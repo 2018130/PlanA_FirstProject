@@ -18,16 +18,4 @@ public class DontDestroyObj : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SceneManager.LoadScene("GameScene");
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            SceneManager.LoadScene("MainScene");
-        }
-    }
 }

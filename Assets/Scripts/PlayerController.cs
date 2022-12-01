@@ -8,12 +8,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float speed = 10.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +20,7 @@ public class PlayerController : MonoBehaviour
             destinationPos.z = 0;
         }
 
-        if(Vector3.Distance(destinationPos, transform.position) >= 0.5f)
+        if(Vector3.Distance(destinationPos, transform.position) >= 0.1f)
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
