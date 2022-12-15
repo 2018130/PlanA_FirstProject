@@ -1,0 +1,7 @@
+Quest_Index,Quest_Name,Quest_Type,Quest_Limit_Min,Quest_Limit_Max,Quest_Start,Quest_Start_NPC,Quest_End,Quest_End_NPC,Quest_Dialogue_Start,Quest_Dialogue_End,Quest_End_Terms,Quest_Link,Unlock_Lev_1,Unlock_Lev_2,Fix_Reward_1,Fix_Reward_2,Fix_Reward_3,Reward_Gold_Basic,Reward_Gold_Lev
+10001,첫 낚시,1,Null,Null,2,Null,1,10001,10001,20001,1,Null,Null,Null,01001,02001,Null,30,Null
+30001,성실한 하루1,3,Null,Null,2,Null,2,Null,Null,Null,2,Null,Null,Null,01001,Null,Null,10,Null
+30002,성실한 하루2,3,Null,Null,2,Null,2,Null,Null,Null,2,Null,Null,Null,Null,02001,Null,10,Null
+30003,성실한 하루3,3,Null,Null,2,Null,2,Null,Null,Null,2,Null,Null,Null,Null,Null,03001,10,Null
+10002,더 많은 친구를 만나자,1,2,3,2,Null,2,10005,10005,20005,1,10006,1,Null,Null,02001,Null,30,Null
+10003,요령을 익혀보자,2,3,4,1,10005,1,10005,10006,20006,1,Null,Null,Null,01001,Null,Null,20,Null

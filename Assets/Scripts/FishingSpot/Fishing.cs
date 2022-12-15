@@ -26,9 +26,9 @@ public class Fishing : MonoBehaviour
             float minLowerRate = (float)1 / 4;
 
             float horizontalSpeed = 5.0f;
-            float verticalSpeed = 5.0f;
+            float verticalSpeed = 15f;
 
-            float maxBodyLength = 6.5f;
+            float maxBodyLength = 10f;
             float maxRotationableAngle = 30f;
 
             //상
@@ -71,7 +71,6 @@ public class Fishing : MonoBehaviour
                 if (newRodAngle >= 0 && newRodAngle <= maxRotationableAngle + angleOffset)
                 {
                     newRodAngle = Mathf.Clamp(newRodAngle, 0, maxRotationableAngle);
-                    Debug.Log(newRodAngle);
                 }
                 rod.transform.localEulerAngles = new Vector3(0, 0, newRodAngle);
             }
