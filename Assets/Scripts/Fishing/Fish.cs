@@ -73,7 +73,6 @@ public class Fish : MonoBehaviour
             {
                 GameObject targetObj = raycastHit2Ds[i].collider.gameObject;
 
-                Debug.Log(eFishType + ", " + targetObj.GetComponent<Fish>().eFishType);
                 if (eFishType != targetObj.GetComponent<Fish>().eFishType)
                 {
                     float fishSlowRate = 0.8f;
