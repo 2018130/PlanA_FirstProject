@@ -19,17 +19,13 @@ public class Fishing : MonoBehaviour
     [SerializeField]
     GameObject rod;
 
-    GameObject rodBody;
-    GameObject fishingFloat;
-
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
     int fishingSucessCount = 0;
 
     private void Start()
     {
-        rodBody = rod.transform.Find("Body").gameObject;
-        fishingFloat = rod.transform.Find("FishingFloat").gameObject;
+
     }
 
     private void Update()

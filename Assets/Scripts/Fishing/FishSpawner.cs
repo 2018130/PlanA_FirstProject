@@ -1,67 +1,64 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
+using UnityEngine.AI;
 
 public class FishSpawner : MonoBehaviour
 {
-    public static FishSpawner Instance;
+    [SerializeField] private GameObject[] fishPrefab;
+    [SerializeField] private float fishInterval = 1f;
 
-    public GameObject fishPrefab;
+    private int limitFish = 20;
+    private float ranStart1Y = 0f;
+    private float ranNext1Y = 0f;
+    private int fishIdx = 0;
+    private int curFish = 0;
 
-    Queue<GameObject> poolingObjQueue = new Queue<GameObject>();
+    private Vector3 fishStartPos = new Vector3(-5.2f, 0f, 0f);
+    private Vector3 fishNext1Pos = new Vector3(0f,0f,0f);
 
-    private void Awake()
+    private void Start()
     {
-        Instance = this;
-        SpawnFish();
+        fishStartPos = Vector3.zero; //Ãß°¡
+        StartCoroutine("SpawnFish");
     }
 
-    private void Update()
+    private IEnumerator SpawnFish()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        while (true)
         {
-            SpawnFish();
+            yield return new WaitForSeconds(fishInterval);
+            fishIdx = Random.Range(0, 3);
+
+
+            ranStart1Y = Random.Range(1, 25);
+            if (ranStart1Y < 11) fishStartPos.y = (ranStart1Y * 0.1f);
+            else fishStartPos.y = ((ranStart1Y - 11) * 0.1f);
+
+            ranNext1Y = Random.Range(1, 25);
+            if (ranNext1Y < 11) fishNext1Pos.y = (ranNext1Y * 0.1f);
+            else fishNext1Pos.y = ((ranNext1Y - 11) * 0.1f);
+
+
+
+
+            // +11 12 13 14 15 16  ( 12 - 11 * 0.1)
+
+            if (curFish <= limitFish)
+            {
+                GameObject newFish = Instantiate(fishPrefab[fishIdx], fishStartPos, Quaternion.identity);
+                newFish.transform.SetParent(this.transform, false);
+                newFish.GetComponent<SpriteRenderer>().flipX = false;
+                newFish.GetComponent<NavMeshAgent>().SetDestination(fishNext1Pos);
+                ++curFish;
+            }
+
         }
     }
-    private GameObject CreateNewFish()
+
+
+    public void DestroyCurFish()
     {
-        GameObject newFish = Instantiate(fishPrefab);
-        newFish.transform.position = Instance.transform.position;
-        newFish.SetActive(false);
-        newFish.transform.SetParent(transform);
-
-        return newFish;
-    }
-
-    public static void ReturnFish(GameObject fish)
-    {
-        Instance.poolingObjQueue.Enqueue(fish);
-        fish.transform.position = Instance.transform.position;
-        fish.transform.SetParent(Instance.transform);
-        fish.SetActive(false);
-    }
-
-    public static GameObject SpawnFish()
-    {
-        GameObject spawnableFish = null;
-
-        if(Instance.poolingObjQueue.Count > 0)
-        {
-            spawnableFish = Instance.poolingObjQueue.Dequeue();
-            spawnableFish.transform.SetParent(null);
-            spawnableFish.SetActive(true);
-        }else
-        {
-            spawnableFish = Instance.CreateNewFish();
-            spawnableFish.transform.SetParent(null);
-            spawnableFish.SetActive(true);
-        }
-        spawnableFish.GetComponent<Fish>().SetFishStat((EFishType)UnityEngine.Random.Range(0,3));
-        float randomHeight = UnityEngine.Random.Range(-Instance.transform.localScale.y / 2, Instance.transform.localScale.y / 2);
-        spawnableFish.transform.position = new Vector3(Instance.transform.position.x, Instance.transform.position.y + randomHeight);
-
-        return spawnableFish;
+        --curFish;
     }
 }
