@@ -19,7 +19,6 @@ public class FishSpawner : MonoBehaviour
 
     private void Start()
     {
-        fishStartPos = Vector3.zero; //Ãß°¡
         StartCoroutine("SpawnFish");
     }
 
