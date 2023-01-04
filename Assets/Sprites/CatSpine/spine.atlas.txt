@@ -1,0 +1,29 @@
+spine.png
+size:556,214
+filter:Linear,Linear
+pma:true
+Body
+bounds:287,75,124,137
+offsets:0,0,125,159
+Fishing rod
+bounds:2,2,283,210
+Head
+bounds:450,120,92,104
+rotate:90
+L arm
+bounds:450,6,52,57
+offsets:0,1,53,58
+L leg
+bounds:369,6,67,79
+rotate:90
+R arm1
+bounds:413,184,34,28
+offsets:0,0,34,29
+R arm2
+bounds:413,118,33,64
+R leg
+bounds:287,5,80,68
+offsets:0,2,80,70
+Tail
+bounds:450,65,53,92
+rotate:90
