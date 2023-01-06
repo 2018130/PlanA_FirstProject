@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
     }
     const int maxCoin = 9999999;
     int coin;
+
     public int Coin
     {
         get { return coin; }
@@ -105,6 +107,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
         }
 
+        //체력, 미끼, 코인 수 키트키
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Health++;
@@ -129,5 +132,38 @@ public class PlayerController : MonoBehaviour
         {
             Coin -= 1000000;
         }
+
+        //에니메이션 동작 키트키
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SetAnimation("Action1");
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SetAnimation("Action2");
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SetAnimation("Action3");
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SetAnimation("Fishing");
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SetAnimation("Idle");
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SetAnimation("Sleep");
+        }
+    }
+
+    private void SetAnimation(string action)
+    {
+        SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
+
+        skeletonAnimation.AnimationName = action;
     }
 }

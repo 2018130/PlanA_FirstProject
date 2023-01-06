@@ -1,0 +1,75 @@
+Quest Cat.png
+size:332,523
+filter:Linear,Linear
+pma:true
+scale:0.5
+Body
+bounds:221,101,89,51
+offsets:1,0,90,51
+Head
+bounds:221,154,112,108
+offsets:0,0,112,118
+rotate:90
+L Head1
+bounds:2,395,111,126
+offsets:1,0,112,126
+L Head2
+bounds:2,265,109,128
+L Head3
+bounds:113,265,106,128
+offsets:1,0,107,128
+L Head4
+bounds:112,8,107,125
+L arm
+bounds:228,444,82,77
+L ear
+bounds:228,405,37,49
+rotate:90
+L eye1
+bounds:312,127,14,25
+L eye2
+bounds:248,15,17,14
+offsets:0,0,18,14
+M Head
+bounds:2,7,108,126
+M L eye1
+bounds:221,15,14,25
+rotate:90
+M L eye2
+bounds:286,56,16,10
+rotate:90
+M Nose
+bounds:312,458,17,21
+M R eye1
+bounds:286,74,14,25
+M R eye2
+bounds:312,446,16,10
+M mouth
+bounds:312,502,18,19
+Mouth1
+bounds:221,2,19,11
+Mouth2
+bounds:312,109,15,16
+Nose
+bounds:312,481,18,19
+R Head1
+bounds:115,395,111,126
+offsets:0,0,112,126
+R Head2
+bounds:2,135,109,128
+R Head3
+bounds:113,135,106,128
+offsets:0,0,107,128
+R Head4
+bounds:221,268,107,125
+R arm
+bounds:221,31,63,68
+R ear
+bounds:279,399,36,43
+R eye1
+bounds:242,2,11,19
+offsets:0,0,12,19
+rotate:90
+R eye2
+bounds:228,397,12,6
+offsets:0,0,12,7
