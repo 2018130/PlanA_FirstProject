@@ -7,10 +7,10 @@ public class FishingHookController : MonoBehaviour
     [SerializeField] private Transform fishingLine = null;
     [SerializeField] private Transform fishingHook = null;
 
-    [SerializeField] private float speed = 3.0f;
+    [SerializeField] private float speed = 15f;
     private LineRenderer lr = null;
     private new Camera camera = null;
-    private Vector3 destPos = new Vector3(0f, 5f, 0f);
+    private Vector3 destPos = new Vector3(0f, -15f, 0f);
 
 
 
@@ -26,19 +26,21 @@ public class FishingHookController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
-            Vector3 mousePos = Input.mousePosition;
-            destPos = camera.ScreenToWorldPoint(mousePos);
-            destPos.z = 0f;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
+            float distance;
+            xy.Raycast(ray, out distance);
+            destPos = ray.GetPoint(distance);
+            if (destPos.y > -19f)
+                destPos = transform.position;
         }
 
-        if (Vector3.Distance(destPos, GetPos()) >= 0.01f)
+        if (Vector3.Distance(destPos, transform.position) >= 0.1f)
         {
-            Vector3 dirVector = (destPos - GetPos());
-            dirVector.z = 0f;
-            transform.Translate(dirVector * Time.deltaTime * speed);
-
+            Vector3 dirVector = (destPos - transform.position).normalized;
+            GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
         }
 
         lr.SetPosition(0, fishingHook.position);

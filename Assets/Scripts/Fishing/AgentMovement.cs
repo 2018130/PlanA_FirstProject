@@ -5,26 +5,35 @@ using UnityEngine.AI;
 
 public class AgentMovement : MonoBehaviour
 {
-
     private NavMeshAgent agent;
     private FishSpawner fishSp = null;
-    private Vector3 fishEndV = new Vector3(-5.1f, -1f, 0f);
-    private Vector3 FishNext1P = new Vector3(5.3f, 0f, 0f);
-    private Vector3 FishNext2P = new Vector3(5.3f, -2.5f, 0f);
-    private Vector3 beforePos = new Vector3(0f, 0f, 0f);
+    private Vector3 beforePos = Vector3.zero;
+    private Vector3 fishNext1Pos = Vector3.zero;
+    private Vector3 fishNext1P = Vector3.zero;
+    private Vector3 fishNext2P = Vector3.zero;
+    private Vector3 fishNext2Pos = Vector3.zero;
+    private Vector3 fishEndV = Vector3.zero;
 
+    private Vector3 spawnPos = Vector3.zero;
+    private Vector3 fishNext1Point;
+    private Vector3 fishNext2Point;
+    private Vector3 fishEndPoint;
+
+    private float ranNext1Y = 0f;
     private float ranEnd1Y = 0f;
     private float ranStart2Y = 0f;
     private float ranNext2Y = 0f;
     private float ranEnd2Y = 0f;
     private float offsetAngle = 1f;
 
+    private int boundaryX = 0;
+    private int boundaryY = 0;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        fishSp = GameObject.FindWithTag("FishSpawner").GetComponent<FishSpawner>();
     }
 
     private void Start()
@@ -42,55 +51,82 @@ public class AgentMovement : MonoBehaviour
 
     private IEnumerator SetDest()
     {
+        float boundrayYMin = -(boundaryY * 2f - 1);
+        float boundrayYMax = (boundaryY * 2f + 1);
         while (true)
         {
 
 
             yield return new WaitForSeconds(0.4f);
-            if (GetPos().x <= -4.0f && GetPos().y < -1)
+            if (GetPos().x <= -7.4f && GetPos().y < -27)
             {
                 fishSp.DestroyCurFish();
                 Destroy(gameObject);
             }
-            else if (GetPos().x <= -0.5f && GetPos().y > -1)
+            else if (GetPos().x <= -7.5f && GetPos().y > -27)
             {
-                ranEnd1Y = Random.Range(1, 25);
-                if (ranEnd1Y < 11) FishNext1P.y = (ranEnd1Y * 0.1f);
-                else FishNext1P.y = ((ranEnd1Y - 11) * 0.1f);
-                agent.SetDestination(FishNext1P);
+                ranNext1Y = Random.Range(boundrayYMin, boundrayYMax);
+                fishNext1Pos = fishNext1Point;
+                fishNext1Pos.x = 0.5f;
+                fishNext1Pos.y += (ranNext1Y * 0.1f);
+                agent.SetDestination(fishNext1Pos);
             }
-            else if (GetPos().x >= 3.8f && GetPos().y > -1)
+            else if (Vector3.Distance(GetPos(), fishNext1P) < 1f)
             {
-                ranStart2Y = Random.Range(1, 25);
-                if (ranStart2Y < 11) FishNext2P.y = (ranStart2Y * 0.1f - 3f);
-                else FishNext2P.y = ((ranStart2Y - 11) * 0.1f - 3f);
+                ranStart2Y = Random.Range(boundrayYMin, boundrayYMax);
+                fishNext2P = fishNext2Point;
+                fishNext2P.y += (ranStart2Y * 0.1f);
                 GetComponent<SpriteRenderer>().flipX = true;
-                agent.SetDestination(FishNext2P);
+                agent.SetDestination(fishNext2P);
             }
-            else if (GetPos().x >= 3.8f && GetPos().y < -1)
+            else if (Vector3.Distance(GetPos(), fishNext1Pos) < 1f)
             {
-                ranNext2Y = Random.Range(-5, 30);
-                FishNext2P.x = 0f;
-                if (ranNext2Y < 11) FishNext2P.y = (ranNext2Y * 0.1f - 3f);
-                else FishNext2P.y = ((ranNext2Y - 11) * 0.1f - 3f);
-                agent.SetDestination(FishNext2P);
+                ranEnd1Y = Random.Range(boundrayYMin, boundrayYMax);
+                fishNext1P = fishNext1Point;
+                fishNext1P.y += (ranEnd1Y * 0.1f);
+                agent.SetDestination(fishNext1P);
+
             }
-            else if (GetPos().x <= 0.5f && GetPos().y < -1)
+            else if (Vector3.Distance(GetPos(), fishNext2Pos) < 1f)
             {
-                ranEnd2Y = Random.Range(-5, 30);
-                if (ranEnd2Y < 11) fishEndV.y = (ranEnd2Y * 0.1f - 3f);
-                else fishEndV.y = ((ranEnd2Y - 11) * 0.1f - 3f);
+                ranEnd2Y = Random.Range(boundrayYMin, boundrayYMax);
+                fishEndV = fishEndPoint;
+                fishEndV.y += (ranEnd2Y* 0.1f);
                 agent.SetDestination(fishEndV);
             }
+            else if (Vector3.Distance(GetPos(), fishNext2P) < 1f)
+            {
+                ranNext2Y = Random.Range(boundrayYMin, boundrayYMax);
+                fishNext2Pos = fishNext2Point;
+                fishNext2Pos.x = -0.5f;
+                fishNext2Pos.y += (ranNext2Y * 0.1f);
+                agent.SetDestination(fishNext2Pos);
+            }
+
             beforePos = GetPos();
 
         }
 
     }
-    
+
     private Vector3 GetPos()
     {
         return transform.position;
+    }
+
+    public void SetBoundary(int _x, int _y, Vector3 _spawnPos, Vector3 _fishNext1Point, Vector3 _fishNext2Point, Vector3 _fishEndPoint)
+    {
+       boundaryX = _x;
+       boundaryY = _y;
+       spawnPos = _spawnPos;
+       fishNext1Point = _fishNext1Point;
+       fishNext2Point = _fishNext2Point;
+       fishEndPoint = _fishEndPoint;
+    }
+
+    public void SetSpawner(FishSpawner _fishSpawner)
+    {
+        fishSp = _fishSpawner;
     }
 
 
