@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+#if UNITY_EDITOR
         //마우스가 클릭된 위치로 플레이어의 위치를 이동시키는 코드 입니다.
         if (Input.GetMouseButtonDown(0))
         {
@@ -100,7 +100,17 @@ public class PlayerController : MonoBehaviour
             xy.Raycast(ray, out distance);
             destinationPos = ray.GetPoint(distance);
         }
-
+#else
+        //화면 터치시 마지막 터치 위치로 이동
+        if(Input.touchCount != 0)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
+            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
+            float distance;
+            xy.Raycast(ray, out distance);
+            destinationPos = ray.GetPoint(distance);
+        }
+#endif
         if(Vector3.Distance(destinationPos, transform.position) >= 0.1f)
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;

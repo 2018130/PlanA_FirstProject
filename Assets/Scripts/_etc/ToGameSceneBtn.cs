@@ -23,15 +23,11 @@ public class ToGameSceneBtn : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount != 0 && false)
+        if (Input.touchCount != 0)
         {
-            // 낚시터 클릭시 화면 SetOn, 전환 그리고 플레이어 SetOff
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                toMainMenuBtn.SetActive(true);
-                fishing.SetActive(true);
-                player.SetActive(false);
-                Camera.main.GetComponent<Animator>().SetTrigger("MoveToGameScreen");
+                questionUseHealthPanel.GetComponent<QuestionUseHealth>().ActiveToViewport();
             }
         }
     }
