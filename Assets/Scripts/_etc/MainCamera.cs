@@ -9,6 +9,9 @@ public class MainCamera : MonoBehaviour
     [SerializeField]
     QuestionUseBait questionUseBait;
 
+    [SerializeField] FishSpawner fishSpawnerCS;
+    [SerializeField] FishingHookController hookCtrl;
+
     bool isFistOfToGameScreenChange = false;
     bool isFistOfToMainScreenChange = false;
 
@@ -27,11 +30,12 @@ public class MainCamera : MonoBehaviour
         {
             transform.position -= new Vector3(0, Time.unscaledDeltaTime * cameraSpeed, 0);
 
-            if(transform.position.y <= gameViewPositionY)
+            if (transform.position.y <= gameViewPositionY)
             {
                 transform.position = new Vector3(transform.position.x, gameViewPositionY, transform.position.z);
                 questionUseBait.ActiveToViewport();
                 isFistOfToGameScreenChange = false;
+                fishSpawnerCS.RestartSpawn();
             }
         }
 
@@ -40,10 +44,11 @@ public class MainCamera : MonoBehaviour
         {
             transform.position += new Vector3(0, Time.unscaledDeltaTime * cameraSpeed, 0);
             Debug.Log(transform.position);
-
+            hookCtrl.MoveDefault();
             if (transform.position.y >= mainViewPositionY)
             {
                 transform.position = new Vector3(transform.position.x, mainViewPositionY, transform.position.z);
+                fishSpawnerCS.ResetSpawn();
                 fishing.DeactiveGameObject();
                 isFistOfToMainScreenChange = false;
             }

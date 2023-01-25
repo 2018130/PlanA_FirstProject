@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour
         if (!isEndOfTimer)
         {
             currentTime -= Time.deltaTime;
-            GetComponentInChildren<Text>().text = currentTime.ToString().Substring(0, 5);
+            GetComponentInChildren<Text>().text = string.Format("{0:0.00#} ", currentTime);//.ToString().Substring(0, 5);
             if(currentTime <= 0)
             {
                 isEndOfTimer = true;

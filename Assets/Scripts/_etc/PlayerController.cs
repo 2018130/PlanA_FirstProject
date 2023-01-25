@@ -104,14 +104,17 @@ public class PlayerController : MonoBehaviour
         //화면 터치시 마지막 터치 위치로 이동
         if(Input.touchCount != 0)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
+/*            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
             Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
             float distance;
             xy.Raycast(ray, out distance);
-            destinationPos = ray.GetPoint(distance);
+            destinationPos = ray.GetPoint(distance);*/
+
+            Touch touch = Input.GetTouch(0);
+            destinationPos = new Vector3(touch.position.x, touch.position.y, 0f);
         }
 #endif
-        if(Vector3.Distance(destinationPos, transform.position) >= 0.1f)
+        if (Vector3.Distance(destinationPos, transform.position) >= 0.1f)
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);

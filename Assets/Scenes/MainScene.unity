@@ -2143,6 +2143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishing: {fileID: 5947921311759977052}
   questionUseBait: {fileID: 1256919429}
+  fishSpawnerCS: {fileID: 5947921312061825865}
+  hookCtrl: {fileID: 5947921312033114219}
 --- !u!1 &537005224
 GameObject:
   m_ObjectHideFlags: 0
@@ -7418,26 +7420,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!231 &5947921310790937971
-SpringJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5947921310790937982}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 5947921312033114229}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 0.5
-  m_DampingRatio: 0
-  m_Frequency: 0
 --- !u!68 &5947921310790937980
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -7499,7 +7481,6 @@ GameObject:
   - component: {fileID: 5947921310790937968}
   - component: {fileID: 5947921310790937969}
   - component: {fileID: 5947921310790937970}
-  - component: {fileID: 5947921310790937971}
   - component: {fileID: 5947921310790937980}
   m_Layer: 0
   m_Name: FishingHook
@@ -7600,7 +7581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5947921311158920049}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.26, y: -18.8232, z: 0}
+  m_LocalPosition: {x: 0, y: -18.8232, z: 0}
   m_LocalScale: {x: 1, y: 1.1108, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8179,8 +8160,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5947921311661965280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 18, y: 0.1, z: 1}
+  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalScale: {x: 19, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5947921311445812930}
@@ -8263,7 +8244,7 @@ Transform:
   m_GameObject: {fileID: 5947921311756842935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 15, z: 1}
+  m_LocalScale: {x: 22, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5947921311445812930}
@@ -8368,6 +8349,7 @@ GameObject:
   - component: {fileID: 5947921312033114228}
   - component: {fileID: 5947921312033114229}
   - component: {fileID: 5947921312033114230}
+  - component: {fileID: 5947921312033114232}
   m_Layer: 0
   m_Name: FishingAnchor
   m_TagString: Untagged
@@ -8435,7 +8417,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5947921312033114224}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -8500,8 +8482,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.013419371
-        value: 0.019614756
+        time: 0.021354329
+        value: 0.060304206
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -8564,6 +8546,30 @@ Transform:
   m_Father: {fileID: 5947921311158920048}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!233 &5947921312033114232
+HingeJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5947921312033114224}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 5947921310790937970}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 2}
+  m_UseMotor: 0
+  m_Motor:
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 1
+  m_AngleLimits:
+    m_LowerAngle: -90
+    m_UpperAngle: 90
 --- !u!212 &5947921312061825864
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8632,7 +8638,7 @@ MonoBehaviour:
   - {fileID: 2610916903965179033, guid: 94d9fa86b78bde14a976819772909758, type: 3}
   - {fileID: 6342235933491417415, guid: 5e5e806741d80154f997ca0637da560d, type: 3}
   - {fileID: 6174490838122734144, guid: f31cc1482894e1743965eea08e348570, type: 3}
-  fishInterval: 1
+  fishInterval: 1.5
   moveField: {fileID: 5947921311756842935}
   fishNext1PointTr: {fileID: 5947921311488375567}
   fishNext2PointTr: {fileID: 5947921311097257160}

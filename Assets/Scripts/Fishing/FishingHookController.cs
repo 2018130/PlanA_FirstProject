@@ -10,7 +10,7 @@ public class FishingHookController : MonoBehaviour
     [SerializeField] private float speed = 15f;
     private LineRenderer lr = null;
     private new Camera camera = null;
-    private Vector3 destPos = new Vector3(0f, -15f, 0f);
+    private Vector3 destPos = new Vector3(0f, -28f, 0f);
 
 
 
@@ -26,6 +26,11 @@ public class FishingHookController : MonoBehaviour
 
     private void Update()
     {
+
+
+
+
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,15 +38,31 @@ public class FishingHookController : MonoBehaviour
             float distance;
             xy.Raycast(ray, out distance);
             destPos = ray.GetPoint(distance);
-            if (destPos.y > -19f)
+            if ( -26f < destPos.y || destPos.y < -33.5f)
                 destPos = transform.position;
         }
+#else
+        //화면 터치시 마지막 터치 위치로 이동
+        if(Input.touchCount != 0)
+        {
+/*            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
+            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
+            float distance;
+            xy.Raycast(ray, out distance);
+            destPos = ray.GetPoint(distance);*/
 
+            Touch touch = Input.GetTouch(0);
+            destPos = new Vector3(touch.position.x, touch.position.y, 0f);
+            
+        }
+#endif
         if (Vector3.Distance(destPos, transform.position) >= 0.1f)
         {
             Vector3 dirVector = (destPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
         }
+
+
 
         lr.SetPosition(0, fishingHook.position);
         lr.SetPosition(1, GetPos());
@@ -51,6 +72,10 @@ public class FishingHookController : MonoBehaviour
 
     }
 
+    public void MoveDefault()
+    {
+        destPos = new Vector3(0f, -28f, 0f);
+    }
     private Vector3 GetPos()
     {
         return transform.position;
