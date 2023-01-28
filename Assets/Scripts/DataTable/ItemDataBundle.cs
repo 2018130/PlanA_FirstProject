@@ -58,9 +58,6 @@ public class ItemDataBundle : MonoBehaviour
     private void Start()
     {
         InitItemDatas();
-        foreach(var itemData in itemDatas){
-            itemData.Value.PrintItemData();
-        }
     }
     //csv파일을 모두 읽어 itemDatas변수에 할당 합니다.
     public void InitItemDatas()

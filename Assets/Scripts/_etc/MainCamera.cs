@@ -12,10 +12,10 @@ public class MainCamera : MonoBehaviour
     bool isFistOfToGameScreenChange = false;
     bool isFistOfToMainScreenChange = false;
 
-    float cameraSpeed = 5f;
+    float cameraSpeed = 20f;
 
     const float mainViewPositionY = 0f;
-    const float gameViewPositionY = -26f;
+    const float gameViewPositionY = -256f;
     public float GameViewPostionY
     {
         get { return gameViewPositionY; }

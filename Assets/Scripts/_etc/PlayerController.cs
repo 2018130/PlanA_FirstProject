@@ -93,13 +93,27 @@ public class PlayerController : MonoBehaviour
 
             //원근투영, 정사영 둘다 가능
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
+            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 90));
             float distance;
             xy.Raycast(ray, out distance);
             destinationPos = ray.GetPoint(distance);
         }
+<<<<<<< Updated upstream
 
         if(Vector3.Distance(destinationPos, transform.position) >= 0.1f)
+=======
+#else
+        //화면 터치시 마지막 터치 위치로 이동
+        if(Input.touchCount != 0)
+        {
+            destinationPos = ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
+/*
+            Touch touch = Input.GetTouch(0);
+            destinationPos = new Vector3(touch.position.x, touch.position.y, 0f);*/
+        }
+#endif
+        if (Vector3.Distance(destinationPos, transform.position) >= 0.1f)
+>>>>>>> Stashed changes
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
@@ -129,5 +143,15 @@ public class PlayerController : MonoBehaviour
         {
             Coin -= 1000000;
         }
+    }
+
+    public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 90));
+        float distance;
+        xy.Raycast(ray, out distance);
+
+        return ray.GetPoint(distance);
     }
 }
