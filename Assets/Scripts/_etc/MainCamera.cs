@@ -8,6 +8,8 @@ public class MainCamera : MonoBehaviour
     Fishing fishing;
     [SerializeField]
     QuestionUseBait questionUseBait;
+    [SerializeField]
+    PlayerController playerController;
 
     [SerializeField] FishSpawner fishSpawnerCS;
     [SerializeField] FishingHookController hookCtrl;
@@ -22,6 +24,11 @@ public class MainCamera : MonoBehaviour
     public float GameViewPostionY
     {
         get { return gameViewPositionY; }
+    }
+
+    private void Start()
+    {
+        Camera.main.fieldOfView = 104f;
     }
     private void Update()
     {
@@ -43,7 +50,6 @@ public class MainCamera : MonoBehaviour
         if (isFistOfToMainScreenChange)
         {
             transform.position += new Vector3(0, Time.unscaledDeltaTime * cameraSpeed, 0);
-            Debug.Log(transform.position);
             hookCtrl.MoveDefault();
             if (transform.position.y >= mainViewPositionY)
             {
@@ -51,6 +57,7 @@ public class MainCamera : MonoBehaviour
                 fishSpawnerCS.ResetSpawn();
                 fishing.DeactiveGameObject();
                 isFistOfToMainScreenChange = false;
+                playerController.ResetPlayer();
             }
         }
     }

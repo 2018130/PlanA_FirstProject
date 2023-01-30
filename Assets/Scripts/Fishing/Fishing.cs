@@ -23,11 +23,6 @@ public class Fishing : MonoBehaviour
     int maxFishingSucessCount = 3;
     int fishingSucessCount = 0;
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         if(fishingSucessCount == maxFishingSucessCount)

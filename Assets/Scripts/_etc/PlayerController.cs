@@ -87,32 +87,16 @@ public class PlayerController : MonoBehaviour
         //마우스가 클릭된 위치로 플레이어의 위치를 이동시키는 코드 입니다.
         if (Input.GetMouseButtonDown(0))
         {
-            /* 정사영
-            Vector3 mousePos = Input.mousePosition;
-            destinationPos = Camera.main.ScreenToWorldPoint(mousePos);
-            destinationPos.z = 0;
-            */
-
             //원근투영, 정사영 둘다 가능
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
-            float distance;
-            xy.Raycast(ray, out distance);
-            destinationPos = ray.GetPoint(distance);
+            destinationPos = ExchangeScreenPosToWorldPos(Input.mousePosition);
         }
 #else
         //화면 터치시 마지막 터치 위치로 이동
         if(Input.touchCount != 0)
         {
-/*            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
-            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
-            float distance;
-            xy.Raycast(ray, out distance);
-            destinationPos = ray.GetPoint(distance);*/
-
-            Touch touch = Input.GetTouch(0);
-            destinationPos = new Vector3(touch.position.x, touch.position.y, 0f);
+            destinationPos = ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
         }
+        Debug.Log(transform.position);
 #endif
         if (Vector3.Distance(destinationPos, transform.position) >= 0.1f)
         {
@@ -173,10 +157,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SetAnimation(string action)
+    public float SetAnimation(string action)
     {
         SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
 
-        skeletonAnimation.AnimationName = action;
+        if (skeletonAnimation.skeleton.Data.FindAnimation(action) != null)
+        {
+            float duration = skeletonAnimation.skeleton.Data.FindAnimation(action).Duration;
+            skeletonAnimation.AnimationName = action;
+
+            return duration;
+        }
+
+        return 0;
+    }
+
+    public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
+        float distance;
+        xy.Raycast(ray, out distance);
+        
+        return ray.GetPoint(distance);
+    }
+
+    public void ResetPlayer()
+    {
+        gameObject.SetActive(true);
+        transform.position = Vector3.zero;
+        SetAnimation("Action1");
     }
 }

@@ -16,19 +16,19 @@ public class ToGameSceneBtn : MonoBehaviour
     [SerializeField]
     GameObject questionUseHealthPanel;
 
-    private void OnMouseDown()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        questionUseHealthPanel.GetComponent<QuestionUseHealth>().ActiveToViewport();
+        PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+        if(playerController != null)
+        {
+            float duration = playerController.SetAnimation("Fishing");
+
+            Invoke("DisplayQuestionUseHealthPanel", duration);
+        }
     }
 
-    private void Update()
+    void DisplayQuestionUseHealthPanel()
     {
-        if (Input.touchCount != 0)
-        {
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                questionUseHealthPanel.GetComponent<QuestionUseHealth>().ActiveToViewport();
-            }
-        }
+        questionUseHealthPanel.GetComponent<QuestionUseHealth>().ActiveToViewport();
     }
 }
