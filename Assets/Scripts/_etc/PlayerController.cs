@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,10 @@ public class PlayerController : MonoBehaviour
 
     Vector3 destinationPos = Vector3.zero;
     [SerializeField]
-    float speed = 10.0f;
+    float speed = 5.0f;
+
+    float lastTouchedTime;
+    float animationLatency = 5.0f;
 
     const int maxHealth = 10;
     int health;
@@ -79,6 +83,7 @@ public class PlayerController : MonoBehaviour
         Health = maxHealth;
         Bait = maxBait;
         Coin = 0;
+        lastTouchedTime = 0f;
     }
     // Update is called once per frame
     void Update()
@@ -87,6 +92,7 @@ public class PlayerController : MonoBehaviour
         //마우스가 클릭된 위치로 플레이어의 위치를 이동시키는 코드 입니다.
         if (Input.GetMouseButtonDown(0))
         {
+            lastTouchedTime = Time.time;
             //원근투영, 정사영 둘다 가능
             destinationPos = ExchangeScreenPosToWorldPos(Input.mousePosition);
         }
@@ -94,14 +100,21 @@ public class PlayerController : MonoBehaviour
         //화면 터치시 마지막 터치 위치로 이동
         if(Input.touchCount != 0)
         {
+            lastTouchedTime = Time.time;
             destinationPos = ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
         }
-        Debug.Log(transform.position);
 #endif
-        if (Vector3.Distance(destinationPos, transform.position) >= 0.1f)
+        //플레이어 이동 코드
+        if (Vector3.Distance(destinationPos, transform.position) >= 0.3f)
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
+        }
+
+        //입력 없을 때 랜덤 애니메이션 재생
+        if(Time.time - lastTouchedTime >= animationLatency)
+        {
+            PlayRandomAnimation();
         }
 
         //체력, 미끼, 코인 수 키트키
@@ -154,6 +167,24 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             SetAnimation("Sleep");
+        }
+    }
+
+    private void PlayRandomAnimation()
+    {
+        SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
+        Array animationNames = skeletonAnimation.skeleton.Data.Animations.ToArray();
+
+        string newAnimationName = animationNames.GetValue(UnityEngine.Random.Range(0, animationNames.Length)).ToString();
+        if(newAnimationName != "Fishing" && newAnimationName != "Sleep")
+        {
+            SetAnimation(newAnimationName);
+            Debug.Log(newAnimationName);
+            lastTouchedTime = Time.time;
+        }//랜덤으로 재생하는 애니메이션이 채택되지 않은 경우
+        else
+        {
+            lastTouchedTime = Time.time - animationLatency;
         }
     }
 
