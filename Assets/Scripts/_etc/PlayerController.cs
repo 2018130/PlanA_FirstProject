@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
     {
 #if UNITY_EDITOR
         //마우스가 클릭된 위치로 플레이어의 위치를 이동시키는 코드 입니다.
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             lastTouchedTime = Time.time;
             //원근투영, 정사영 둘다 가능
@@ -98,7 +99,9 @@ public class PlayerController : MonoBehaviour
         }
 #else
         //화면 터치시 마지막 터치 위치로 이동
-        if(Input.touchCount != 0)
+        if(Input.touchCount != 0 &&
+            Input.GetTouch(0).phase == TouchPhase.Began && 
+            !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
         {
             lastTouchedTime = Time.time;
             destinationPos = ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);

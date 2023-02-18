@@ -54,7 +54,7 @@ public class Fishing : MonoBehaviour
         yield return new WaitForSeconds(panelDisplayTime);
 
         fishingStartTextPanel.SetActive(false);
-        float gamePlayTime = 60f;
+        float gamePlayTime = 10f;
         timerPanel.GetComponent<Timer>().SetTimer(gamePlayTime);
         questProgressPanel.GetComponent<QuestProgress>().SetPercent(questProgressPercent);
     }
