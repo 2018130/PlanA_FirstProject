@@ -13,6 +13,8 @@ public class QuestionUseHealth : MonoBehaviour
     PlayerController player;
     [SerializeField]
     GameObject toMainMenuBtn;
+    [SerializeField]
+    FishingBtn fishingBtn;
 
     public void PlayToFishing()
     {
@@ -47,6 +49,7 @@ public class QuestionUseHealth : MonoBehaviour
             fishing.GetComponent<Fishing>().MoveToMainMenuScreen();
         }
 
+        fishingBtn.ReduceBtnSizeAndSetOff();
         gameObject.SetActive(false);
     }
 }

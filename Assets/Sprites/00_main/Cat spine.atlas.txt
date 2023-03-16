@@ -1,0 +1,77 @@
+Cat spine.png
+size:1024,1024
+filter:Linear,Linear
+pma:true
+scale:0.5
+Bait
+bounds:84,34,30,43
+offsets:0,0,31,43
+Body Back
+bounds:250,865,42,9
+Body1
+bounds:65,848,183,174
+Body2
+bounds:669,897,153,125
+Fishing line
+bounds:2,376,17,303
+Fishing rod
+bounds:2,681,61,341
+Head
+bounds:21,359,137,114
+rotate:90
+L Ear
+bounds:964,962,50,60
+offsets:0,1,55,61
+L Eye1
+bounds:65,681,17,14
+rotate:90
+L Eye2
+bounds:324,711,11,21
+L arm
+bounds:586,771,82,107
+L head2
+bounds:96,556,142,116
+rotate:90
+L head3
+bounds:214,562,140,120
+rotate:90
+L head4
+bounds:824,894,138,128
+L head5
+bounds:2,219,136,138
+L head6
+bounds:391,880,137,142
+L head7
+bounds:65,700,139,146
+R Ear
+bounds:96,506,48,57
+offsets:14,1,62,58
+rotate:90
+R Eye1
+bounds:2,360,17,14
+R Eye2
+bounds:446,737,11,21
+rotate:90
+R amr
+bounds:2,2,75,80
+rotate:90
+R head2
+bounds:206,704,142,116
+rotate:90
+R head3
+bounds:324,734,140,120
+rotate:90
+R head4
+bounds:446,750,138,128
+R head5
+bounds:2,79,136,138
+R head6
+bounds:530,880,137,142
+R head7
+bounds:250,876,139,146
+Tail
+bounds:21,498,73,181
+offsets:6,2,79,183
+tongue
+bounds:84,2,20,30
+offsets:0,0,21,40

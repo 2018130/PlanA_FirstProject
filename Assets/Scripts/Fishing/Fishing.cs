@@ -14,6 +14,8 @@ public class Fishing : MonoBehaviour
     [SerializeField]
     GameObject moveToMainMenuBtn;
     [SerializeField]
+    FishingBtn moveToGameSceneBtn;
+    [SerializeField]
     GameObject questionUseHealthPanel;
 
     [SerializeField]
@@ -64,6 +66,7 @@ public class Fishing : MonoBehaviour
         timerPanel.GetComponent<Timer>().DeactivePanel();
         questProgressPanel.GetComponent<QuestProgress>().DeactivePaenl();
         moveToMainMenuBtn.SetActive(false);
+        moveToGameSceneBtn.ReduceBtnSizeAndSetOff();
         Camera.main.GetComponent<MainCamera>().MoveToMainScreen();
     }
 

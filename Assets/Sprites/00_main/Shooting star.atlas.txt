@@ -1,0 +1,10 @@
+Shooting star.png
+size:512,512
+filter:Linear,Linear
+pma:true
+scale:0.5
+Shooting star
+bounds:2,132,361,231
+offsets:1,0,364,232
+Starlight
+bounds:2,47,83,83

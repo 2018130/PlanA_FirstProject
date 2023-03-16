@@ -1,0 +1,14 @@
+Star.png
+size:256,256
+filter:Linear,Linear
+pma:true
+scale:0.5
+Star
+bounds:84,128,24,23
+offsets:1,2,26,27
+Starlight1
+bounds:2,70,80,81
+offsets:0,0,80,82
+Starlight2
+bounds:2,2,65,66
+offsets:1,1,67,68

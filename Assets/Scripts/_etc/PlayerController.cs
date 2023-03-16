@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
 #endif
         //플레이어 이동 코드
-        if (Vector3.Distance(destinationPos, transform.position) >= 0.3f)
+        if (false && Vector3.Distance(destinationPos, transform.position) >= 0.3f)
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
     public void ResetPlayer()
     {
         gameObject.SetActive(true);
-        transform.position = Vector3.zero;
+        //transform.position = Vector3.zero;
         SetAnimation("Action1");
     }
 }
