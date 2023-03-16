@@ -8381,6 +8381,7 @@ MonoBehaviour:
   fishingLine: {fileID: 5947921311446443621}
   fishingHook: {fileID: 5947921310790937981}
   speed: 15
+  playerController: {fileID: 1049329905}
 --- !u!1 &5947921312033114224
 GameObject:
   m_ObjectHideFlags: 0
