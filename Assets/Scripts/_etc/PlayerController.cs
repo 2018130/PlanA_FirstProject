@@ -25,14 +25,17 @@ public class PlayerController : MonoBehaviour
         get { return health; }
         set { 
             health = value;
-            upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = health.ToString();
-            if (health > maxHealth)
+            if (upperBar != null)
             {
-                upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().color = Color.red;
-            }
-            else if(upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().color == Color.red)
-            {
-                upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().color = Color.white;
+                upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = health.ToString();
+                if (health > maxHealth)
+                {
+                    upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().color = Color.red;
+                }
+                else if (upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().color == Color.red)
+                {
+                    upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().color = Color.white;
+                }
             }
         }
     }
@@ -44,14 +47,17 @@ public class PlayerController : MonoBehaviour
         set
         {
             bait = value;
-            upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().text = bait.ToString();
-            if (bait > maxBait)
+            if (upperBar != null)
             {
-                upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().color = Color.red;
-            }
-            else if (upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().color == Color.red)
-            {
-                upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().color = Color.white;
+                upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().text = bait.ToString();
+                if (bait > maxBait)
+                {
+                    upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().color = Color.red;
+                }
+                else if (upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().color == Color.red)
+                {
+                    upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().color = Color.white;
+                }
             }
         }
     }
@@ -64,17 +70,21 @@ public class PlayerController : MonoBehaviour
         set
         {
             coin = value;
-            if (coin > maxCoin)
+            if (upperBar != null)
             {
-                upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = maxCoin.ToString();
-                upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().color = Color.red;
-            }
-            else {
-                if (upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().color == Color.red)
+                if (coin > maxCoin)
                 {
-                    upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().color = Color.white;
+                    upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = maxCoin.ToString();
+                    upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().color = Color.red;
                 }
-                upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = coin.ToString();
+                else
+                {
+                    if (upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().color == Color.red)
+                    {
+                        upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().color = Color.white;
+                    }
+                    upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = coin.ToString();
+                }
             }
         }
     }
@@ -90,14 +100,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 #if UNITY_EDITOR
+        /*
         //마우스가 클릭된 위치로 플레이어의 위치를 이동시키는 코드 입니다.
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             lastTouchedTime = Time.time;
             //원근투영, 정사영 둘다 가능
             destinationPos = ExchangeScreenPosToWorldPos(Input.mousePosition);
-        }
+        }*/
 #else
+        //뒤로가기 누르면 앱 종료
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         //화면 터치시 마지막 터치 위치로 이동
         if(Input.touchCount != 0 &&
             Input.GetTouch(0).phase == TouchPhase.Began && 
@@ -176,18 +193,21 @@ public class PlayerController : MonoBehaviour
     private void PlayRandomAnimation()
     {
         SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
-        Array animationNames = skeletonAnimation.skeleton.Data.Animations.ToArray();
 
-        string newAnimationName = animationNames.GetValue(UnityEngine.Random.Range(0, animationNames.Length)).ToString();
-        if(newAnimationName != "Fishing" && newAnimationName != "Sleep")
+        if (skeletonAnimation != null)
         {
-            SetAnimation(newAnimationName);
-            Debug.Log(newAnimationName);
-            lastTouchedTime = Time.time;
-        }//랜덤으로 재생하는 애니메이션이 채택되지 않은 경우
-        else
-        {
-            lastTouchedTime = Time.time - animationLatency;
+            Array animationNames = skeletonAnimation.skeleton.Data.Animations.ToArray();
+            string newAnimationName = animationNames.GetValue(UnityEngine.Random.Range(0, animationNames.Length)).ToString();
+            if (newAnimationName != "Fishing" && newAnimationName != "Sleep")
+            {
+                SetAnimation(newAnimationName);
+                Debug.Log(newAnimationName);
+                lastTouchedTime = Time.time;
+            }//랜덤으로 재생하는 애니메이션이 채택되지 않은 경우
+            else
+            {
+                lastTouchedTime = Time.time - animationLatency;
+            }
         }
     }
 

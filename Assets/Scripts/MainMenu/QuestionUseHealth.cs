@@ -42,14 +42,14 @@ public class QuestionUseHealth : MonoBehaviour
 
     public void DeactiveToViewport()
     {
+
         //게임화면에 있는 경우
-        if(Camera.main.transform.position.y == Camera.main.GetComponent<MainCamera>().GameViewPostionY)
+        if (Camera.main.transform.position.y == Camera.main.GetComponent<MainCamera>().GameViewPostionY)
         {
             Time.timeScale = 1.0f;
             fishing.GetComponent<Fishing>().MoveToMainMenuScreen();
         }
 
-        fishingBtn.ReduceBtnSizeAndSetOff();
         gameObject.SetActive(false);
     }
 }

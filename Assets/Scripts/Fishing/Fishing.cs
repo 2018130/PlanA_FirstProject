@@ -27,7 +27,7 @@ public class Fishing : MonoBehaviour
 
     private void Update()
     {
-        if(fishingSucessCount == maxFishingSucessCount)
+        if(fishingSucessCount == maxFishingSucessCount && !questionUseHealthPanel.activeSelf)
         {
             EndOfOneRound();
             return;
