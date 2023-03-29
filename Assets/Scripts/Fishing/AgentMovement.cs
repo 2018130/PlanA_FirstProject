@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Spine.Unity;
 
 public class AgentMovement : MonoBehaviour
 {
@@ -29,15 +30,30 @@ public class AgentMovement : MonoBehaviour
     private int boundaryX = 0;
     private int boundaryY = 0;
 
+    FishData fishData = new FishData();
+    SkeletonAnimation skeletonAnimation;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        skeletonAnimation = GetComponent<SkeletonAnimation>();
     }
 
     private void Start()
     {
+        FishData baseFishData = FishDataBundle.GetRandomFishData();
+        if (baseFishData != null)
+        {
+            fishData.InitFishData(baseFishData);
+        }
+
+        skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetImagePath());
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        skeletonAnimation.loop = true;
+        skeletonAnimation.AnimationName = "animation";
         StartCoroutine("SetDest");
     }
 
@@ -76,7 +92,7 @@ public class AgentMovement : MonoBehaviour
                 ranStart2Y = Random.Range(boundrayYMin, boundrayYMax);
                 fishNext2P = fishNext2Point;
                 fishNext2P.y += (ranStart2Y * 0.1f);
-                GetComponent<SpriteRenderer>().flipX = true;
+                GetComponent<SkeletonAnimation>().skeleton.FlipX = true;
                 agent.SetDestination(fishNext2P);
             }
             else if (Vector3.Distance(GetPos(), fishNext1Pos) < 1f)
@@ -91,7 +107,7 @@ public class AgentMovement : MonoBehaviour
             {
                 ranEnd2Y = Random.Range(boundrayYMin, boundrayYMax);
                 fishEndV = fishEndPoint;
-                fishEndV.y += (ranEnd2Y* 0.1f);
+                fishEndV.y += (ranEnd2Y * 0.1f);
                 agent.SetDestination(fishEndV);
             }
             else if (Vector3.Distance(GetPos(), fishNext2P) < 1f)
@@ -116,18 +132,17 @@ public class AgentMovement : MonoBehaviour
 
     public void SetBoundary(int _x, int _y, Vector3 _spawnPos, Vector3 _fishNext1Point, Vector3 _fishNext2Point, Vector3 _fishEndPoint)
     {
-       boundaryX = _x;
-       boundaryY = _y;
-       spawnPos = _spawnPos;
-       fishNext1Point = _fishNext1Point;
-       fishNext2Point = _fishNext2Point;
-       fishEndPoint = _fishEndPoint;
+        boundaryX = _x;
+        boundaryY = _y;
+        spawnPos = _spawnPos;
+        fishNext1Point = _fishNext1Point;
+        fishNext2Point = _fishNext2Point;
+        fishEndPoint = _fishEndPoint;
     }
 
     public void SetSpawner(FishSpawner _fishSpawner)
     {
         fishSp = _fishSpawner;
     }
-
 
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Spine.Unity;
 
 public class FishSpawner : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class FishSpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(fishInterval);
-            fishIdx = Random.Range(0, 3);
+            fishIdx = Random.Range(0, fishPrefab.Length);
 
             ranStart1Y = Random.Range(boundrayYMin, boundrayYMax);
             fishStartPos.y = (ranStart1Y * 0.1f );
@@ -60,7 +61,6 @@ public class FishSpawner : MonoBehaviour
                     transform.position, fishNext1PointTr.position, fishNext2PointTr.position, fishEndPointTr.position);
                 newFish.transform.position = fishStartPos;
                 newFish.transform.SetParent(this.transform, false);
-                newFish.GetComponent<SpriteRenderer>().flipX = false;
                 if (i >= limitFish) i = 0;
             }
 

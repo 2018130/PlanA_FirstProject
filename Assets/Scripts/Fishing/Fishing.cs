@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Spine.Unity;
 
 public class Fishing : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class Fishing : MonoBehaviour
     [SerializeField]
     GameObject rod;
 
+    [SerializeField]
+    GameObject catchFishEffectPrefab;
+
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
     int fishingSucessCount = 0;
@@ -31,11 +35,6 @@ public class Fishing : MonoBehaviour
         {
             EndOfOneRound();
             return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CatchFish(null);
         }
     }
 
@@ -83,12 +82,17 @@ public class Fishing : MonoBehaviour
     }
 
     
-    public void CatchFish(FishData fishData)
+    public void CatchFish(AgentMovement catchedFish)
     {
         //임시 코드입니다 추후 fishData에서 데이터를 읽어와야 합니다.
         fishingSucessCount++;
 
         questProgressPercent += 0.1f;
-        questProgressPanel.GetComponent<QuestProgress>().SetPercent(questProgressPercent);
+        
+        Time.timeScale = 0;
+        Texture2D texture = (Texture2D)catchedFish.gameObject.GetComponent<Material>().mainTexture;
+        GameObject catchFishEffect = Instantiate(catchFishEffectPrefab);
+        catchFishEffectPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite =
+            Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 }

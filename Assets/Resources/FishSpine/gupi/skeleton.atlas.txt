@@ -1,0 +1,22 @@
+skeleton.png
+size:1820,164
+filter:Linear,Linear
+pma:true
+Gupi_Skin Black/Gupi
+bounds:2,2,301,160
+offsets:97,164,512,512
+Gupi_Skin Blue/Gupi
+bounds:305,2,301,160
+offsets:97,164,512,512
+Gupi_Skin Orange/Gupi
+bounds:608,2,301,160
+offsets:97,164,512,512
+Gupi_Skin Red/Gupi
+bounds:911,2,301,160
+offsets:97,164,512,512
+Gupi_Skin White/Gupi
+bounds:1214,2,301,160
+offsets:97,164,512,512
+Gupi_Skin Yellow/Gupi
+bounds:1517,2,301,160
+offsets:97,164,512,512

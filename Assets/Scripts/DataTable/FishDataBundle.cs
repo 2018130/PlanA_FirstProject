@@ -20,6 +20,7 @@ public class FishData
     private int speed = 0;
     private int productCount = 0;
     private string information = "";
+    private string imagePath = "";
     private List<Habitat> habitats = new List<Habitat>();
 
     public void InitFishData(Dictionary<string, object> dictionaryFishData)
@@ -30,6 +31,7 @@ public class FishData
         speed = int.Parse(dictionaryFishData["Speed"].ToString());
         productCount = int.Parse(dictionaryFishData["ProductCount"].ToString());
         information = dictionaryFishData["Information"].ToString();
+        imagePath = dictionaryFishData["ImagePath"].ToString();
 
         //서식지가 2개 있는경우 ""내 , 로 따로 구분 되어 있어 작업 추가
         habitats.Clear();
@@ -46,21 +48,42 @@ public class FishData
         }
     }
 
+    public void InitFishData(FishData baseFishData)
+    {
+        id = baseFishData.id;
+        fishName = baseFishData.fishName;
+        lv = baseFishData.lv;
+        speed = baseFishData.speed;
+        productCount = baseFishData.productCount;
+        information = baseFishData.information;
+        imagePath = baseFishData.imagePath;
+        
+        for(int i = 0; i < baseFishData.habitats.Count; i++)
+        {
+            habitats.Add(baseFishData.habitats[i]);
+        }
+    }
+
     //디버깅용
     public void PrintFishDataVar()
     {
-        Debug.Log(id + " " + fishName + " " + lv + " " + speed + " " + productCount + " " + information);
+        Debug.Log(id + " " + fishName + " " + lv + " " + speed + " " + productCount + " " + information + " " + imagePath);
         for(int i = 0; i < habitats.Count; i++)
         {
             Debug.Log(habitats[i]);
         }
+    }
+
+    public string GetImagePath()
+    {
+        return imagePath;
     }
 }
 
 public class FishDataBundle : MonoBehaviour
 {
     //물고기의 id를 키값으로 하고 FishData형식의 밸류값를 갖는 Dictionary
-    Dictionary<int, FishData> fishDatas = new Dictionary<int, FishData>();
+    static Dictionary<int, FishData> fishDatas = new Dictionary<int, FishData>();
 
     private void Start()
     {
@@ -106,5 +129,32 @@ public class FishDataBundle : MonoBehaviour
         }
 
         return false;
+    }
+
+    public FishData CopyFishData(int id)
+    {
+        FishData fishData = new FishData();
+        if (fishDatas.ContainsKey(id))
+        {
+            fishData.InitFishData(fishDatas[id]);
+
+            return fishData;
+        }
+
+        return null;
+    }
+
+    //각 물고기의 id가 순차적이어야함
+    //1회 랜덤값 추출 후 해당 id에 대응되는 fishData의 id가 없을경우 null 반환
+    public static FishData GetRandomFishData()
+    {
+        //추후 수정해야함 아래 랜덤하게 수를 뽑는 과정에서 이미지의 개수와 매칭함
+        int randId = Random.Range(1, 14);
+        if (fishDatas.ContainsKey(randId))
+        {
+            return fishDatas[randId];
+        }
+
+        return null;
     }
 }

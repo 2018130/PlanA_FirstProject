@@ -1,0 +1,18 @@
+물고기 에니메이션.png
+size:632,104
+filter:Linear,Linear
+pma:true
+Body
+bounds:2,6,361,96
+Down Fin1
+bounds:443,2,68,51
+offsets:1,1,70,53
+Down Fin2
+bounds:365,6,76,47
+offsets:0,0,76,48
+Tail Fin
+bounds:556,16,86,74
+offsets:0,0,87,76
+rotate:90
+Upper Fin
+bounds:365,55,189,47

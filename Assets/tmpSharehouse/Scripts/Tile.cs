@@ -18,6 +18,7 @@ public class Tile : MonoBehaviour
     public int f, g, h;
     public bool isClosed;
 
+    public Tile preTile;
     public Tile postTile;
 
     private void Awake()
@@ -50,16 +51,17 @@ public class Tile : MonoBehaviour
     {
         f = -1; g = 0; h = 0;
         isClosed = false;
+        preTile = this;
         postTile = this;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (postTile != null && postTile != this)
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
+            //Debug.Log(gameObject);
             transform.parent.parent.GetComponent<TileBundle>().playerPos = new Vector2Int(tilePosX, tilePosY);
             transform.parent.parent.GetComponent<TileBundle>().haveToWalkTile = new Vector2Int(postTile.tilePosX, postTile.tilePosY);
-            Debug.Log("tile pos : " + tilePosX + ", " + tilePosY + "   post pos : " + postTile.tilePosX + ", " + postTile.tilePosY);
         }
     }
 }

@@ -12,7 +12,11 @@ public class HookCaptureController : MonoBehaviour
         {
             Debug.Log($"{_collision}를 잡았다!");
             _collision.gameObject.SetActive(false);
-            fishing.CatchFish(null);
+            AgentMovement agentMovement = _collision.gameObject.GetComponent<AgentMovement>();
+            if(agentMovement != null)
+            {
+                fishing.CatchFish(agentMovement);
+            }
         }
     }
 }

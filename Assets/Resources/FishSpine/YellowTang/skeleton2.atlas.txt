@@ -1,0 +1,11 @@
+skeleton2.png
+size:375,282
+filter:Linear,Linear
+pma:true
+제목_없는_아트워크-1 3
+bounds:2,2,328,278
+offsets:71,119,512,512
+제목_없는_아트워크-2 3
+bounds:332,206,74,41
+offsets:164,182,512,512
+rotate:90

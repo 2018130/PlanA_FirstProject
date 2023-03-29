@@ -3949,6 +3949,7 @@ GameObject:
   - component: {fileID: 985778490}
   - component: {fileID: 985778489}
   - component: {fileID: 985778488}
+  - component: {fileID: 985778491}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -4064,6 +4065,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &985778491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985778486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53bd218c470a8643acad11f6f8d16a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twinkleStarPrefab: {fileID: 397492007201946640, guid: fd2c15c1c42d0794ab1608f9d24a18e9, type: 3}
+  shootingStarPrefab: {fileID: 2822019465821597697, guid: 57e32f3051d895d4682fd6ad08c6be9f, type: 3}
 --- !u!1 &1013478080
 GameObject:
   m_ObjectHideFlags: 0
@@ -6300,6 +6315,7 @@ GameObject:
   - component: {fileID: 1888373955}
   - component: {fileID: 1888373954}
   - component: {fileID: 1888373953}
+  - component: {fileID: 1888373956}
   m_Layer: 5
   m_Name: SharehouseBtn
   m_TagString: Untagged
@@ -6370,7 +6386,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1888373954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1888373956}
+        m_TargetAssemblyTypeName: GoToSharehouse, Assembly-CSharp
+        m_MethodName: OpenSharehouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1888373954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6409,6 +6437,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888373951}
   m_CullTransparentMesh: 1
+--- !u!114 &1888373956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888373951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5781cff80a72a854e9344f24714cb26b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1888597038
 GameObject:
   m_ObjectHideFlags: 0
@@ -8360,6 +8400,7 @@ MonoBehaviour:
   moveToGameSceneBtn: {fileID: 37850099}
   questionUseHealthPanel: {fileID: 193387965}
   rod: {fileID: 0}
+  catchFishEffectPrefab: {fileID: 4159844987788417078, guid: aa9b2055bf027bc46aecde7bc6e4c396, type: 3}
 --- !u!4 &5947921311759977053
 Transform:
   m_ObjectHideFlags: 0
@@ -8710,9 +8751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab:
-  - {fileID: 2610916903965179033, guid: 94d9fa86b78bde14a976819772909758, type: 3}
-  - {fileID: 6342235933491417415, guid: 5e5e806741d80154f997ca0637da560d, type: 3}
-  - {fileID: 6174490838122734144, guid: f31cc1482894e1743965eea08e348570, type: 3}
+  - {fileID: 6174490838122734144, guid: 574b22522bbea1f47a7dd805c81f27ec, type: 3}
   fishInterval: 1.5
   moveField: {fileID: 5947921311756842935}
   fishNext1PointTr: {fileID: 5947921311488375567}

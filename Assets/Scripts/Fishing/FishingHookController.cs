@@ -42,7 +42,7 @@ public class FishingHookController : MonoBehaviour
             if (-26f < destPos.y || destPos.y < -33.5f)
                 destPos = transform.position;
         }
-        #else
+#else
         //화면 터치시 마지막 터치 위치로 이동
         if (Input.touchCount != 0)
         {
@@ -56,9 +56,14 @@ public class FishingHookController : MonoBehaviour
                         !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
                 Touch touch = Input.GetTouch(0);
-                destPos = playerController.ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
-            }
+                Vector3 touchedPos = playerController.ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
 
+                if (-26f < touchedPos.y || touchedPos.y < -33.5f)
+                {
+                    destPos = touchedPos;
+                }
+
+            }
         }
 #endif
         if (Vector3.Distance(destPos, transform.position) >= 0.3f)
@@ -67,14 +72,9 @@ public class FishingHookController : MonoBehaviour
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
         }
 
-
-
         lr.SetPosition(0, fishingHook.position);
         lr.SetPosition(1, GetPos());
         lr.SetPosition(2, fishingLine.position);
-
-
-
     }
 
     public void MoveDefault()
@@ -85,6 +85,5 @@ public class FishingHookController : MonoBehaviour
     {
         return transform.position;
     }
-
 
 }
