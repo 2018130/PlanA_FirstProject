@@ -88,11 +88,11 @@ public class Fishing : MonoBehaviour
         fishingSucessCount++;
 
         questProgressPercent += 0.1f;
-        
+        /*
         Time.timeScale = 0;
-        Texture2D texture = (Texture2D)catchedFish.gameObject.GetComponent<Material>().mainTexture;
         GameObject catchFishEffect = Instantiate(catchFishEffectPrefab);
+        Debug.Log(Resources.Load<Sprite>(catchedFish.GetFishData().GetSpritePath()));
         catchFishEffectPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite =
-            Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            Resources.Load<Sprite>(catchedFish.GetFishData().GetSpritePath());*/
     }
 }

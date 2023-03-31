@@ -20,7 +20,8 @@ public class FishData
     private int speed = 0;
     private int productCount = 0;
     private string information = "";
-    private string imagePath = "";
+    private string spinePath = "";
+    private string spritePath = "";
     private List<Habitat> habitats = new List<Habitat>();
 
     public void InitFishData(Dictionary<string, object> dictionaryFishData)
@@ -31,7 +32,8 @@ public class FishData
         speed = int.Parse(dictionaryFishData["Speed"].ToString());
         productCount = int.Parse(dictionaryFishData["ProductCount"].ToString());
         information = dictionaryFishData["Information"].ToString();
-        imagePath = dictionaryFishData["ImagePath"].ToString();
+        spinePath = dictionaryFishData["SpinePath"].ToString();
+        spritePath = dictionaryFishData["SpritePath"].ToString();
 
         //서식지가 2개 있는경우 ""내 , 로 따로 구분 되어 있어 작업 추가
         habitats.Clear();
@@ -56,9 +58,10 @@ public class FishData
         speed = baseFishData.speed;
         productCount = baseFishData.productCount;
         information = baseFishData.information;
-        imagePath = baseFishData.imagePath;
-        
-        for(int i = 0; i < baseFishData.habitats.Count; i++)
+        spinePath = baseFishData.spinePath;
+        spritePath = baseFishData.spritePath;
+
+        for (int i = 0; i < baseFishData.habitats.Count; i++)
         {
             habitats.Add(baseFishData.habitats[i]);
         }
@@ -67,16 +70,20 @@ public class FishData
     //디버깅용
     public void PrintFishDataVar()
     {
-        Debug.Log(id + " " + fishName + " " + lv + " " + speed + " " + productCount + " " + information + " " + imagePath);
+        Debug.Log(id + " " + fishName + " " + lv + " " + speed + " " + productCount + " " + information + " " + spinePath + " " + spritePath);
         for(int i = 0; i < habitats.Count; i++)
         {
             Debug.Log(habitats[i]);
         }
     }
 
-    public string GetImagePath()
+    public string GetSpinePath()
     {
-        return imagePath;
+        return spinePath;
+    }
+    public string GetSpritePath()
+    {
+        return spritePath;
     }
 }
 

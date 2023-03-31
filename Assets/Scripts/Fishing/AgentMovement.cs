@@ -50,7 +50,7 @@ public class AgentMovement : MonoBehaviour
             fishData.InitFishData(baseFishData);
         }
 
-        skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetImagePath());
+        skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetSpinePath());
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         skeletonAnimation.loop = true;
         skeletonAnimation.AnimationName = "animation";
@@ -144,5 +144,9 @@ public class AgentMovement : MonoBehaviour
     {
         fishSp = _fishSpawner;
     }
-
+    
+    public FishData GetFishData()
+    {
+        return fishData;
+    }
 }

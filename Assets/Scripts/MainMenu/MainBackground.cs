@@ -14,7 +14,7 @@ public class MainBackground : MonoBehaviour
     float shootingStarMinSpawnPosY = 6f;
     float shootingStarMaxSpawnPosY = 10f;
     float shootingStarMinSpawnPosX = 0f;
-    float shootingStarMaxSpawnPosX = 5f;
+    float shootingStarMaxSpawnPosX = 10f;
 
     float twinkleStarTimer = 1.5f;
     float twinkleStarSpawnTime = 4f;

@@ -58,7 +58,7 @@ public class FishingHookController : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 Vector3 touchedPos = playerController.ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
 
-                if (-26f < touchedPos.y || touchedPos.y < -33.5f)
+                if (-26f > touchedPos.y && touchedPos.y > -33.5f)
                 {
                     destPos = touchedPos;
                 }
