@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     const int maxHealth = 10;
     int health;
     float lastHealthRecoverTime = 0f;
-    float healthRecoverTimeForSecond = 10f;
+    float healthRecoverTimeForSecond = 600f;
     public int Health
     {
         get { return health; }
@@ -136,68 +136,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //입력 없을 때 랜덤 애니메이션 재생
-        if(Time.time - lastTouchedTime >= animationLatency)
+        if (Time.time - lastTouchedTime >= animationLatency)
         {
             PlayRandomAnimation();
         }
 
         //특정 시간 이후 체력 자동 회복 
-        if(Health < maxHealth && Time.time - lastHealthRecoverTime >= healthRecoverTimeForSecond)
+        if (Health < maxHealth && Time.time - lastHealthRecoverTime >= healthRecoverTimeForSecond)
         {
             ++Health;
             lastHealthRecoverTime = Time.time;
-        }
-
-        //체력, 미끼, 코인 수 키트키
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Health++;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Bait++;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Coin += 1000000;
-        }
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            --Health;
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            --Bait;
-        }
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            Coin -= 1000000;
-        }
-
-        //에니메이션 동작 키트키
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SetAnimation("Action1");
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            SetAnimation("Action2");
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SetAnimation("Action3");
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SetAnimation("Fishing");
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            SetAnimation("Idle");
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            SetAnimation("Sleep");
         }
     }
 
@@ -260,6 +208,7 @@ public class PlayerController : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("Health"))
         {
+            Debug.Log("1111");
             Health = maxHealth;
             Bait = maxBait;
             Coin = 0;
@@ -284,5 +233,12 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetInt("Bait", Bait);
         PlayerPrefs.SetInt("Coin", Coin);
         PlayerPrefs.SetFloat("lastHealthRecoverTime", lastHealthRecoverTime);
+    }
+
+    public void IncreaseHBC()
+    {
+        Health++;
+        Bait++;
+        Coin++;
     }
 }
