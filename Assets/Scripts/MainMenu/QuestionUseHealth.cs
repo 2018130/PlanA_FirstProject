@@ -25,7 +25,6 @@ public class QuestionUseHealth : MonoBehaviour
         gameObject.SetActive(false);
         toMainMenuBtn.SetActive(true);
         fishing.SetActive(true);
-        player.gameObject.SetActive(false);
 
         Camera.main.GetComponent<MainCamera>().MoveToGameScreen();
     }

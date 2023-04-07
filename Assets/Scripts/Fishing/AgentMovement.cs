@@ -48,12 +48,16 @@ public class AgentMovement : MonoBehaviour
         if (baseFishData != null)
         {
             fishData.InitFishData(baseFishData);
+            agent.speed = fishData.GetSpeed();
         }
 
         skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetSpinePath());
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         skeletonAnimation.loop = true;
-        skeletonAnimation.AnimationName = "animation";
+        Spine.Animation[] animations = skeletonAnimation.skeletonDataAsset.GetSkeletonData(false).Animations.Items;
+        int animationIndex = Random.Range(0, animations.Length);
+        skeletonAnimation.AnimationName = animations[animationIndex].ToString();
+
         StartCoroutine("SetDest");
     }
 

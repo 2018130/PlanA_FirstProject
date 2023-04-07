@@ -10,18 +10,18 @@ public class MainBackground : MonoBehaviour
     GameObject shootingStarPrefab;
 
     float shootingStarTimer = 0f;
-    float shootingStarSpawnTime = 3f;
+    float shootingStarSpawnTime = 5f;
     float shootingStarMinSpawnPosY = 6f;
     float shootingStarMaxSpawnPosY = 10f;
-    float shootingStarMinSpawnPosX = 0f;
-    float shootingStarMaxSpawnPosX = 10f;
+    float shootingStarMinSpawnPosX = 5f;
+    float shootingStarMaxSpawnPosX = 13f;
 
     float twinkleStarTimer = 1.5f;
     float twinkleStarSpawnTime = 4f;
     float twinkleStarMinSpawnPosY = 2f;
     float twinkleStarMaxSpawnPosY = 10f;
-    float twinkleStarMinSpawnPosX = -6f;
-    float twinkleStarMaxSpawnPosX = 10f;
+    float twinkleStarMinSpawnPosX = -5f;
+    float twinkleStarMaxSpawnPosX = 8f;
 
     private void Update()
     {
@@ -32,7 +32,9 @@ public class MainBackground : MonoBehaviour
         {
             GameObject shootingStar = Instantiate(shootingStarPrefab,
                 new Vector3(Random.Range(shootingStarMinSpawnPosX, shootingStarMaxSpawnPosX), Random.Range(shootingStarMinSpawnPosY, shootingStarMaxSpawnPosY), 0), Quaternion.identity);
+            float shootingStarRotZ = -25f;
 
+            shootingStar.transform.Rotate(new Vector3(0, 0, shootingStarRotZ));
             shootingStarTimer = 0;
         }
 

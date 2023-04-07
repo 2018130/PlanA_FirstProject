@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     const int maxHealth = 10;
     int health;
+    float lastHealthRecoverTime = 0f;
+    float healthRecoverTimeForSecond = 10f;
     public int Health
     {
         get { return health; }
@@ -63,7 +65,6 @@ public class PlayerController : MonoBehaviour
     }
     const int maxCoin = 9999999;
     int coin;
-
     public int Coin
     {
         get { return coin; }
@@ -91,10 +92,13 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        Health = maxHealth;
-        Bait = maxBait;
-        Coin = 0;
-        lastTouchedTime = 0f;
+        InitializePlayerInfoFromPlayerPrefs();
+        int recoverHealthSize = (int)((int)(Time.time - lastHealthRecoverTime) / healthRecoverTimeForSecond);
+        if(recoverHealthSize + Health >= maxHealth)
+        {
+            Health = maxHealth;
+            lastHealthRecoverTime = Time.time;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -135,6 +139,13 @@ public class PlayerController : MonoBehaviour
         if(Time.time - lastTouchedTime >= animationLatency)
         {
             PlayRandomAnimation();
+        }
+
+        //특정 시간 이후 체력 자동 회복 
+        if(Health < maxHealth && Time.time - lastHealthRecoverTime >= healthRecoverTimeForSecond)
+        {
+            ++Health;
+            lastHealthRecoverTime = Time.time;
         }
 
         //체력, 미끼, 코인 수 키트키
@@ -241,5 +252,37 @@ public class PlayerController : MonoBehaviour
         gameObject.SetActive(true);
         //transform.position = Vector3.zero;
         SetAnimation("Action1");
+    }
+
+    private void InitializePlayerInfoFromPlayerPrefs()
+    {
+        lastTouchedTime = 0f;
+
+        if (!PlayerPrefs.HasKey("Health"))
+        {
+            Health = maxHealth;
+            Bait = maxBait;
+            Coin = 0;
+            lastHealthRecoverTime = 0f;
+            PlayerPrefs.SetInt("Health", Health);
+            PlayerPrefs.SetInt("Bait", Bait);
+            PlayerPrefs.SetInt("Coin", Coin);
+            PlayerPrefs.SetFloat("lastHealthRecoverTime", lastHealthRecoverTime);
+        }
+        else
+        {
+            Health = PlayerPrefs.GetInt("Health");
+            Bait = PlayerPrefs.GetInt("Bait");
+            Coin = PlayerPrefs.GetInt("Coin");
+            lastHealthRecoverTime = PlayerPrefs.GetFloat("lastHealthRecoverTime");
+        }
+    }
+
+    public void SavePlayerInfoToPlayerPrefs()
+    {
+        PlayerPrefs.SetInt("Health", Health);
+        PlayerPrefs.SetInt("Bait", Bait);
+        PlayerPrefs.SetInt("Coin", Coin);
+        PlayerPrefs.SetFloat("lastHealthRecoverTime", lastHealthRecoverTime);
     }
 }

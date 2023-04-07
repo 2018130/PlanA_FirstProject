@@ -17,7 +17,7 @@ public class FishData
     }
     private string fishName = "";
     private string lv = "";
-    private int speed = 0;
+    private float speed = 0;
     private int productCount = 0;
     private string information = "";
     private string spinePath = "";
@@ -29,7 +29,7 @@ public class FishData
         id = int.Parse(dictionaryFishData["Id"].ToString());
         fishName = dictionaryFishData["Name"].ToString();
         lv = dictionaryFishData["Lv"].ToString();
-        speed = int.Parse(dictionaryFishData["Speed"].ToString());
+        speed = float.Parse(dictionaryFishData["Speed"].ToString());
         productCount = int.Parse(dictionaryFishData["ProductCount"].ToString());
         information = dictionaryFishData["Information"].ToString();
         spinePath = dictionaryFishData["SpinePath"].ToString();
@@ -84,6 +84,11 @@ public class FishData
     public string GetSpritePath()
     {
         return spritePath;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
     }
 }
 
@@ -156,7 +161,7 @@ public class FishDataBundle : MonoBehaviour
     public static FishData GetRandomFishData()
     {
         //추후 수정해야함 아래 랜덤하게 수를 뽑는 과정에서 이미지의 개수와 매칭함
-        int randId = Random.Range(1, 14);
+        int randId = Random.Range(1, 13);
         if (fishDatas.ContainsKey(randId))
         {
             return fishDatas[randId];

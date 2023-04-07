@@ -3,7 +3,7 @@ Id,Name,Lv,Speed,ProductCount,Information,Habitat,SpinePath,SpritePath
 2,연골어강1,S,2,1,연골어강에 속하는 물고기로 딱딱한 뼈 대신에 질긴 피부와 가벼운 물렁뼈를 가지고 있다.,바다,FishSpine/gupi/skeleton_SkeletonData,FishSpine/gupi/skeleton
 3,연골어강2,S,3,1,(프로토 타입이므로 비워둡니다. 연골어강1과 내용 동일),바다,FishSpine/Hairtail/skeleton_SkeletonData,FishSpine/Hairtail/skeleton
 4,연골어강3,S,4,1,〃,바다,FishSpine/Heckel/skeleton_SkeletonData,FishSpine/Heckel/skeleton
-5,심해어1,A,-1,1,수심 200m보다 깊은 해역에 사는 생물이다. 독특한 생김새를 한 친구가 많다.,바다,FishSpine/JellyFish/skeleton_SkeletonData,FishSpine/JellyFish/skeleton
+5,심해어1,A,0.5,1,수심 200m보다 깊은 해역에 사는 생물이다. 독특한 생김새를 한 친구가 많다.,바다,FishSpine/JellyFish/skeleton_SkeletonData,FishSpine/JellyFish/skeleton
 6,심해어2,A,2,1,〃,바다,FishSpine/krill/skeleton_SkeletonData,FishSpine/krill/skeleton
 7,심해어3,A,2,1,〃,바다,FishSpine/MolaMola/skeleton_SkeletonData,FishSpine/MolaMola/skeleton
 8,관상어1,B,2,1,아름다운 모습을 한 친구가 많다. 뷰티풀!,바다,FishSpine/PlasticBag/skeleton_SkeletonData,FishSpine/PlasticBag/skeleton
