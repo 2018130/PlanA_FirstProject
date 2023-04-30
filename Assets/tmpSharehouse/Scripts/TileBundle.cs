@@ -27,6 +27,8 @@ public class TileBundle : MonoBehaviour
     [SerializeField]
     ETouchType eTouchType = ETouchType.Move;
 
+    bool isEndOfTileSync = false;
+
     private void Awake()
     {
         tiles = new GameObject[transform.childCount][];
@@ -47,7 +49,7 @@ public class TileBundle : MonoBehaviour
         }
 
         //플레이어 시작위치 바뀌면 해당 좌표 수정해 주어야함
-        playerPos = new Vector2Int(0, 0);
+        playerPos = new Vector2Int(3, 29);
         haveToWalkTile = playerPos;
     }
 
@@ -76,7 +78,7 @@ public class TileBundle : MonoBehaviour
             }
         }
 
-        if (playerPos != haveToWalkTile)
+        if (isEndOfTileSync && playerPos != haveToWalkTile)
         {
             player.transform.position = Vector3.MoveTowards(player.transform.position,
                 tiles[haveToWalkTile.y][haveToWalkTile.x].transform.position, Time.deltaTime * speed);
@@ -96,10 +98,14 @@ public class TileBundle : MonoBehaviour
 
     IEnumerator C_AStar(Vector2Int curIdx, Vector2Int targetIdx)
     {
-        yield return new WaitForSeconds(0.1f);
-
+        isEndOfTileSync = false;
         AStar(curIdx, targetIdx);
+
+        yield return new WaitForSeconds(0.3f);
+
+        isEndOfTileSync = true;
     }
+
     public void AStar(Vector2Int curIdx, Vector2Int targetIdx)
     {
         //데이터는 x, y값이 ','로 구분되어 저장
@@ -191,30 +197,14 @@ public class TileBundle : MonoBehaviour
 
     Tile FindClickedTile()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D[] raycastHit2D = Physics2D.RaycastAll(ray.origin, ray.direction * 20);
-        Tile targetTile = null;
-        float distanceTileToTouch = float.MaxValue;
-        //Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 1.0f);
+        Vector2  touchPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(touchPoint, new Vector2(0.001f, 0), 1f, 1 << LayerMask.NameToLayer("Tile"));
 
-        for (int i = 0; i < raycastHit2D.Length; i++)
+        if(hit.collider != null)
         {
-            if (raycastHit2D[i].collider != null)
-            {
-                Tile tmpTile = raycastHit2D[i].collider.GetComponent<Tile>();
-                if (tmpTile != null)
-                {
-                    float tmpDistance = Vector2.Distance(tmpTile.transform.position, player.GetComponent<PlayerController>().ExchangeScreenPosToWorldPos(Input.mousePosition));
-                    if (distanceTileToTouch > tmpDistance)
-                    {
-                        targetTile = tmpTile;
-                        distanceTileToTouch = tmpDistance;
-                    }
-                }
-            }
+            return hit.collider.GetComponent<Tile>();
         }
-
-        return targetTile;
+        return null;
     }
 
     public void TouchTypeToMove()

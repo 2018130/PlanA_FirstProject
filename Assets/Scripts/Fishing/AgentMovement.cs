@@ -51,12 +51,7 @@ public class AgentMovement : MonoBehaviour
             agent.speed = fishData.GetSpeed();
         }
 
-        skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetSpinePath());
-        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        skeletonAnimation.loop = true;
-        Spine.Animation[] animations = skeletonAnimation.skeletonDataAsset.GetSkeletonData(false).Animations.Items;
-        int animationIndex = Random.Range(0, animations.Length);
-        skeletonAnimation.AnimationName = animations[animationIndex].ToString();
+        InitFishData();
 
         StartCoroutine("SetDest");
     }
@@ -152,5 +147,15 @@ public class AgentMovement : MonoBehaviour
     public FishData GetFishData()
     {
         return fishData;
+    }
+
+    void InitFishData()
+    {
+        skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetSpinePath());
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        skeletonAnimation.loop = true;
+        Spine.Animation[] animations = skeletonAnimation.skeletonDataAsset.GetSkeletonData(false).Animations.Items;
+        int animationIndex = Random.Range(0, animations.Length);
+        skeletonAnimation.AnimationName = animations[animationIndex].ToString();
     }
 }

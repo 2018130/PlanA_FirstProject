@@ -18,12 +18,11 @@ public class Fishing : MonoBehaviour
     FishingBtn moveToGameSceneBtn;
     [SerializeField]
     GameObject questionUseHealthPanel;
+    [SerializeField]
+    GameObject catchFishPanel;
 
     [SerializeField]
     GameObject rod;
-
-    [SerializeField]
-    GameObject catchFishEffectPrefab;
 
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
@@ -84,15 +83,12 @@ public class Fishing : MonoBehaviour
     
     public void CatchFish(AgentMovement catchedFish)
     {
-        //임시 코드입니다 추후 fishData에서 데이터를 읽어와야 합니다.
         fishingSucessCount++;
 
-        questProgressPercent += 0.1f;
-        /*
-        Time.timeScale = 0;
-        GameObject catchFishEffect = Instantiate(catchFishEffectPrefab);
-        Debug.Log(Resources.Load<Sprite>(catchedFish.GetFishData().GetSpritePath()));
-        catchFishEffectPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite =
-            Resources.Load<Sprite>(catchedFish.GetFishData().GetSpritePath());*/
+        CatchFish catchFish = catchFishPanel.GetComponent<CatchFish>();
+        if(catchedFish != null)
+        {
+            catchFish.ActiveToViewport(catchedFish);
+        }
     }
 }

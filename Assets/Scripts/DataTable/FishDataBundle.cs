@@ -77,6 +77,14 @@ public class FishData
         }
     }
 
+    public string GetName()
+    {
+        return fishName;
+    }
+    public string GetInformation()
+    {
+        return information;
+    }
     public string GetSpinePath()
     {
         return spinePath;

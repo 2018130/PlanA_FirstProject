@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
         //뒤로가기 누르면 앱 종료
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SavePlayerInfoToPlayerPrefs();
             Application.Quit();
         }
 
@@ -160,7 +161,6 @@ public class PlayerController : MonoBehaviour
             if (newAnimationName != "Fishing" && newAnimationName != "Sleep")
             {
                 SetAnimation(newAnimationName);
-                Debug.Log(newAnimationName);
                 lastTouchedTime = Time.time;
             }//랜덤으로 재생하는 애니메이션이 채택되지 않은 경우
             else
@@ -208,7 +208,6 @@ public class PlayerController : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("Health"))
         {
-            Debug.Log("1111");
             Health = maxHealth;
             Bait = maxBait;
             Coin = 0;

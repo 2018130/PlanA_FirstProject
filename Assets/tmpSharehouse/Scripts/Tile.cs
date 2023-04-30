@@ -11,7 +11,7 @@ public enum ETileType
 
 public class Tile : MonoBehaviour
 {
-    public ETileType eTileType;
+    public ETileType eTileType = ETileType.Unlock;
     public SpriteRenderer spriteRenderer;
     public int tilePosX = 0, tilePosY = 0;
 
@@ -23,9 +23,20 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        eTileType = ETileType.Unlock;
         spriteRenderer = GetComponent<SpriteRenderer>();
         ResetTile();
+    }
+
+    private void Start()
+    {
+        if (eTileType == ETileType.Lock)
+        {
+            LockTile();
+        }
+        else
+        {
+            eTileType = ETileType.Unlock;
+        }
     }
 
     //해당 타일 첫 방문 인경우
@@ -55,13 +66,36 @@ public class Tile : MonoBehaviour
         postTile = this;
     }
 
+    public void LockTile()
+    {
+        eTileType = ETileType.Lock;
+        spriteRenderer.color = new Color(1, 0, 0, 0.6f);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
             //Debug.Log(gameObject);
-            transform.parent.parent.GetComponent<TileBundle>().playerPos = new Vector2Int(tilePosX, tilePosY);
-            transform.parent.parent.GetComponent<TileBundle>().haveToWalkTile = new Vector2Int(postTile.tilePosX, postTile.tilePosY);
+            //transform.parent.parent.GetComponent<TileBundle>().playerPos = new Vector2Int(tilePosX, tilePosY);
+            //transform.parent.parent.GetComponent<TileBundle>().haveToWalkTile = new Vector2Int(postTile.tilePosX, postTile.tilePosY);
+        }else if(collision.tag == "Furniture")
+        {
+            LockTile();
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        {
+            if (Mathf.Approximately(collision.transform.position.x, transform.position.x) &&
+                Mathf.Approximately(collision.transform.position.x, transform.position.x))
+            {
+                Debug.Log(gameObject);
+                transform.parent.parent.GetComponent<TileBundle>().playerPos = new Vector2Int(tilePosX, tilePosY);
+                transform.parent.parent.GetComponent<TileBundle>().haveToWalkTile = new Vector2Int(postTile.tilePosX, postTile.tilePosY);
+            }
+            }
     }
 }
