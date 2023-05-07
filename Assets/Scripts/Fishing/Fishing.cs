@@ -20,17 +20,22 @@ public class Fishing : MonoBehaviour
     GameObject questionUseHealthPanel;
     [SerializeField]
     GameObject catchFishPanel;
+    HookCaptureController hookCaptureController;
 
     [SerializeField]
     GameObject rod;
 
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
-    int fishingSucessCount = 0;
+    int fishingSuccessCount = 0;
 
+    private void Awake()
+    {
+        hookCaptureController = transform.Find("FishingController").Find("FishingHook").gameObject.GetComponent<HookCaptureController>();
+    }
     private void Update()
     {
-        if(fishingSucessCount == maxFishingSucessCount && !questionUseHealthPanel.activeSelf)
+        if(fishingSuccessCount == maxFishingSucessCount && !questionUseHealthPanel.activeSelf)
         {
             EndOfOneRound();
             return;
@@ -75,7 +80,7 @@ public class Fishing : MonoBehaviour
     public void EndOfOneRound()
     {
         Time.timeScale = 0;
-        fishingSucessCount = 0;
+        fishingSuccessCount = 0;
         questProgressPercent = 0f;
         questionUseHealthPanel.GetComponent<QuestionUseHealth>().ActiveToViewport();
     }
@@ -83,11 +88,12 @@ public class Fishing : MonoBehaviour
     
     public void CatchFish(AgentMovement catchedFish)
     {
-        fishingSucessCount++;
+        fishingSuccessCount++;
 
         CatchFish catchFish = catchFishPanel.GetComponent<CatchFish>();
         if(catchedFish != null)
         {
+            hookCaptureController.SetTriggerBlocked(true);
             catchFish.ActiveToViewport(catchedFish);
         }
     }

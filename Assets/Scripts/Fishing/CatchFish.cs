@@ -6,6 +6,8 @@ using Spine.Unity;
 
 public class CatchFish : MonoBehaviour
 {
+    [SerializeField]
+    HookCaptureController hookCaptureController;
 
     private void Update()
     {
@@ -26,17 +28,16 @@ public class CatchFish : MonoBehaviour
             SkeletonAnimation skeletonAnimation = fishImage.GetComponent<SkeletonAnimation>();
             fishImage.GetComponent<MeshRenderer>().sortingOrder = 5;
             skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(catchedFish.GetFishData().GetSpinePath());
-            skeletonAnimation.AnimationName = "None";
+            skeletonAnimation.AnimationName = "<None>";
         }
 
         gameObject.SetActive(true);
-        //Time.timeScale = 0;
     }
 
     public void DeactiveToViewport()
     {
+        hookCaptureController.SetTriggerBlocked(false);
         gameObject.SetActive(false);
-        Time.timeScale = 1;
     }
 
 }
