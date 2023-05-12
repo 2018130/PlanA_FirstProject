@@ -49,7 +49,7 @@ public class TileBundle : MonoBehaviour
         }
 
         //플레이어 시작위치 바뀌면 해당 좌표 수정해 주어야함
-        playerPos = new Vector2Int(3, 29);
+        playerPos = new Vector2Int(2, 9);
         haveToWalkTile = playerPos;
     }
 
@@ -78,10 +78,16 @@ public class TileBundle : MonoBehaviour
             }
         }
 
+        //플레이어 다음 타일로 가야하는 경우
         if (isEndOfTileSync && playerPos != haveToWalkTile)
         {
             player.transform.position = Vector3.MoveTowards(player.transform.position,
                 tiles[haveToWalkTile.y][haveToWalkTile.x].transform.position, Time.deltaTime * speed);
+            player.GetComponent<PlayerController>().PlayWalkingAnimation(true);
+        }
+        else
+        {
+            player.GetComponent<PlayerController>().PlayWalkingAnimation(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

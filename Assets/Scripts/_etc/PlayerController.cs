@@ -5,11 +5,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
+public enum EScreenState
+{
+    main,
+    sharehouse,
+}
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     GameObject upperBar;
+
+    //쉐어하우스에서만 사용합니다.
+    Animator animator;
+
+    //쉐어하우스에서만 사용합니다.
+    Rigidbody2D rigidBody2d;
+
+    EScreenState eScreenState = EScreenState.main;
 
     Vector3 destinationPos = Vector3.zero;
     [SerializeField]
@@ -90,6 +104,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        rigidBody2d = GetComponent<Rigidbody2D>();
+    }
     private void Start()
     {
         InitializePlayerInfoFromPlayerPrefs();
@@ -98,6 +117,15 @@ public class PlayerController : MonoBehaviour
         {
             Health = maxHealth;
             lastHealthRecoverTime = Time.time;
+        }
+
+        if(SceneManager.GetActiveScene().name == "tmpSharehouse")
+        {
+            eScreenState = EScreenState.sharehouse;
+        }
+        else
+        {
+            eScreenState = EScreenState.main;
         }
     }
     // Update is called once per frame
@@ -129,15 +157,22 @@ public class PlayerController : MonoBehaviour
             destinationPos = ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
         }
 #endif
+        /*
         //플레이어 이동 코드
         if (false && Vector3.Distance(destinationPos, transform.position) >= 0.3f)
         {
             Vector3 dirVector = (destinationPos - transform.position).normalized;
             GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
+        }*/
+
+        //쉐어하우스에서 고양이 하품 치트키
+        if (eScreenState == EScreenState.sharehouse && Input.GetKeyDown(KeyCode.Y))
+        {
+            PlayYawnAnimation();
         }
 
-        //입력 없을 때 랜덤 애니메이션 재생
-        if (Time.time - lastTouchedTime >= animationLatency)
+        //메인 화면에서 입력 없을 때 랜덤 애니메이션 재생
+        if (eScreenState == EScreenState.main && Time.time - lastTouchedTime >= animationLatency)
         {
             PlayRandomAnimation();
         }
@@ -239,5 +274,28 @@ public class PlayerController : MonoBehaviour
         Health++;
         Bait++;
         Coin++;
+    }
+
+    //쉐어하우스 전용 함수 입니다.
+    public void PlayYawnAnimation()
+    {
+        if(animator != null)
+        {
+            animator.SetTrigger("Yawn");
+        }
+    }
+
+    //쉐어하우스 전용 함수 입니다.
+    public void PlayWalkingAnimation(bool state)
+    {
+        if (animator != null)
+        {
+            animator.SetBool("IsWalking", state);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SavePlayerInfoToPlayerPrefs();
     }
 }
