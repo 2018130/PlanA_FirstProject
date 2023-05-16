@@ -28,7 +28,8 @@ public class CatchFish : MonoBehaviour
             SkeletonAnimation skeletonAnimation = fishImage.GetComponent<SkeletonAnimation>();
             fishImage.GetComponent<MeshRenderer>().sortingOrder = 5;
             skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(catchedFish.GetFishData().GetSpinePath());
-            skeletonAnimation.AnimationName = "<None>";
+            skeletonAnimation.AnimationName = "";
+            skeletonAnimation.Initialize(true);
         }
 
         gameObject.SetActive(true);
