@@ -9,10 +9,9 @@ public class FishingBtn : MonoBehaviour
 
     [Space(10f)]
     [SerializeField]
-    GameObject player;
+    GameObject mainCat;
     [SerializeField]
     GameObject questionUseHealthPanel;
-    Button fishingBtn;
 
     [SerializeField]
     Sprite fishingBtnOnImage;
@@ -20,11 +19,6 @@ public class FishingBtn : MonoBehaviour
     Sprite fishingBtnOffImage;
     [SerializeField]
     Fishing fishing;
-
-    private void Awake()
-    {
-        fishingBtn = GetComponent<Button>();
-    }
 
     public void DisplayQuestionUseHealthPanel()
     {
@@ -36,7 +30,7 @@ public class FishingBtn : MonoBehaviour
         Image btnImage = GetComponent<Image>();
         if (btnImage.sprite.name.Contains("off"))
         {
-            player.GetComponent<PlayerController>().SetAnimation("Fishing");
+            mainCat.GetComponent<MainMenuCat>().SetAnimation("Fishing");
             GetComponent<Image>().sprite = fishingBtnOnImage;
             transform.localScale = transform.localScale * 1.2f;
             DisplayQuestionUseHealthPanel();

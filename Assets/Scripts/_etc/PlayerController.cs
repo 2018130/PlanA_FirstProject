@@ -17,20 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject upperBar;
 
-    //쉐어하우스에서만 사용합니다.
-    Animator animator;
-
-    //쉐어하우스에서만 사용합니다.
-    Rigidbody2D rigidBody2d;
-
-    EScreenState eScreenState = EScreenState.main;
-
     Vector3 destinationPos = Vector3.zero;
     [SerializeField]
     float speed = 5.0f;
-
-    float lastTouchedTime;
-    float animationLatency = 5.0f;
 
     const int maxHealth = 10;
     int health;
@@ -106,9 +95,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        rigidBody2d = GetComponent<Rigidbody2D>();
+        upperBar = transform.Find("UpperBar").gameObject;
     }
+
     private void Start()
     {
         InitializePlayerInfoFromPlayerPrefs();
@@ -118,106 +107,17 @@ public class PlayerController : MonoBehaviour
             Health = maxHealth;
             lastHealthRecoverTime = Time.time;
         }
-
-        if(SceneManager.GetActiveScene().name == "tmpSharehouse")
-        {
-            eScreenState = EScreenState.sharehouse;
-        }
-        else
-        {
-            eScreenState = EScreenState.main;
-        }
     }
+
     // Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR
-        /*
-        //마우스가 클릭된 위치로 플레이어의 위치를 이동시키는 코드 입니다.
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            lastTouchedTime = Time.time;
-            //원근투영, 정사영 둘다 가능
-            destinationPos = ExchangeScreenPosToWorldPos(Input.mousePosition);
-        }*/
-#else
-        //뒤로가기 누르면 앱 종료
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SavePlayerInfoToPlayerPrefs();
-            Application.Quit();
-        }
-
-        //화면 터치시 마지막 터치 위치로 이동
-        if(Input.touchCount != 0 &&
-            Input.GetTouch(0).phase == TouchPhase.Began && 
-            !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-        {
-            lastTouchedTime = Time.time;
-            destinationPos = ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
-        }
-#endif
-        /*
-        //플레이어 이동 코드
-        if (false && Vector3.Distance(destinationPos, transform.position) >= 0.3f)
-        {
-            Vector3 dirVector = (destinationPos - transform.position).normalized;
-            GetComponent<Rigidbody2D>().MovePosition(transform.position + dirVector * Time.deltaTime * speed);
-        }*/
-
-        //쉐어하우스에서 고양이 하품 치트키
-        if (eScreenState == EScreenState.sharehouse && Input.GetKeyDown(KeyCode.Y))
-        {
-            PlayYawnAnimation();
-        }
-
-        //메인 화면에서 입력 없을 때 랜덤 애니메이션 재생
-        if (eScreenState == EScreenState.main && Time.time - lastTouchedTime >= animationLatency)
-        {
-            PlayRandomAnimation();
-        }
-
         //특정 시간 이후 체력 자동 회복 
         if (Health < maxHealth && Time.time - lastHealthRecoverTime >= healthRecoverTimeForSecond)
         {
             ++Health;
             lastHealthRecoverTime = Time.time;
         }
-    }
-
-    private void PlayRandomAnimation()
-    {
-        SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
-
-        if (skeletonAnimation != null)
-        {
-            Array animationNames = skeletonAnimation.skeleton.Data.Animations.ToArray();
-            string newAnimationName = animationNames.GetValue(UnityEngine.Random.Range(0, animationNames.Length)).ToString();
-            if (newAnimationName != "Fishing" && newAnimationName != "Sleep")
-            {
-                SetAnimation(newAnimationName);
-                lastTouchedTime = Time.time;
-            }//랜덤으로 재생하는 애니메이션이 채택되지 않은 경우
-            else
-            {
-                lastTouchedTime = Time.time - animationLatency;
-            }
-        }
-    }
-
-    public float SetAnimation(string action)
-    {
-        SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
-
-        if (skeletonAnimation.skeleton.Data.FindAnimation(action) != null)
-        {
-            float duration = skeletonAnimation.skeleton.Data.FindAnimation(action).Duration;
-            skeletonAnimation.AnimationName = action;
-
-            return duration;
-        }
-
-        return 0;
     }
 
     public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
@@ -230,17 +130,8 @@ public class PlayerController : MonoBehaviour
         return ray.GetPoint(distance);
     }
 
-    public void ResetPlayer()
-    {
-        gameObject.SetActive(true);
-        //transform.position = Vector3.zero;
-        SetAnimation("Action1");
-    }
-
     private void InitializePlayerInfoFromPlayerPrefs()
     {
-        lastTouchedTime = 0f;
-
         if (!PlayerPrefs.HasKey("Health"))
         {
             Health = maxHealth;
@@ -276,25 +167,7 @@ public class PlayerController : MonoBehaviour
         Coin++;
     }
 
-    //쉐어하우스 전용 함수 입니다.
-    public void PlayYawnAnimation()
-    {
-        if(animator != null)
-        {
-            animator.SetTrigger("Yawn");
-        }
-    }
-
-    //쉐어하우스 전용 함수 입니다.
-    public void PlayWalkingAnimation(bool state)
-    {
-        if (animator != null)
-        {
-            animator.SetBool("IsWalking", state);
-        }
-    }
-
-    private void OnDestroy()
+    private void OnApplicationQuit()
     {
         SavePlayerInfoToPlayerPrefs();
     }

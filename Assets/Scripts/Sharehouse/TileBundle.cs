@@ -15,14 +15,13 @@ public class TileBundle : MonoBehaviour
 
     GameObject[][] tiles;
 
-    [SerializeField]
-    GameObject player;
+    GameObject shareHouseCat;
     [SerializeField]
     public Vector2Int playerPos;
     [SerializeField]
     public Vector2Int haveToWalkTile;
 
-    float speed = 10f;
+    float speed = 5f;
 
     [SerializeField]
     ETouchType eTouchType = ETouchType.Move;
@@ -31,6 +30,8 @@ public class TileBundle : MonoBehaviour
 
     private void Awake()
     {
+        shareHouseCat = FindObjectOfType<SharehouseCat>().gameObject;
+
         tiles = new GameObject[transform.childCount][];
 
         for (int i = 0; i < transform.childCount; i++)
@@ -49,14 +50,14 @@ public class TileBundle : MonoBehaviour
         }
 
         //플레이어 시작위치 바뀌면 해당 좌표 수정해 주어야함
-        playerPos = new Vector2Int(2, 9);
-        //playerPos = new Vector2Int(4, 27);
+        //playerPos = new Vector2Int(2, 9);
+        playerPos = new Vector2Int(4, 27);
         haveToWalkTile = playerPos;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && shareHouseCat.GetComponent<SharehouseCat>().GetOpenedPanelCount() == 0)
         {
             Tile targetTile = FindClickedTile();
 
@@ -64,17 +65,14 @@ public class TileBundle : MonoBehaviour
             {
                 if(eTouchType == ETouchType.Lock)
                 {
-                    targetTile.eTileType = ETileType.Lock;
-                    targetTile.spriteRenderer.color = new Color(1, 0, 0, 0.6f);
+                    targetTile.LockTile();
                 }else if(eTouchType == ETouchType.Move)
                 {
-                    targetTile.spriteRenderer.color = new Color(0, 0, 1, 0.6f);
                     ResetTiles();
                     StartCoroutine(C_AStar(playerPos, new Vector2Int(targetTile.tilePosX, targetTile.tilePosY)));
                 }else if(eTouchType == ETouchType.Unlock)
                 {
                     targetTile.eTileType = ETileType.Unlock;
-                    targetTile.spriteRenderer.color = new Color(1, 1, 1, 0.6f);
                 }
             }
         }
@@ -82,13 +80,13 @@ public class TileBundle : MonoBehaviour
         //플레이어 다음 타일로 가야하는 경우
         if (isEndOfTileSync && playerPos != haveToWalkTile)
         {
-            player.transform.position = Vector3.MoveTowards(player.transform.position,
+            shareHouseCat.transform.position = Vector3.MoveTowards(shareHouseCat.transform.position,
                 tiles[haveToWalkTile.y][haveToWalkTile.x].transform.position, Time.deltaTime * speed);
-            player.GetComponent<PlayerController>().PlayWalkingAnimation(true);
+            shareHouseCat.GetComponent<SharehouseCat>().PlayWalkingAnimation(true);
         }
         else
         {
-            player.GetComponent<PlayerController>().PlayWalkingAnimation(false);
+            shareHouseCat.GetComponent<SharehouseCat>().PlayWalkingAnimation(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -97,7 +95,7 @@ public class TileBundle : MonoBehaviour
             {
                 for (int j = 0; j < tiles[i].Length; j++)
                 {
-                    Debug.Log(tiles[i][j].GetComponent<Tile>() + " next : " + tiles[i][j].GetComponent<Tile>().postTile);
+                    Debug.Log((j + 1) + ", " + (i + 1)  + " next : " + tiles[i][j].GetComponent<Tile>().postTile);
                 }
             }
         }
@@ -145,6 +143,7 @@ public class TileBundle : MonoBehaviour
                 return;
             }
 
+            int preF = 0;
             for (int i = 0; i < 4; i++)
             {
                 int nextPosX = posX + dx[i], nextPosY = posY + dy[i];
@@ -158,15 +157,17 @@ public class TileBundle : MonoBehaviour
                 if (nextTile.f == -1)
                 {
                     nextTile.SetF(curTile.g + tileMoveWeight, DistanceTo(new Vector2Int(nextPosX, nextPosY), targetIdx));
+                    nextTile.preTile = curTile;
                 }
                 else
                 {
+                    preF = nextTile.f;
                     nextTile.SetF(curTile.g + tileMoveWeight);
                 }
 
-                //Debug.Log("insert queue : " + nextPosX + ", " + nextPosY + " weight : " + nextTile.f + " next h : " + nextTile.h);
                 priorityQueue.Insert(nextPosX.ToString() + "," + nextPosY.ToString(), nextTile.f);
-                nextTile.preTile = curTile;
+                if (preF != nextTile.f)
+                    nextTile.preTile = curTile;
             }
         }
     }

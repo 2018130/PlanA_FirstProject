@@ -69,17 +69,17 @@ public class Tile : MonoBehaviour
     public void LockTile()
     {
         eTileType = ETileType.Lock;
-        spriteRenderer.color = new Color(1, 0, 0, 0.6f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        if (collision.gameObject.GetComponent<SharehouseCat>() != null)
         {
             //Debug.Log(gameObject);
             //transform.parent.parent.GetComponent<TileBundle>().playerPos = new Vector2Int(tilePosX, tilePosY);
             //transform.parent.parent.GetComponent<TileBundle>().haveToWalkTile = new Vector2Int(postTile.tilePosX, postTile.tilePosY);
-        }else if(collision.tag == "Furniture")
+        }
+        else if (collision.tag == "Furniture")
         {
             LockTile();
         }
@@ -87,15 +87,33 @@ public class Tile : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        SharehouseCat shareHouseCat = collision.gameObject.GetComponent<SharehouseCat>();
+        if (shareHouseCat != null)
         {
             if (Mathf.Approximately(collision.transform.position.x, transform.position.x) &&
                 Mathf.Approximately(collision.transform.position.x, transform.position.x))
             {
-                Debug.Log(gameObject);
+                if (tilePosX > postTile.tilePosX)
+                {
+                    shareHouseCat.GetComponent<SharehouseCat>().FlipX(-1);
+                }
+                else if (tilePosX < postTile.tilePosX)
+                {
+                    shareHouseCat.GetComponent<SharehouseCat>().FlipX(1);
+                }
+                else
+                {
+                    if (tilePosY > postTile.tilePosY)
+                    {
+                        shareHouseCat.GetComponent<SharehouseCat>().FlipX(-1);
+                    } else if (tilePosY < postTile.tilePosY)
+                    {
+                        shareHouseCat.GetComponent<SharehouseCat>().FlipX(1);
+                    }
+                }
                 transform.parent.parent.GetComponent<TileBundle>().playerPos = new Vector2Int(tilePosX, tilePosY);
                 transform.parent.parent.GetComponent<TileBundle>().haveToWalkTile = new Vector2Int(postTile.tilePosX, postTile.tilePosY);
             }
-            }
+        }
     }
 }

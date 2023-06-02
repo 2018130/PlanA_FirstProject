@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Furniture
+  - FishSpawner
+  - Fish
+  - Fishing
   layers:
   - Default
   - TransparentFX

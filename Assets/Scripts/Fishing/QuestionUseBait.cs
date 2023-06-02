@@ -10,7 +10,7 @@ public class QuestionUseBait : MonoBehaviour
 
     [Space(10f)]
     [SerializeField]
-    PlayerController player;
+    PlayerController playerController;
 
     public void ActiveToViewport()
     {
@@ -18,7 +18,7 @@ public class QuestionUseBait : MonoBehaviour
         GameObject holdingBait = transform.GetChild(0).Find("HoldingBait").gameObject;
         if (holdingBait != null)
         {
-            holdingBait.GetComponent<Text>().text = player.Bait.ToString();
+            holdingBait.GetComponent<Text>().text = playerController.Bait.ToString();
         }
         gameObject.SetActive(true);
     }
@@ -26,13 +26,13 @@ public class QuestionUseBait : MonoBehaviour
     public void UseBait()
     {
         DeactiveToViewport();
-        if (player.Bait <= 0)
+        if (playerController.Bait <= 0)
         {
             Debug.Log("플레이어의 미끼 수가 0보다 작습니다.");
             return;
         }
 
-        player.Bait -= 1;
+        playerController.Bait -= 1;
     }
 
     public void DeactiveToViewport()

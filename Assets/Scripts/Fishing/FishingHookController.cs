@@ -22,15 +22,10 @@ public class FishingHookController : MonoBehaviour
         lr.SetPosition(0, fishingHook.position);
         lr.SetPosition(1, GetPos());
         lr.SetPosition(2, fishingLine.position);
-
     }
 
     private void Update()
     {
-
-
-
-
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
         {
@@ -46,14 +41,13 @@ public class FishingHookController : MonoBehaviour
         //화면 터치시 마지막 터치 위치로 이동
         if (Input.touchCount != 0)
         {
-            /*            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
-                        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
-                        float distance;
-                        xy.Raycast(ray, out distance);
-                        destPos = ray.GetPoint(distance);*/
-            if (Input.touchCount != 0 &&
-                        Input.GetTouch(0).phase == TouchPhase.Began &&
-                        !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            /*
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
+            Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
+            float distance;
+            xy.Raycast(ray, out distance);
+            destPos = ray.GetPoint(distance);*/
+            if (Input.touchCount != 0)
             {
                 Touch touch = Input.GetTouch(0);
                 Vector3 touchedPos = playerController.ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
@@ -62,7 +56,6 @@ public class FishingHookController : MonoBehaviour
                 {
                     destPos = touchedPos;
                 }
-
             }
         }
 #endif

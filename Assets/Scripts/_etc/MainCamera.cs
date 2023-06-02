@@ -57,7 +57,6 @@ public class MainCamera : MonoBehaviour
                 fishSpawnerCS.ResetSpawn();
                 fishing.DeactiveGameObject();
                 isFistOfToMainScreenChange = false;
-                playerController.ResetPlayer();
             }
         }
     }

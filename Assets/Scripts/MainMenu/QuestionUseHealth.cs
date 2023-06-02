@@ -10,7 +10,7 @@ public class QuestionUseHealth : MonoBehaviour
 
     [Space(10f)]
     [SerializeField]
-    PlayerController player;
+    PlayerController playerController;
     [SerializeField]
     GameObject toMainMenuBtn;
     [SerializeField]
@@ -18,9 +18,9 @@ public class QuestionUseHealth : MonoBehaviour
 
     public void PlayToFishing()
     {
-        if (player.Health <= 0) return;
+        if (playerController.Health <= 0) return;
 
-        player.GetComponent<PlayerController>().Health -= 1;
+        playerController.GetComponent<PlayerController>().Health -= 1;
 
         gameObject.SetActive(false);
         toMainMenuBtn.SetActive(true);
@@ -34,8 +34,9 @@ public class QuestionUseHealth : MonoBehaviour
         GameObject holdingHealth = transform.GetChild(0).Find("HoldingHealth").gameObject;
         if(holdingHealth != null)
         {
-            holdingHealth.GetComponent<Text>().text = player.Health.ToString();
+            holdingHealth.GetComponent<Text>().text = playerController.Health.ToString();
         }
+
         gameObject.SetActive(true);
     }
 
