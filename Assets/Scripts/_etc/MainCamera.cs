@@ -35,31 +35,43 @@ public class MainCamera : MonoBehaviour
         //카메라 게임뷰로 다 내려가면 패널 전시
         if (isFistOfToGameScreenChange)
         {
-            transform.position -= new Vector3(0, Time.unscaledDeltaTime * cameraSpeed, 0);
-
-            if (transform.position.y <= gameViewPositionY)
-            {
-                transform.position = new Vector3(transform.position.x, gameViewPositionY, transform.position.z);
-                questionUseBait.ActiveToViewport();
-                isFistOfToGameScreenChange = false;
-                fishSpawnerCS.RestartSpawn();
-            }
+            transform.position = new Vector3(0, gameViewPositionY, -10);
+            transform.position = new Vector3(transform.position.x, gameViewPositionY, transform.position.z);
+            questionUseBait.ActiveToViewport();
+            isFistOfToGameScreenChange = false;
+            fishSpawnerCS.RestartSpawn();
         }
 
         //카메라 메인메뉴로 거의 다 올라가면 fishing삭제
         if (isFistOfToMainScreenChange)
         {
-            transform.position += new Vector3(0, Time.unscaledDeltaTime * cameraSpeed, 0);
+            transform.position = new Vector3(0, mainViewPositionY, -10);
             hookCtrl.MoveDefault();
-            if (transform.position.y >= mainViewPositionY)
+            transform.position = new Vector3(transform.position.x, mainViewPositionY, transform.position.z);
+            fishSpawnerCS.ResetSpawn();
+            fishing.DeactiveGameObject();
+            isFistOfToMainScreenChange = false;
+        }
+
+        //낚시화면에서 카메라 낚시바늘에 고정
+        if (fishing.gameObject.activeSelf)
+        {
+            float topCamPosY = -27f, bottomCamPosY = -53f;
+            float leftCamPosX = -6f, rightCamPosX = 6f;
+            if (hookCtrl.gameObject.transform.position.y > bottomCamPosY &&
+                hookCtrl.gameObject.transform.position.y < topCamPosY)
             {
-                transform.position = new Vector3(transform.position.x, mainViewPositionY, transform.position.z);
-                fishSpawnerCS.ResetSpawn();
-                fishing.DeactiveGameObject();
-                isFistOfToMainScreenChange = false;
+                transform.position = new Vector3(gameObject.transform.position.x, hookCtrl.gameObject.transform.position.y, transform.position.z);
+            }
+
+            if (hookCtrl.gameObject.transform.position.x > leftCamPosX &&
+                hookCtrl.gameObject.transform.position.x < rightCamPosX)
+            {
+                transform.position = new Vector3(hookCtrl.gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
             }
         }
     }
+
     public void MoveToGameScreen()
     {
         isFistOfToGameScreenChange = true;

@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     const int maxHealth = 10;
     int health;
-    float lastHealthRecoverTime = 0f;
+    string lastHealthRecoverTime = "";
     float healthRecoverTimeForSecond = 600f;
     public int Health
     {
@@ -101,11 +101,10 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitializePlayerInfoFromPlayerPrefs();
-        int recoverHealthSize = (int)((int)(Time.time - lastHealthRecoverTime) / healthRecoverTimeForSecond);
-        if(recoverHealthSize + Health >= maxHealth)
+        if (Health + (GetElapsedTimeToSeconds(lastHealthRecoverTime) / healthRecoverTimeForSecond)  >= maxHealth)
         {
             Health = maxHealth;
-            lastHealthRecoverTime = Time.time;
+            lastHealthRecoverTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 
@@ -113,10 +112,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //특정 시간 이후 체력 자동 회복 
-        if (Health < maxHealth && Time.time - lastHealthRecoverTime >= healthRecoverTimeForSecond)
+        if (GetElapsedTimeToSeconds(lastHealthRecoverTime) >= healthRecoverTimeForSecond)
         {
-            ++Health;
-            lastHealthRecoverTime = Time.time;
+            if (Health < maxHealth)
+            {
+                ++Health;
+            }
+            lastHealthRecoverTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 
@@ -137,18 +139,18 @@ public class PlayerController : MonoBehaviour
             Health = maxHealth;
             Bait = maxBait;
             Coin = 0;
-            lastHealthRecoverTime = 0f;
+            lastHealthRecoverTime = "2023-06-06 12:00:00";
             PlayerPrefs.SetInt("Health", Health);
             PlayerPrefs.SetInt("Bait", Bait);
             PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetFloat("lastHealthRecoverTime", lastHealthRecoverTime);
+            PlayerPrefs.SetString("lastHealthRecoverTime", lastHealthRecoverTime);
         }
         else
         {
             Health = PlayerPrefs.GetInt("Health");
             Bait = PlayerPrefs.GetInt("Bait");
             Coin = PlayerPrefs.GetInt("Coin");
-            lastHealthRecoverTime = PlayerPrefs.GetFloat("lastHealthRecoverTime");
+            lastHealthRecoverTime = PlayerPrefs.GetString("lastHealthRecoverTime");
         }
     }
 
@@ -157,7 +159,7 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetInt("Health", Health);
         PlayerPrefs.SetInt("Bait", Bait);
         PlayerPrefs.SetInt("Coin", Coin);
-        PlayerPrefs.SetFloat("lastHealthRecoverTime", lastHealthRecoverTime);
+        PlayerPrefs.SetString("lastHealthRecoverTime", lastHealthRecoverTime);
     }
 
     public void IncreaseHBC()
@@ -170,5 +172,16 @@ public class PlayerController : MonoBehaviour
     private void OnApplicationQuit()
     {
         SavePlayerInfoToPlayerPrefs();
+    }
+
+    //yyyy-MM-dd HH:mm:ss
+    private double GetElapsedTimeToSeconds(string date)
+    {
+        char[] separator = { '-', ':', ' ' };
+        string[] dates = date.Split(separator);
+
+        TimeSpan time = (DateTime.Now - new DateTime(int.Parse(dates[0]), int.Parse(dates[1]), int.Parse(dates[2]),
+                                                        int.Parse(dates[3]), int.Parse(dates[4]), int.Parse(dates[5])));
+        return time.TotalSeconds;
     }
 }

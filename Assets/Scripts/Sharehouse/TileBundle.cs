@@ -63,14 +63,16 @@ public class TileBundle : MonoBehaviour
 
             if (targetTile != null)
             {
-                if(eTouchType == ETouchType.Lock)
+                if (eTouchType == ETouchType.Lock)
                 {
                     targetTile.LockTile();
-                }else if(eTouchType == ETouchType.Move)
+                }
+                else if (eTouchType == ETouchType.Move)
                 {
                     ResetTiles();
                     StartCoroutine(C_AStar(playerPos, new Vector2Int(targetTile.tilePosX, targetTile.tilePosY)));
-                }else if(eTouchType == ETouchType.Unlock)
+                }
+                else if (eTouchType == ETouchType.Unlock)
                 {
                     targetTile.eTileType = ETileType.Unlock;
                 }
@@ -212,6 +214,7 @@ public class TileBundle : MonoBehaviour
         {
             return hit.collider.GetComponent<Tile>();
         }
+
         return null;
     }
 

@@ -42,6 +42,7 @@ public class AnimatedPanel : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Contains("Share"))
         {
             GameObject.Find("SharehouseCat").GetComponent<SharehouseCat>().AnyPaenlOpened();
+            Debug.Log("1111");
         }
         PlayClapAnimation();
     }
@@ -50,6 +51,7 @@ public class AnimatedPanel : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name.Contains("Share"))
         {
+            Debug.Log("2222");
             GameObject.Find("SharehouseCat").GetComponent<SharehouseCat>().AnyPaenlClosed();
         }
         gameObject.SetActive(false);

@@ -7,7 +7,7 @@ public class FishingHookController : MonoBehaviour
     [SerializeField] private Transform fishingLine = null;
     [SerializeField] private Transform fishingHook = null;
 
-    [SerializeField] private float speed = 15f;
+    [SerializeField] private float speed = 35f;
     private LineRenderer lr = null;
     private new Camera camera = null;
     private Vector3 destPos = new Vector3(0f, -28f, 0f);
@@ -31,11 +31,16 @@ public class FishingHookController : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
-            float distance;
+            float distance, topPosY = -15f, bottomPosY = -63f;
+            float leftPosX = -13f, RightPosX = 13f;
             xy.Raycast(ray, out distance);
             destPos = ray.GetPoint(distance);
-            if (-26f < destPos.y || destPos.y < -33.5f)
+            Debug.Log(destPos.x);
+            if (bottomPosY > destPos.y || destPos.y > topPosY ||
+                leftPosX > destPos.x || RightPosX < destPos.x)
+            {
                 destPos = transform.position;
+            }
         }
 #else
         //화면 터치시 마지막 터치 위치로 이동
