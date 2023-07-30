@@ -13,6 +13,7 @@ public class MainCamera : MonoBehaviour
 
     [SerializeField] FishSpawner fishSpawnerCS;
     [SerializeField] FishingHookController hookCtrl;
+    [SerializeField] HookCaptureController hookCapture;
 
     bool isFistOfToGameScreenChange = false;
     bool isFistOfToMainScreenChange = false;
@@ -58,16 +59,16 @@ public class MainCamera : MonoBehaviour
         {
             float topCamPosY = -27f, bottomCamPosY = -53f;
             float leftCamPosX = -6f, rightCamPosX = 6f;
-            if (hookCtrl.gameObject.transform.position.y > bottomCamPosY &&
-                hookCtrl.gameObject.transform.position.y < topCamPosY)
+            if (hookCapture.gameObject.transform.position.y > bottomCamPosY &&
+                hookCapture.gameObject.transform.position.y < topCamPosY)
             {
-                transform.position = new Vector3(gameObject.transform.position.x, hookCtrl.gameObject.transform.position.y, transform.position.z);
+                transform.position = new Vector3(gameObject.transform.position.x, hookCapture.gameObject.transform.position.y, transform.position.z);
             }
 
-            if (hookCtrl.gameObject.transform.position.x > leftCamPosX &&
-                hookCtrl.gameObject.transform.position.x < rightCamPosX)
+            if (hookCapture.gameObject.transform.position.x > leftCamPosX &&
+                hookCapture.gameObject.transform.position.x < rightCamPosX)
             {
-                transform.position = new Vector3(hookCtrl.gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
+                transform.position = new Vector3(hookCapture.gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
             }
         }
     }

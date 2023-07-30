@@ -9,9 +9,7 @@ public class Fishing : MonoBehaviour
     [SerializeField]
     GameObject fishingStartTextPanel;
     [SerializeField]
-    GameObject timerPanel;
-    [SerializeField]
-    GameObject questProgressPanel;
+    GameObject timerProgressPanel;
     [SerializeField]
     GameObject moveToMainMenuBtn;
     [SerializeField]
@@ -20,6 +18,8 @@ public class Fishing : MonoBehaviour
     GameObject questionUseHealthPanel;
     [SerializeField]
     GameObject catchFishPanel;
+    [SerializeField]
+    GameObject bottomBar;
     HookCaptureController hookCaptureController;
 
     [SerializeField]
@@ -44,10 +44,10 @@ public class Fishing : MonoBehaviour
 
     public void ActiveFishingStartTextPanel()
     {
-        if (timerPanel.activeSelf || questProgressPanel.activeSelf)
+        if (timerProgressPanel.activeSelf)
         {
-            timerPanel.SetActive(false);
-            questProgressPanel.SetActive(false);
+            timerProgressPanel.SetActive(false);
+            timerProgressPanel.SetActive(false);
         }
         fishingStartTextPanel.SetActive(true);
         StartCoroutine("DeactiveFishingStartTextPanel");
@@ -60,16 +60,17 @@ public class Fishing : MonoBehaviour
 
         fishingStartTextPanel.SetActive(false);
         float gamePlayTime = 60f;
-        timerPanel.GetComponent<Timer>().SetTimer(gamePlayTime);
-        questProgressPanel.GetComponent<QuestProgress>().SetPercent(questProgressPercent);
+        timerProgressPanel.GetComponent<Timer>().SetTimer(gamePlayTime);
+        timerProgressPanel.GetComponent<Progress>().SetPercent(questProgressPercent);
     }
 
     public void MoveToMainMenuScreen()
     {
-        timerPanel.GetComponent<Timer>().DeactivePanel();
-        questProgressPanel.GetComponent<QuestProgress>().DeactivePaenl();
+        timerProgressPanel.GetComponent<Timer>().DeactivePanel();
+        timerProgressPanel.GetComponent<Progress>().DeactivePaenl();
         moveToMainMenuBtn.SetActive(false);
         moveToGameSceneBtn.ReduceBtnSizeAndSetOff();
+        bottomBar.SetActive(true);
         Camera.main.GetComponent<MainCamera>().MoveToMainScreen();
     }
 

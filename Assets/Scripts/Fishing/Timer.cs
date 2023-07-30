@@ -7,6 +7,8 @@ public class Timer : MonoBehaviour
 {
     [SerializeField]
     Fishing fishing;
+    [SerializeField]
+    Progress progress;
 
     bool isEndOfTimer = true;
     float maxTime = 0f;
@@ -25,7 +27,8 @@ public class Timer : MonoBehaviour
         if (!isEndOfTimer)
         {
             currentTime -= Time.deltaTime;
-            GetComponentInChildren<Text>().text = string.Format("{0:0.00#} ", currentTime);//.ToString().Substring(0, 5);
+            //GetComponentInChildren<Text>().text = string.Format("{0:0.00#} ", currentTime);//.ToString().Substring(0, 5);
+            progress.SetPercent(currentTime / maxTime);
             if(currentTime <= 0)
             {
                 isEndOfTimer = true;

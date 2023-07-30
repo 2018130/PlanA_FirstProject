@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestProgress : MonoBehaviour
+public class Progress : MonoBehaviour
 {
+    [SerializeField]
     GameObject backGround;
+    [SerializeField]
     GameObject progressBar;
 
     float percent = 0f;

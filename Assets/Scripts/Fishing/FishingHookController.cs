@@ -20,8 +20,8 @@ public class FishingHookController : MonoBehaviour
         camera = Camera.main;
         lr = GetComponent<LineRenderer>();
         lr.SetPosition(0, fishingHook.position);
-        lr.SetPosition(1, GetPos());
-        lr.SetPosition(2, fishingLine.position);
+        //lr.SetPosition(0, GetPos());
+        lr.SetPosition(1, fishingLine.position);
     }
 
     private void Update()
@@ -34,8 +34,8 @@ public class FishingHookController : MonoBehaviour
             float distance, topPosY = -15f, bottomPosY = -63f;
             float leftPosX = -13f, RightPosX = 13f;
             xy.Raycast(ray, out distance);
-            destPos = ray.GetPoint(distance);
-            Debug.Log(destPos.x);
+            destPos = ray.GetPoint(distance) + new Vector3(0, 2, 0);
+
             if (bottomPosY > destPos.y || destPos.y > topPosY ||
                 leftPosX > destPos.x || RightPosX < destPos.x)
             {
@@ -71,8 +71,8 @@ public class FishingHookController : MonoBehaviour
         }
 
         lr.SetPosition(0, fishingHook.position);
-        lr.SetPosition(1, GetPos());
-        lr.SetPosition(2, fishingLine.position);
+        //lr.SetPosition(0, GetPos());
+        lr.SetPosition(1, fishingLine.position);
     }
 
     public void MoveDefault()

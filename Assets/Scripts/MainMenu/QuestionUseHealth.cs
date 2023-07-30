@@ -12,6 +12,8 @@ public class QuestionUseHealth : MonoBehaviour
     [SerializeField]
     PlayerController playerController;
     [SerializeField]
+    GameObject bottomBar;
+    [SerializeField]
     GameObject toMainMenuBtn;
     [SerializeField]
     FishingBtn fishingBtn;
@@ -22,6 +24,7 @@ public class QuestionUseHealth : MonoBehaviour
 
         playerController.GetComponent<PlayerController>().Health -= 1;
 
+        bottomBar.SetActive(false);
         gameObject.SetActive(false);
         toMainMenuBtn.SetActive(true);
         fishing.SetActive(true);

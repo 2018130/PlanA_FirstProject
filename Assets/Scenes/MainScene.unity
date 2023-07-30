@@ -917,86 +917,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181750263}
   m_CullTransparentMesh: 1
---- !u!1 &187742193
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 187742194}
-  - component: {fileID: 187742196}
-  - component: {fileID: 187742195}
-  m_Layer: 5
-  m_Name: Text (Legacy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &187742194
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187742193}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1969175279}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 620, y: -195}
-  m_SizeDelta: {x: 300, y: 200}
-  m_Pivot: {x: 0, y: 1}
---- !u!114 &187742195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187742193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 80
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
-    m_MaxSize: 80
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: '60 : 00'
---- !u!222 &187742196
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187742193}
-  m_CullTransparentMesh: 1
 --- !u!1 &193387965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishing: {fileID: 5947921311759977054}
   playerController: {fileID: 1488284656}
+  bottomBar: {fileID: 1472252652}
   toMainMenuBtn: {fileID: 447594466}
   fishingBtn: {fileID: 37850099}
 --- !u!1 &243689330
@@ -2393,6 +2314,7 @@ MonoBehaviour:
   playerController: {fileID: 1488284656}
   fishSpawnerCS: {fileID: 5947921312061825865}
   hookCtrl: {fileID: 5947921312033114219}
+  hookCapture: {fileID: 5947921310790937968}
 --- !u!1 &537005224
 GameObject:
   m_ObjectHideFlags: 0
@@ -2722,8 +2644,9 @@ GameObject:
   m_Component:
   - component: {fileID: 599510233}
   - component: {fileID: 599510234}
+  - component: {fileID: 599510235}
   m_Layer: 5
-  m_Name: QuestProgressPanel
+  m_Name: TimerProgressPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2763,6 +2686,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006cfec6dce5fa44a8a1a8021ac78d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backGround: {fileID: 1295544198}
+  progressBar: {fileID: 758806961}
+--- !u!114 &599510235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599510232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ff6f006b7043f045ba983f6f3ebf00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishing: {fileID: 5947921311759977052}
+  progress: {fileID: 599510234}
 --- !u!1 &609278395
 GameObject:
   m_ObjectHideFlags: 0
@@ -5626,7 +5565,6 @@ RectTransform:
   - {fileID: 193387966}
   - {fileID: 1256919428}
   - {fileID: 599510233}
-  - {fileID: 1969175279}
   - {fileID: 1755417348}
   - {fileID: 4063989604058356743}
   m_Father: {fileID: 0}
@@ -6118,7 +6056,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1488284654}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -6792,66 +6730,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939430688}
   m_CullTransparentMesh: 1
---- !u!1 &1969175278
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1969175279}
-  - component: {fileID: 1969175280}
-  - component: {fileID: 1969175281}
-  m_Layer: 5
-  m_Name: Timer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1969175279
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969175278}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 187742194}
-  m_Father: {fileID: 1488284654}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1969175280
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969175278}
-  m_CullTransparentMesh: 1
---- !u!114 &1969175281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969175278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ff6f006b7043f045ba983f6f3ebf00b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fishing: {fileID: 5947921311759977052}
 --- !u!1 &1986404177
 GameObject:
   m_ObjectHideFlags: 0
@@ -7371,7 +7249,7 @@ Transform:
   - {fileID: 1986404178}
   - {fileID: 548450741}
   m_Father: {fileID: 1488284654}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5947921309998361340
 Transform:
@@ -8062,7 +7940,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5947921311446443622}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 26.01, z: 0}
+  m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8507,12 +8385,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishingStartTextPanel: {fileID: 1755417347}
-  timerPanel: {fileID: 1969175278}
-  questProgressPanel: {fileID: 599510232}
+  timerProgressPanel: {fileID: 599510232}
   moveToMainMenuBtn: {fileID: 447594466}
   moveToGameSceneBtn: {fileID: 37850099}
   questionUseHealthPanel: {fileID: 193387965}
   catchFishPanel: {fileID: 2627615895855264150}
+  bottomBar: {fileID: 1472252652}
   rod: {fileID: 0}
 --- !u!4 &5947921311759977053
 Transform:
@@ -8548,7 +8426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &5947921312033114219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8563,7 +8441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishingLine: {fileID: 5947921311446443621}
   fishingHook: {fileID: 5947921310790937981}
-  speed: 10
+  speed: 20
   playerController: {fileID: 1488284656}
 --- !u!1 &5947921312033114224
 GameObject:
@@ -8702,8 +8580,7 @@ LineRenderer:
   m_SortingOrder: -1
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -8711,8 +8588,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.021354329
-        value: 0.060304206
+        time: 0.054773137
+        value: 0.06321716
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -8767,7 +8644,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5947921312033114224}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.98, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8790,7 +8667,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0.1}
+  m_ConnectedAnchor: {x: 0, y: 5}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
