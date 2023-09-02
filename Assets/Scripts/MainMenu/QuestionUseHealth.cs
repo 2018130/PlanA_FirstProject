@@ -20,7 +20,11 @@ public class QuestionUseHealth : MonoBehaviour
 
     public void PlayToFishing()
     {
-        if (playerController.Health <= 0) return;
+        if (playerController.Health <= 0)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
         playerController.GetComponent<PlayerController>().Health -= 1;
 

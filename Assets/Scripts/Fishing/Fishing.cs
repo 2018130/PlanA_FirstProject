@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using Spine.Unity;
 
 public class Fishing : MonoBehaviour
 {
+    public UnityEvent onFishingEnd = new UnityEvent();
+
+    public static Fishing SFishing;
+
     [SerializeField]
     GameObject fishingStartTextPanel;
     [SerializeField]
@@ -33,6 +38,15 @@ public class Fishing : MonoBehaviour
     {
         hookCaptureController = transform.Find("FishingController").Find("FishingHook").gameObject.GetComponent<HookCaptureController>();
     }
+
+    private void Start()
+    {
+        if(SFishing == null)
+        {
+            SFishing = this;
+        }
+    }
+
     private void Update()
     {
         if(fishingSuccessCount == maxFishingSucessCount && !questionUseHealthPanel.activeSelf)
@@ -66,12 +80,14 @@ public class Fishing : MonoBehaviour
 
     public void MoveToMainMenuScreen()
     {
+        onFishingEnd.Invoke();
         timerProgressPanel.GetComponent<Timer>().DeactivePanel();
         timerProgressPanel.GetComponent<Progress>().DeactivePaenl();
         moveToMainMenuBtn.SetActive(false);
         moveToGameSceneBtn.ReduceBtnSizeAndSetOff();
         bottomBar.SetActive(true);
         Camera.main.GetComponent<MainCamera>().MoveToMainScreen();
+        gameObject.SetActive(false);
     }
 
     public void DeactiveGameObject()
@@ -93,6 +109,18 @@ public class Fishing : MonoBehaviour
 
         CatchFish catchFish = catchFishPanel.GetComponent<CatchFish>();
         if(catchedFish != null)
+        {
+            hookCaptureController.SetTriggerBlocked(true);
+            catchFish.ActiveToViewport(catchedFish);
+        }
+    }
+
+    public void CatchFish(NewFishMove catchedFish)
+    {
+        fishingSuccessCount++;
+
+        CatchFish catchFish = catchFishPanel.GetComponent<CatchFish>();
+        if (catchedFish != null)
         {
             hookCaptureController.SetTriggerBlocked(true);
             catchFish.ActiveToViewport(catchedFish);

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     const int maxHealth = 10;
     int health;
     string lastHealthRecoverTime = "";
-    float healthRecoverTimeForSecond = 600f;
+    float healthRecoverTimeForSecond = 20f;
     public int Health
     {
         get { return health; }
@@ -101,7 +101,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitializePlayerInfoFromPlayerPrefs();
-        if (Health + (GetElapsedTimeToSeconds(lastHealthRecoverTime) / healthRecoverTimeForSecond)  >= maxHealth)
+
+        if (Health + (GetElapsedTimeToSeconds(lastHealthRecoverTime) / healthRecoverTimeForSecond)  <= maxHealth)
         {
             Health = maxHealth;
             lastHealthRecoverTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -111,6 +112,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(GetElapsedTimeToSeconds(lastHealthRecoverTime));
         //특정 시간 이후 체력 자동 회복 
         if (GetElapsedTimeToSeconds(lastHealthRecoverTime) >= healthRecoverTimeForSecond)
         {
@@ -139,7 +141,7 @@ public class PlayerController : MonoBehaviour
             Health = maxHealth;
             Bait = maxBait;
             Coin = 0;
-            lastHealthRecoverTime = "2023-06-06 12:00:00";
+            lastHealthRecoverTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             PlayerPrefs.SetInt("Health", Health);
             PlayerPrefs.SetInt("Bait", Bait);
             PlayerPrefs.SetInt("Coin", Coin);

@@ -13,15 +13,20 @@ public class MainCamera : MonoBehaviour
 
     [SerializeField] FishSpawner fishSpawnerCS;
     [SerializeField] FishingHookController hookCtrl;
-    [SerializeField] HookCaptureController hookCapture;
+    [SerializeField] GameObject fishingFloats;
 
     bool isFistOfToGameScreenChange = false;
     bool isFistOfToMainScreenChange = false;
 
     float cameraSpeed = 15f;
+    float cameraSizeSpeed = 3f;
+    float preCameraPosX = 0f;
+    const float maxCameraSize = 12.7f;
+    const float minCameraSize = 10f;
 
     const float mainViewPositionY = 0f;
     const float gameViewPositionY = -26f;
+
     public float GameViewPostionY
     {
         get { return gameViewPositionY; }
@@ -40,17 +45,15 @@ public class MainCamera : MonoBehaviour
             transform.position = new Vector3(transform.position.x, gameViewPositionY, transform.position.z);
             questionUseBait.ActiveToViewport();
             isFistOfToGameScreenChange = false;
-            fishSpawnerCS.RestartSpawn();
         }
 
         //카메라 메인메뉴로 거의 다 올라가면 fishing삭제
         if (isFistOfToMainScreenChange)
         {
             transform.position = new Vector3(0, mainViewPositionY, -10);
-            hookCtrl.MoveDefault();
             transform.position = new Vector3(transform.position.x, mainViewPositionY, transform.position.z);
-            fishSpawnerCS.ResetSpawn();
             fishing.DeactiveGameObject();
+            Camera.main.orthographicSize = maxCameraSize;
             isFistOfToMainScreenChange = false;
         }
 
@@ -59,17 +62,38 @@ public class MainCamera : MonoBehaviour
         {
             float topCamPosY = -27f, bottomCamPosY = -53f;
             float leftCamPosX = -6f, rightCamPosX = 6f;
-            if (hookCapture.gameObject.transform.position.y > bottomCamPosY &&
-                hookCapture.gameObject.transform.position.y < topCamPosY)
+            if (fishingFloats.gameObject.transform.position.y > bottomCamPosY &&
+                fishingFloats.gameObject.transform.position.y < topCamPosY)
             {
-                transform.position = new Vector3(gameObject.transform.position.x, hookCapture.gameObject.transform.position.y, transform.position.z);
+                //모바일 환경에서 카메라의 x좌표를 낚시찌에 맞춘 경우 유저의 터치에 의해 
+                //낚시찌의 속도가 반대가 되는 경우 이질감이 듬 따라서 
+                //카메라 lag을 주기위해 이전프레임의 x좌표를 따름
+                transform.position = new Vector3(gameObject.transform.position.x, fishingFloats.gameObject.transform.position.y, transform.position.z);
             }
 
-            if (hookCapture.gameObject.transform.position.x > leftCamPosX &&
-                hookCapture.gameObject.transform.position.x < rightCamPosX)
+            if (fishingFloats.gameObject.transform.position.x > leftCamPosX &&
+                fishingFloats.gameObject.transform.position.x < rightCamPosX)
             {
-                transform.position = new Vector3(hookCapture.gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
+                transform.position = new Vector3(fishingFloats.gameObject.transform.position.x, gameObject.transform.position.y, transform.position.z);
             }
+
+            //낚시바늘이 화면 가운데로 가면 화면 확대
+            if (Mathf.Abs(0f - preCameraPosX) > Mathf.Abs(0f - transform.position.x))
+            {
+                if (Camera.main.orthographicSize > minCameraSize)
+                {
+                    //Camera.main.orthographicSize -= Time.deltaTime * cameraSizeSpeed;
+                }
+            }
+            else
+            {
+                if (Camera.main.orthographicSize < maxCameraSize)
+                {
+                    //Camera.main.orthographicSize += Time.deltaTime * cameraSizeSpeed;
+                }
+            }
+
+            preCameraPosX = transform.position.x;
         }
     }
 

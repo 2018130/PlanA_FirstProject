@@ -26,13 +26,13 @@ public class FishingHookController : MonoBehaviour
 
     private void Update()
     {
+        float distance, topPosY = -15f, bottomPosY = -63f;
+        float leftPosX = -13f, RightPosX = 13f;
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
-            float distance, topPosY = -15f, bottomPosY = -63f;
-            float leftPosX = -13f, RightPosX = 13f;
             xy.Raycast(ray, out distance);
             destPos = ray.GetPoint(distance) + new Vector3(0, 2, 0);
 
@@ -42,25 +42,19 @@ public class FishingHookController : MonoBehaviour
                 destPos = transform.position;
             }
         }
-#else
+//#else
         //화면 터치시 마지막 터치 위치로 이동
         if (Input.touchCount != 0)
         {
-            /*
             Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(Input.touchCount - 1).deltaPosition);
             Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, 0));
-            float distance;
             xy.Raycast(ray, out distance);
-            destPos = ray.GetPoint(distance);*/
-            if (Input.touchCount != 0)
-            {
-                Touch touch = Input.GetTouch(0);
-                Vector3 touchedPos = playerController.ExchangeScreenPosToWorldPos(Input.GetTouch(Input.touchCount - 1).position);
+            destPos = ray.GetPoint(distance);
 
-                if (-26f > touchedPos.y && touchedPos.y > -33.5f)
-                {
-                    destPos = touchedPos;
-                }
+            if (bottomPosY > destPos.y || destPos.y > topPosY ||
+                leftPosX > destPos.x || RightPosX < destPos.x)
+            {
+                destPos = transform.position;
             }
         }
 #endif
