@@ -10,6 +10,10 @@ public class MainCamera : MonoBehaviour
     QuestionUseBait questionUseBait;
     [SerializeField]
     PlayerController playerController;
+    [SerializeField]
+    GameObject mainUI;
+    [SerializeField]
+    GameObject gameUI;
 
     [SerializeField] FishSpawner fishSpawnerCS;
     [SerializeField] FishingHookController hookCtrl;
@@ -24,12 +28,12 @@ public class MainCamera : MonoBehaviour
     const float maxCameraSize = 12.7f;
     const float minCameraSize = 10f;
 
-    const float mainViewPositionY = 0f;
-    const float gameViewPositionY = -26f;
+    const float mainViewPositionX = 0f;
+    const float gameViewPositionX = 100f;
 
-    public float GameViewPostionY
+    public float GameViewPostionX
     {
-        get { return gameViewPositionY; }
+        get { return gameViewPositionX; }
     }
 
     private void Start()
@@ -38,20 +42,10 @@ public class MainCamera : MonoBehaviour
     }
     private void Update()
     {
-        //카메라 게임뷰로 다 내려가면 패널 전시
-        if (isFistOfToGameScreenChange)
-        {
-            transform.position = new Vector3(0, gameViewPositionY, -10);
-            transform.position = new Vector3(transform.position.x, gameViewPositionY, transform.position.z);
-            questionUseBait.ActiveToViewport();
-            isFistOfToGameScreenChange = false;
-        }
-
         //카메라 메인메뉴로 거의 다 올라가면 fishing삭제
         if (isFistOfToMainScreenChange)
         {
-            transform.position = new Vector3(0, mainViewPositionY, -10);
-            transform.position = new Vector3(transform.position.x, mainViewPositionY, transform.position.z);
+            transform.position = new Vector3(mainViewPositionX, transform.position.y, transform.position.z);
             fishing.DeactiveGameObject();
             Camera.main.orthographicSize = maxCameraSize;
             isFistOfToMainScreenChange = false;
@@ -60,8 +54,8 @@ public class MainCamera : MonoBehaviour
         //낚시화면에서 카메라 낚시바늘에 고정
         if (fishing.gameObject.activeSelf)
         {
-            float topCamPosY = -27f, bottomCamPosY = -53f;
-            float leftCamPosX = -6f, rightCamPosX = 6f;
+            float topCamPosY = -100f, bottomCamPosY = 100f;
+            float leftCamPosX = -100f, rightCamPosX = 200f;
             if (fishingFloats.gameObject.transform.position.y > bottomCamPosY &&
                 fishingFloats.gameObject.transform.position.y < topCamPosY)
             {
@@ -100,10 +94,16 @@ public class MainCamera : MonoBehaviour
     public void MoveToGameScreen()
     {
         isFistOfToGameScreenChange = true;
+        fishing.gameObject.SetActive(true);
+        mainUI.SetActive(false);
+        gameUI.SetActive(true);
     }
 
     public void MoveToMainScreen()
     {
         isFistOfToMainScreenChange = true;
+        fishing.gameObject.SetActive(false);
+        mainUI.SetActive(true);
+        gameUI.SetActive(false);
     }
 }

@@ -20,30 +20,21 @@ public class FishingBtn : MonoBehaviour
     [SerializeField]
     Fishing fishing;
 
-    public void DisplayQuestionUseHealthPanel()
-    {
-        questionUseHealthPanel.GetComponent<QuestionUseHealth>().ActiveToViewport();
-    }
-
     public void ClickToFisingBtn()
     {
         Image btnImage = GetComponent<Image>();
-        if (btnImage.sprite.name.Contains("off"))
+
+        //mainCat.GetComponent<MainMenuCat>().SetAnimation("Fishing");
+        MainCamera mainCamera = Camera.main.GetComponent<MainCamera>();
+        if (mainCamera)
         {
-            mainCat.GetComponent<MainMenuCat>().SetAnimation("Fishing");
-            GetComponent<Image>().sprite = fishingBtnOnImage;
-            transform.localScale = transform.localScale * 1.2f;
-            DisplayQuestionUseHealthPanel();
-        }
-        else
-        {
-            fishing.MoveToMainMenuScreen();
+            mainCamera.MoveToGameScreen();
         }
     }
 
     public void ReduceBtnSizeAndSetOff()
     {
         GetComponent<Image>().sprite = fishingBtnOffImage;
-        transform.localScale = transform.localScale * 5.0f/6;
+        transform.localScale = transform.localScale * 5.0f / 6;
     }
 }

@@ -32,14 +32,8 @@ public class Timer : MonoBehaviour
             if(currentTime <= 0)
             {
                 isEndOfTimer = true;
-                EndOfTime();
             }
         }
-    }
-
-    void EndOfTime()
-    {
-        fishing.EndOfOneRound();
     }
 
     public void DeactivePanel()

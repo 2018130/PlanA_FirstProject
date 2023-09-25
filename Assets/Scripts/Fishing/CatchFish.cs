@@ -63,7 +63,6 @@ public class CatchFish : MonoBehaviour
     public void DeactiveToViewport()
     {
         hookCaptureController.SetTriggerBlocked(false);
-        fishingFloats.SetBlockCatch(false);
         gameObject.SetActive(false);
     }
 

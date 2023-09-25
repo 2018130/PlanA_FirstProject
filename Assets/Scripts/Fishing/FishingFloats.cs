@@ -20,12 +20,13 @@ public class FishingFloats : MonoBehaviour
         if (newFishMove != null)
         {
             fishing.CatchFish(newFishMove);
-            SetBlockCatch(true);
-        }
-    }
+            newFishMove.RemoveFish();
 
-    public void SetBlockCatch(bool value)
-    {
-        collider2d.enabled = !value;
+            fishing.CurrentHealth -= 100;
+            if (fishing.CurrentHealth <= 0)
+            {
+                fishing.OpenFailPanel();
+            }
+        }
     }
 }

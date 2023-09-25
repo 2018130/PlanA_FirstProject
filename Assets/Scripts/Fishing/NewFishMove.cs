@@ -18,6 +18,7 @@ public class NewFishMove : MonoBehaviour
     float fishAngleWeight = 15.0f;
     int fishAngleSign = 1;
     int fishDirectionSign = 1;
+    public int fishSize = 1;
 
     bool isCorutineRunning = false;
     bool isDetectedObject = false;
@@ -67,7 +68,7 @@ public class NewFishMove : MonoBehaviour
 
         Turn();
 
-        float upperRemovePosY = -12f;
+        float upperRemovePosY = 13f;
         if (upperRemovePosY < transform.position.y)
         {
             RemoveFish();
@@ -150,8 +151,8 @@ public class NewFishMove : MonoBehaviour
 
     void Turn()
     {
-        float rightTurnPointX = 13f;
-        float leftTurnPointX = -13f;
+        float rightTurnPointX = 115f;
+        float leftTurnPointX = 84f;
         bool isTurn = false;
 
         if (transform.position.x > rightTurnPointX)

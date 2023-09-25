@@ -20,7 +20,7 @@ public class FishingLine : MonoBehaviour
         fishingFloats = transform.GetChild(0).gameObject;
 
         lineRenderer.positionCount = 2;
-        Vector3 startPoint = new Vector3(0f, -14f, 0);
+        Vector3 startPoint = new Vector3(100f, 12f, 0);
         lineRenderer.SetPosition(0, startPoint);
     }
 

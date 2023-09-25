@@ -38,7 +38,6 @@ public class QuestionUseBait : MonoBehaviour
     public void DeactiveToViewport()
     {
         Time.timeScale = 1;
-        fishing.GetComponent<Fishing>().ActiveFishingStartTextPanel();
         gameObject.SetActive(false);
     }
 
