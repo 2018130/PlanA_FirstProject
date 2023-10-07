@@ -18,6 +18,7 @@ public class Bag : MonoBehaviour
 
     ESelectedWindow eSelectedWindow = ESelectedWindow.FISHINGLINE;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +62,6 @@ public class Bag : MonoBehaviour
     public void OpenWindow(int selectedWindow)
     {
         backgroundPanel.SetActive(true);
-        Debug.Log("1111");
 
         switch (selectedWindow)
         {
@@ -86,6 +86,7 @@ public class Bag : MonoBehaviour
             //FISHBOWL
             case 3:
                 {
+                    windows[3].GetComponent<Fishbowl>().VisualizeBoxesWithItemInfo();
                     ActiveOnlySelectedWindow(3);
                     break;
                 }

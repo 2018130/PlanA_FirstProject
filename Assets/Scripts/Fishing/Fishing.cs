@@ -38,6 +38,11 @@ public class Fishing : MonoBehaviour
     GameObject caeraPanel;
     [SerializeField]
     GameObject currentHealthUI;
+    GameObject fishingBackground;
+    [SerializeField]
+    GameObject mainBackground;
+    [SerializeField]
+    GameObject fishbowl;
     HookCaptureController hookCaptureController;
 
     [SerializeField]
@@ -126,6 +131,7 @@ public class Fishing : MonoBehaviour
 
     private void Awake()
     {
+        fishingBackground = transform.GetChild(2).gameObject;
         hookCaptureController = transform.Find("FishingController").Find("FishingHook").gameObject.GetComponent<HookCaptureController>();
     }
 
@@ -146,6 +152,9 @@ public class Fishing : MonoBehaviour
         CatchedMediumFishCount = 0;
         CatchedLargeFishCount = 0;
         fishingLineLenth = 0;
+
+        const float backgroundPosY = -87f;
+        fishingBackground.transform.position = new Vector3(fishingBackground.transform.position.x, backgroundPosY, 0);
     }
 
     private void Update()
@@ -173,6 +182,9 @@ public class Fishing : MonoBehaviour
         {
             failPanel.SetActive(false);
         }
+
+        const float mainBackgroundPosY = 67.87f;
+        mainBackground.transform.position = new Vector3(mainBackground.transform.position.x, mainBackgroundPosY, 0);
 
         onFishingEnd.Invoke();
         Camera.main.GetComponent<MainCamera>().MoveToMainScreen();
@@ -218,11 +230,7 @@ public class Fishing : MonoBehaviour
                 }
         }
 
-        CatchFish catchFish = catchFishPanel.GetComponent<CatchFish>();
-        if (catchedFish != null)
-        {
-            hookCaptureController.SetTriggerBlocked(true);
-        }
+        fishbowl.GetComponent<Fishbowl>().AddItemInBox(ChangeFishDataToItem(catchedFish.GetFishData()));
     }
 
     void OpenCaeraPanel()
@@ -247,5 +255,19 @@ public class Fishing : MonoBehaviour
         Time.timeScale = 0;
 
         failPanel.SetActive(true);
+    }
+
+    public Item ChangeFishDataToItem(FishData fishData)
+    {
+        Item newItem = new Item();
+        newItem.itemCount = fishData.GetCount();
+        newItem.itemId = fishData.GetId();
+        newItem.itemImage = fishData.GetSprite();
+        newItem.itemName = fishData.GetName();
+        //나중에 수정해야함
+        newItem.itemPrice = fishData.GetId();
+        newItem.itemType = EItemType.FISH;
+
+        return newItem;
     }
 }

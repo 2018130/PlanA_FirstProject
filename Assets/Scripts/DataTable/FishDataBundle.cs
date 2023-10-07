@@ -21,7 +21,8 @@ public class FishData
     private int productCount = 0;
     private string information = "";
     private string spinePath = "";
-    private string spritePath = "";
+    private string spritePath;
+    private Sprite sprite;
     private List<Habitat> habitats = new List<Habitat>();
 
     public void InitFishData(Dictionary<string, object> dictionaryFishData)
@@ -34,6 +35,8 @@ public class FishData
         information = dictionaryFishData["Information"].ToString();
         spinePath = dictionaryFishData["SpinePath"].ToString();
         spritePath = dictionaryFishData["SpritePath"].ToString();
+        sprite = Resources.Load<Sprite>(spritePath);
+        Debug.Log(fishName + " " + spritePath);
 
         //서식지가 2개 있는경우 ""내 , 로 따로 구분 되어 있어 작업 추가
         habitats.Clear();
@@ -89,21 +92,31 @@ public class FishData
     {
         return spinePath;
     }
-    public string GetSpritePath()
+    public Sprite GetSprite()
     {
-        return spritePath;
+        return sprite;
     }
 
     public float GetSpeed()
     {
         return speed;
     }
+
+    public int GetCount()
+    {
+        return productCount;
+    }
+
+    public int GetId()
+    {
+        return id;
+    }
 }
 
 public class FishDataBundle : MonoBehaviour
 {
     //물고기의 id를 키값으로 하고 FishData형식의 밸류값를 갖는 Dictionary
-    static Dictionary<int, FishData> fishDatas = new Dictionary<int, FishData>();
+    public static Dictionary<int, FishData> fishDatas = new Dictionary<int, FishData>();
 
     private void Start()
     {

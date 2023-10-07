@@ -5,7 +5,7 @@ Id,Name,Lv,Speed,ProductCount,Information,Habitat,SpinePath,SpritePath
 4,연골어강3,S,4,1,〃,바다,FishSpine/Heckel/skeleton_SkeletonData,FishSpine/Heckel/skeleton
 5,심해어1,A,0.5,1,수심 200m보다 깊은 해역에 사는 생물이다. 독특한 생김새를 한 친구가 많다.,바다,FishSpine/JellyFish/skeleton_SkeletonData,FishSpine/JellyFish/skeleton
 6,심해어2,A,2,1,〃,바다,FishSpine/krill/skeleton_SkeletonData,FishSpine/krill/skeleton
-7,심해어3,A,2,1,〃,바다,FishSpine/MolaMola/skeleton_SkeletonData,FishSpine/MolaMola/skeleton
+7,심해어3,A,2,1,〃,바다,FishSpine/MolaMola/skeleton_SkeletonData,FishSpine/MolaMola/skeleton1
 8,관상어1,B,2,1,아름다운 모습을 한 친구가 많다. 뷰티풀!,바다,FishSpine/PlasticBag/skeleton_SkeletonData,FishSpine/PlasticBag/skeleton
 9,관상어2,B,1,1,〃,바다,FishSpine/Pollock/skeleton_SkeletonData,FishSpine/Pollock/skeleton
 10,관상어3,B,1,1,〃,바다,FishSpine/Stingray/skeleton_SkeletonData,FishSpine/Stingray/skeleton
