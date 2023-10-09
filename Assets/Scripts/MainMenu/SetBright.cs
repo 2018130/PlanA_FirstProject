@@ -16,6 +16,7 @@ public class SetBright: MonoBehaviour
     int nextBrightReverseTimeIndex = 0;
     bool isCoroutinePlaying = false;
     int brightDirection = 1;
+    float time = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,18 +36,16 @@ public class SetBright: MonoBehaviour
             spriteRenderer.color = newColor;
         }
 
-        if (!isCoroutinePlaying)
+        if(time >= brightReverseTime[nextBrightReverseTimeIndex])
         {
-            StartCoroutine(CReverseBright());
+            ReverseBright();
         }
+
+        time += Time.deltaTime;
     }
 
-    IEnumerator CReverseBright()
+    void ReverseBright()
     {
-        isCoroutinePlaying = true;
-
-        yield return new WaitForSeconds(brightReverseTime[nextBrightReverseTimeIndex]);
-
         brightDirection *= -1;
         if (nextBrightReverseTimeIndex < brightReverseTime.Count - 1)
         {
@@ -56,6 +55,6 @@ public class SetBright: MonoBehaviour
         {
             nextBrightReverseTimeIndex = 0;
         }
-        isCoroutinePlaying = false;
+        time = 0;
     }
 }

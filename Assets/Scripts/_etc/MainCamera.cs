@@ -40,6 +40,7 @@ public class MainCamera : MonoBehaviour
     {
         Camera.main.fieldOfView = 104f;
     }
+
     private void Update()
     {
         //카메라 메인메뉴로 거의 다 올라가면 fishing삭제

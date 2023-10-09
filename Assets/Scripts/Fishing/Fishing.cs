@@ -184,7 +184,7 @@ public class Fishing : MonoBehaviour
         }
 
         const float mainBackgroundPosY = 67.87f;
-        mainBackground.transform.position = new Vector3(mainBackground.transform.position.x, mainBackgroundPosY, 0);
+        //mainBackground.transform.position = new Vector3(mainBackground.transform.position.x, mainBackgroundPosY, 0);
 
         onFishingEnd.Invoke();
         Camera.main.GetComponent<MainCamera>().MoveToMainScreen();
@@ -266,6 +266,7 @@ public class Fishing : MonoBehaviour
         newItem.itemName = fishData.GetName();
         //나중에 수정해야함
         newItem.itemPrice = fishData.GetId();
+
         newItem.itemType = EItemType.FISH;
 
         return newItem;

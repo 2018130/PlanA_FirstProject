@@ -8,11 +8,15 @@ public class Fishbowl : MonoBehaviour
     public const int FISHBOWL_BOX_SIZE = 50;
     [SerializeField]
     GameObject boxPrefab;
+    [SerializeField]
+    PlayerController playerController;
     GameObject content;
     GameObject sellWindow;
     public GameObject[] boxes = new GameObject[FISHBOWL_BOX_SIZE];
     int itemSize = 0;
     public HashSet<Item> clickedItem = new HashSet<Item>();
+    [SerializeField]
+    Sprite defaultBoxImage;
 
     private void Start()
     {
@@ -42,6 +46,10 @@ public class Fishbowl : MonoBehaviour
             if(item.itemId != -1)
             {
                 boxImg.sprite = item.itemImage;
+            }
+            else
+            {
+                boxImg.sprite = defaultBoxImage;
             }
         }
     }
@@ -73,10 +81,15 @@ public class Fishbowl : MonoBehaviour
         int totalPrice = 0;
         foreach (Item selectedItem in clickedItem)
         {
-            Debug.Log(selectedItem.itemId + "번째 인덱스 아이템 판매완료");
+            totalPrice += selectedItem.itemPrice * selectedItem.itemCount;
+            selectedItem.itemCount = 0;
+            selectedItem.itemId = -1;
         }
 
+        playerController.Coin += totalPrice;
+        int removeSize = RemoveEmptyItemInBox();
         CloseSellWindow();
+        itemSize -= removeSize;
     }
 
     public void SellAllItems_Confirm()
@@ -118,5 +131,39 @@ public class Fishbowl : MonoBehaviour
         boxedItem.itemName = item.itemName;
         boxedItem.itemPrice = item.itemPrice;
         boxedItem.itemType = item.itemType;
+    }
+
+    int RemoveEmptyItemInBox()
+    {
+        for(int i = 0; i < itemSize; i++)
+        {
+            Item item = boxes[i].GetComponent<Item>();
+
+            if(item.itemId == -1 || item.itemCount <= 0)
+            {
+                for (int j = i + 1; j < itemSize; j++)
+                {
+                    Item nextItem = boxes[j].GetComponent<Item>();
+
+                    if(nextItem.itemId != -1 && nextItem.itemCount > 0)
+                    {
+                        item.InitItem(nextItem);
+                        nextItem.itemId = -1;
+                        i = j - 1;
+                        break;
+                    }
+                }
+            }
+        }
+        VisualizeBoxesWithItemInfo();
+
+        int removeSize = 0;
+
+        for(int i = itemSize - 1; i >= 0; i--)
+        {
+            if (boxes[i].GetComponent<Item>().itemId == -1) removeSize++;
+        }
+
+        return removeSize;
     }
 }

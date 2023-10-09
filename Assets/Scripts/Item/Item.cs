@@ -20,10 +20,14 @@ public class Item : MonoBehaviour
     public EItemType itemType = EItemType.NONE;
     public Sprite itemImage;
 
+    private void Awake()
+    {
+        itemId = -1;
+    }
+
     private void Start()
     {
         fishbowl = transform.parent.parent.parent.parent.GetComponent<Fishbowl>();
-        itemId = -1;
     }
     /*
      * 아이템을 클릭하게 되면 해당 아이템의 id를 Fishbowl의 set에 전달
@@ -65,5 +69,15 @@ public class Item : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void InitItem(Item newItem)
+    {
+        itemId = newItem.itemId;
+        itemPrice = newItem.itemPrice;
+        itemCount = newItem.itemCount;
+        itemName = newItem.itemName;
+        itemType = newItem.itemType;
+        itemImage = newItem.itemImage;  
     }
 }

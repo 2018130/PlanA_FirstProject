@@ -26,7 +26,6 @@ public class Bag : MonoBehaviour
         for (int i = 0; i < childCount; i++)
         {
             windows[i] = transform.GetChild(i + 1).gameObject;
-            windows[i].SetActive(false);
         }
         backgroundPanel = transform.GetChild(0).gameObject;
     }

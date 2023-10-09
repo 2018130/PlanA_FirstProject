@@ -36,7 +36,6 @@ public class FishData
         spinePath = dictionaryFishData["SpinePath"].ToString();
         spritePath = dictionaryFishData["SpritePath"].ToString();
         sprite = Resources.Load<Sprite>(spritePath);
-        Debug.Log(fishName + " " + spritePath);
 
         //서식지가 2개 있는경우 ""내 , 로 따로 구분 되어 있어 작업 추가
         habitats.Clear();
