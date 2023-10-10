@@ -10,8 +10,6 @@ public class FishingBtn : MonoBehaviour
     [Space(10f)]
     [SerializeField]
     GameObject mainCat;
-    [SerializeField]
-    GameObject questionUseHealthPanel;
 
     [SerializeField]
     Sprite fishingBtnOnImage;
@@ -19,22 +17,30 @@ public class FishingBtn : MonoBehaviour
     Sprite fishingBtnOffImage;
     [SerializeField]
     Fishing fishing;
-    [SerializeField]
-    PlayerController playerController;
 
     public void ClickToFisingBtn()
     {
-        //mainCat.GetComponent<MainMenuCat>().SetAnimation("Fishing");
-        MainCamera mainCamera = Camera.main.GetComponent<MainCamera>();
-        if (mainCamera)
-        {
-            mainCamera.MoveToGameScreen();
-        }
+        mainCat.GetComponent<Animator>().SetTrigger("StartFishing");
+        mainCat.transform.GetChild(0).GetComponent<Animator>().SetTrigger("StartFishing");
+        float animationPlayTime = mainCat.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length;
+
+        StartCoroutine("C_MoveToGameScreen", animationPlayTime);
     }
 
     public void ReduceBtnSizeAndSetOff()
     {
         GetComponent<Image>().sprite = fishingBtnOffImage;
         transform.localScale = transform.localScale * 5.0f / 6;
+    }
+
+    IEnumerator C_MoveToGameScreen(float animationPlayTime)
+    {
+        yield return new WaitForSeconds(animationPlayTime);
+
+        MainCamera mainCamera = Camera.main.GetComponent<MainCamera>();
+        if (mainCamera)
+        {
+            mainCamera.MoveToGameScreen();
+        }
     }
 }
