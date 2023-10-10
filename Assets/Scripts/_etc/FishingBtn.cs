@@ -19,11 +19,11 @@ public class FishingBtn : MonoBehaviour
     Sprite fishingBtnOffImage;
     [SerializeField]
     Fishing fishing;
+    [SerializeField]
+    PlayerController playerController;
 
     public void ClickToFisingBtn()
     {
-        Image btnImage = GetComponent<Image>();
-
         //mainCat.GetComponent<MainMenuCat>().SetAnimation("Fishing");
         MainCamera mainCamera = Camera.main.GetComponent<MainCamera>();
         if (mainCamera)

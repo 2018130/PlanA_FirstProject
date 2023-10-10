@@ -12,6 +12,7 @@ public enum EScreenState
     main,
     sharehouse,
 }
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
     Vector3 destinationPos = Vector3.zero;
     [SerializeField]
     float speed = 5.0f;
+
+    [SerializeField]
+    SpriteRenderer fishingFloats;
 
     const int maxFishingLineLenth = 3000;
     int fishingLineLenth;
@@ -97,6 +101,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitializePlayerInfoFromPlayerPrefs();
+        SetBaitImage(selectedBaitImage);
     }
 
     // Update is called once per frame
@@ -172,5 +177,6 @@ public class PlayerController : MonoBehaviour
     {
         selectedBaitImage = newBait;
         upperBar.transform.GetChild(4).GetChild(0).GetComponent<Image>().sprite = selectedBaitImage;
+        fishingFloats.sprite = newBait;
     }
 }
