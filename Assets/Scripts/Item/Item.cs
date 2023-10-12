@@ -29,6 +29,20 @@ public class Item : MonoBehaviour
     {
         fishbowl = transform.parent.parent.parent.parent.GetComponent<Fishbowl>();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Item item = new Item();
+            item.itemId = 1000;
+            item.itemPrice = 1000;
+            item.itemCount = 1;
+            item.itemName = "treasure";
+            item.itemType = EItemType.TREASURE;
+            fishbowl.AddItemInBox(item);
+        }
+    }
     /*
      * 아이템을 클릭하게 되면 해당 아이템의 id를 Fishbowl의 set에 전달
      */
@@ -68,6 +82,26 @@ public class Item : MonoBehaviour
                     }
                 }
             }
+
+            switch(itemType)
+            {
+                case EItemType.TREASURE:
+                    {
+                        fishbowl.sellBtn.SetActive(false);
+                        fishbowl.allSellBtn.SetActive(false);
+                        fishbowl.openTreasureBtn.SetActive(true);
+
+                        break;
+                    }
+                case EItemType.FISH:
+                    {
+                        fishbowl.sellBtn.SetActive(true);
+                        fishbowl.allSellBtn.SetActive(true);
+                        fishbowl.openTreasureBtn.SetActive(false);
+
+                        break;
+                    }
+            }
         }
     }
 
@@ -79,5 +113,20 @@ public class Item : MonoBehaviour
         itemName = newItem.itemName;
         itemType = newItem.itemType;
         itemImage = newItem.itemImage;  
+    }
+
+    public void UseItem()
+    {
+        switch (itemType)
+        {
+            case EItemType.TREASURE:
+                {
+                    Debug.Log("보물 아이템 사용 완료");
+                    itemId = -1;
+                    itemCount = 0;
+
+                    break;
+                }
+        }
     }
 }

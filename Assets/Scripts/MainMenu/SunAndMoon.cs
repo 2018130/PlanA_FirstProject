@@ -7,8 +7,8 @@ public class SunAndMoon : MonoBehaviour
     GameObject sun;
     GameObject moon;
 
-    float dayTime = 55f;
-    float nightTime = 81f;
+    float dayTime = 3f;
+    float nightTime = 3f;
 
     private void Start()
     {
@@ -20,8 +20,8 @@ public class SunAndMoon : MonoBehaviour
 
     IEnumerator C_SunRising()
     {
-        sun.SetActive(true);
-        moon.SetActive(false);
+        sun.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        moon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
 
         yield return new WaitForSeconds(dayTime);
 
@@ -30,8 +30,8 @@ public class SunAndMoon : MonoBehaviour
 
     IEnumerator C_MoonRising()
     {
-        sun.SetActive(false);
-        moon.SetActive(true);
+        sun.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        moon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
 
         yield return new WaitForSeconds(nightTime);
 

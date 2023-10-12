@@ -8,20 +8,31 @@ public class Fishbowl : MonoBehaviour
     public const int FISHBOWL_BOX_SIZE = 50;
     [SerializeField]
     GameObject boxPrefab;
+
     [SerializeField]
     PlayerController playerController;
+
     GameObject content;
     GameObject sellWindow;
     public GameObject[] boxes = new GameObject[FISHBOWL_BOX_SIZE];
     int itemSize = 0;
+
     public HashSet<Item> clickedItem = new HashSet<Item>();
+
     [SerializeField]
     Sprite defaultBoxImage;
+
+    public GameObject sellBtn;
+    public GameObject allSellBtn;
+    public GameObject openTreasureBtn;
 
     private void Start()
     {
         content = transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-        sellWindow = transform.GetChild(5).gameObject;
+        sellBtn = transform.Find("SellBtn").gameObject;
+        allSellBtn = transform.Find("AllSellBtn").gameObject;
+        openTreasureBtn = transform.Find("OpenTreasureBtn").gameObject;
+        sellWindow = transform.Find("SellWindow").gameObject;
         InitBoxes();
         gameObject.SetActive(false);
     }

@@ -16,7 +16,7 @@ public enum EScreenState
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    Sprite selectedBaitImage;
+    public Sprite selectedBaitImage;
 
     [SerializeField]
     GameObject upperBar;
@@ -178,5 +178,17 @@ public class PlayerController : MonoBehaviour
         selectedBaitImage = newBait;
         upperBar.transform.GetChild(4).GetChild(0).GetComponent<Image>().sprite = selectedBaitImage;
         fishingFloats.sprite = newBait;
+    }
+
+    public void AddFishingLineLenth()
+    {
+        const int addedLenth = 100;
+        FishingLineLenth += addedLenth;
+    }
+
+    public void AddHealth()
+    {
+        const int addedHealth = 300;
+        Health += addedHealth;
     }
 }
