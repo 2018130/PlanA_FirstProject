@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
             {
                 upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = fishingLineLenth.ToString() + "m";
             }
-            SavePlayerInfoToPlayerPrefs();
         }
     }
     const int maxHealth = 1000;
@@ -54,7 +53,6 @@ public class PlayerController : MonoBehaviour
             {
                 upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().text = health.ToString();
             }
-            SavePlayerInfoToPlayerPrefs();
         }
     }
 
@@ -82,7 +80,6 @@ public class PlayerController : MonoBehaviour
                     upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = coin.ToString();
                 }
             }
-            SavePlayerInfoToPlayerPrefs();
         }
     }
 
@@ -107,16 +104,17 @@ public class PlayerController : MonoBehaviour
         if (!PlayerPrefs.HasKey("Health"))
         {
             Health = 300;
-            Coin = 0;
+            Coin = 919;
             PlayerPrefs.SetInt("Health", Health);
             PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("FishingLineLenth", Coin);
+            PlayerPrefs.SetInt("FishingLineLenth", FishingLineLenth);
         }
         else
         {
             Health = PlayerPrefs.GetInt("Health");
             Coin = PlayerPrefs.GetInt("Coin");
             FishingLineLenth = PlayerPrefs.GetInt("FishingLineLenth");
+            Debug.Log("get coin : " + PlayerPrefs.GetInt("Coin"));
         }
     }
 
@@ -125,6 +123,7 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetInt("Health", Health);
         PlayerPrefs.SetInt("Coin", Coin);
         PlayerPrefs.SetInt("FishingLineLenth", FishingLineLenth);
+        Debug.Log("save coin : " + PlayerPrefs.GetInt("Coin"));
     }
 
     public void IncreaseHBC()
@@ -162,11 +161,15 @@ public class PlayerController : MonoBehaviour
     {
         const int addedLenth = 100;
         FishingLineLenth += addedLenth;
+
+        SavePlayerInfoToPlayerPrefs();
     }
 
     public void AddHealth()
     {
         const int addedHealth = 300;
         Health += addedHealth;
+
+        SavePlayerInfoToPlayerPrefs();
     }
 }

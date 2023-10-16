@@ -115,6 +115,7 @@ public class Fishbowl : MonoBehaviour
         }
 
         playerController.Coin += totalPrice;
+        playerController.SavePlayerInfoToPlayerPrefs();
         int removeSize = RemoveEmptyItemInBox();
         CloseSellWindow();
         itemSize -= removeSize;
