@@ -33,7 +33,7 @@ public class MoveTo : MonoBehaviour
 
         Vector2 nextPos = new Vector2(transform.position.x, transform.position.y) +
             Time.deltaTime * direction.normalized * moveSpeed;
-
+        /*
         if (nextPos.x < startPosition.x || nextPos.x > endPosition.x)
         {
             nextPos.x = transform.position.x;
@@ -41,25 +41,23 @@ public class MoveTo : MonoBehaviour
         if (nextPos.y < startPosition.y || nextPos.y > endPosition.y)
         {
             nextPos.y = transform.position.y;
-        }
+        }*/
 
         transform.position = nextPos;
 
-        if ((Mathf.Abs(transform.position.x - startPosition.x) < 0.01f &&
-            Mathf.Abs(transform.position.y - startPosition.y) < 0.01f) ||
-                (Mathf.Abs(transform.position.x - endPosition.x) < 0.01f &&
-            Mathf.Abs(transform.position.y - endPosition.y) < 0.01f))
+        if (nextPos.x < startPosition.x || nextPos.x > endPosition.x ||
+            nextPos.y < startPosition.y || nextPos.y > endPosition.y)
         {
             switch (eEndState)
             {
                 case EEndState.GOSTARTPOINT:
                     {
-                        transform.position = startPosition + Time.deltaTime * direction.normalized * moveSpeed * 100;
+                        transform.position = startPosition;
                         break;
                     }
                 case EEndState.GOENDPOINT:
                     {
-                        transform.position = endPosition + Time.deltaTime * direction.normalized * moveSpeed * 100;
+                        transform.position = endPosition;
                         break;
                     }
                 case EEndState.STOP:

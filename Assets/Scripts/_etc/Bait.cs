@@ -10,7 +10,7 @@ public class Bait : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(SetBaitImage);
+        GetComponent<Button>().onClick.AddListener(GetBaitImage);
     }
 
     private void Start()
@@ -18,12 +18,20 @@ public class Bait : MonoBehaviour
         baitWindow = transform.parent.parent.parent.parent.GetComponent<BaitWindow>();
     }
 
-    public void SetBaitImage()
+    public void GetBaitImage()
     {
         Sprite baitImage = transform.GetChild(0).GetComponent<Image>().sprite;
 
-        if (baitImage == baitWindow.defaultBoxImage) return;
+        baitWindow.selectedBaitImage = baitImage;
 
-        baitWindow.playerController.SetBaitImage(baitImage);
+        if(baitImage != baitWindow.defaultBoxImage)
+        {
+            for (int i = 0; i < baitWindow.ownBaitSize; i++)
+            {
+                baitWindow.boxes[i].GetComponent<Image>().color = new Color(1, 1, 1);
+            }
+
+            GetComponent<Image>().color = new Color(0.58f, 0.58f, 0.58f);
+        }
     }
 }

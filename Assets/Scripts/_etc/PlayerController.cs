@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
             {
                 upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = fishingLineLenth.ToString() + "m";
             }
+            SavePlayerInfoToPlayerPrefs();
         }
     }
     const int maxHealth = 1000;
@@ -53,21 +54,7 @@ public class PlayerController : MonoBehaviour
             {
                 upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().text = health.ToString();
             }
-        }
-    }
-
-    const int maxBait = 10;
-    int bait;
-    public int Bait
-    {
-        get { return bait; }
-        set
-        {
-            bait = value;
-            if (upperBar != null)
-            {
-                //upperBar.transform.GetChild(2).GetChild(1).GetComponent<Text>().text = bait.ToString();
-            }
+            SavePlayerInfoToPlayerPrefs();
         }
     }
 
@@ -95,6 +82,7 @@ public class PlayerController : MonoBehaviour
                     upperBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = coin.ToString();
                 }
             }
+            SavePlayerInfoToPlayerPrefs();
         }
     }
 
@@ -102,12 +90,6 @@ public class PlayerController : MonoBehaviour
     {
         InitializePlayerInfoFromPlayerPrefs();
         SetBaitImage(selectedBaitImage);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
@@ -125,17 +107,14 @@ public class PlayerController : MonoBehaviour
         if (!PlayerPrefs.HasKey("Health"))
         {
             Health = 300;
-            Bait = maxBait;
             Coin = 0;
             PlayerPrefs.SetInt("Health", Health);
-            PlayerPrefs.SetInt("Bait", Bait);
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("FishingLineLenth", Coin);
         }
         else
         {
             Health = PlayerPrefs.GetInt("Health");
-            Bait = PlayerPrefs.GetInt("Bait");
             Coin = PlayerPrefs.GetInt("Coin");
             FishingLineLenth = PlayerPrefs.GetInt("FishingLineLenth");
         }
@@ -144,7 +123,6 @@ public class PlayerController : MonoBehaviour
     public void SavePlayerInfoToPlayerPrefs()
     {
         PlayerPrefs.SetInt("Health", Health);
-        PlayerPrefs.SetInt("Bait", Bait);
         PlayerPrefs.SetInt("Coin", Coin);
         PlayerPrefs.SetInt("FishingLineLenth", FishingLineLenth);
     }

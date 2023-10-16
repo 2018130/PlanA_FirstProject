@@ -15,12 +15,15 @@ public class Fishbowl : MonoBehaviour
     GameObject content;
     GameObject sellWindow;
     public GameObject[] boxes = new GameObject[FISHBOWL_BOX_SIZE];
-    int itemSize = 0;
+    public int itemSize = 0;
 
     public HashSet<Item> clickedItem = new HashSet<Item>();
 
     [SerializeField]
     Sprite defaultBoxImage;
+
+    [SerializeField]
+    Fishing fishing;
 
     public GameObject sellBtn;
     public GameObject allSellBtn;
@@ -34,7 +37,18 @@ public class Fishbowl : MonoBehaviour
         openTreasureBtn = transform.Find("OpenTreasureBtn").gameObject;
         sellWindow = transform.Find("SellWindow").gameObject;
         InitBoxes();
+        InitItemInfoFromPlayerPrefs();
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveItemInfoToPlayerPrefs();
     }
 
     void InitBoxes()
@@ -62,6 +76,8 @@ public class Fishbowl : MonoBehaviour
             {
                 boxImg.sprite = defaultBoxImage;
             }
+
+            boxes[i].GetComponent<Image>().color = new Color(1f, 1f, 1f);
         }
     }
 
@@ -84,6 +100,7 @@ public class Fishbowl : MonoBehaviour
         {
             boxes[i].GetComponent<Image>().color = new Color(1f, 1f, 1f);
         }
+
         sellWindow.SetActive(false);
     }
 
@@ -110,7 +127,7 @@ public class Fishbowl : MonoBehaviour
             clickedItem.Add(boxes[i].GetComponent<Item>());
         }
 
-        sellWindow.SetActive(true);
+        OpenSellWindow();
     }
 
     public void AddItemInBox(Item newItem)
@@ -144,7 +161,7 @@ public class Fishbowl : MonoBehaviour
         boxedItem.itemType = item.itemType;
     }
 
-    int RemoveEmptyItemInBox()
+    public int RemoveEmptyItemInBox()
     {
         for(int i = 0; i < itemSize; i++)
         {
@@ -160,7 +177,7 @@ public class Fishbowl : MonoBehaviour
                     {
                         item.InitItem(nextItem);
                         nextItem.itemId = -1;
-                        i = j - 1;
+                        nextItem.itemCount = 0;
                         break;
                     }
                 }
@@ -176,5 +193,47 @@ public class Fishbowl : MonoBehaviour
         }
 
         return removeSize;
+    }
+
+    /*
+     * 아이템 정보를 id/개수로 저장
+     */
+    public void SaveItemInfoToPlayerPrefs()
+    {
+        string str = "";
+
+        for (int i = 0; i < itemSize; i++)
+        {
+            Item item = boxes[i].GetComponent<Item>();
+            str += item.itemId + "/" + item.itemCount + " ";
+        }
+        Debug.Log("-" + str + "-");
+        PlayerPrefs.SetString("OwnItemIDAndCount", str);
+    }
+
+    void InitItemInfoFromPlayerPrefs()
+    {
+        string[] datas = PlayerPrefs.GetString("OwnItemIDAndCount").Split(' ');
+
+        if (datas.Length == 1) return;
+
+        for (int i = 0; i < datas.Length; i++)
+        {
+            string[] itemInfoAndCount = datas[i].Split('/');
+            if (itemInfoAndCount.Length == 1) return;
+
+            if (FishDataBundle.fishDatas.ContainsKey(int.Parse(itemInfoAndCount[0])))
+            {
+
+                FishData fishData = FishDataBundle.fishDatas[int.Parse(itemInfoAndCount[0])];
+
+                if (fishData != null)
+                {
+                    Item item = fishing.ChangeFishDataToItem(fishData);
+                    item.itemCount = int.Parse(itemInfoAndCount[1]);
+                    AddItemInBox(item);
+                }
+            }
+        }
     }
 }

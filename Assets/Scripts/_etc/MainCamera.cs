@@ -7,8 +7,6 @@ public class MainCamera : MonoBehaviour
     [SerializeField]
     Fishing fishing;
     [SerializeField]
-    QuestionUseBait questionUseBait;
-    [SerializeField]
     PlayerController playerController;
     [SerializeField]
     GameObject mainUI;

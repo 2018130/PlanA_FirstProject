@@ -55,6 +55,7 @@ public class Bag : MonoBehaviour
     void CloseWindow()
     {
         ActiveOnlySelectedWindow(-1);
+        windows[3].GetComponent<Fishbowl>().SaveItemInfoToPlayerPrefs();
         backgroundPanel.SetActive(false);
     }
 

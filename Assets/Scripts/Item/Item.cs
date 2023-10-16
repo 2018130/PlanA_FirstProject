@@ -12,6 +12,7 @@ public enum EItemType
 public class Item : MonoBehaviour
 {
     Fishbowl fishbowl;
+    BaitWindow baitWindow;
 
     public int itemId = -1;
     public int itemPrice = 0;
@@ -28,6 +29,8 @@ public class Item : MonoBehaviour
     private void Start()
     {
         fishbowl = transform.parent.parent.parent.parent.GetComponent<Fishbowl>();
+        fishbowl.openTreasureBtn.GetComponent<Button>().onClick.AddListener(UseItem);
+        baitWindow = fishbowl.transform.parent.Find("BaitWindow").GetComponent<BaitWindow>();
     }
 
     private void Update()
@@ -121,9 +124,12 @@ public class Item : MonoBehaviour
         {
             case EItemType.TREASURE:
                 {
-                    Debug.Log("보물 아이템 사용 완료");
+                    baitWindow.AddRandomBait();
                     itemId = -1;
                     itemCount = 0;
+                    fishbowl.clickedItem.Remove(this);
+                    int removeSize = fishbowl.RemoveEmptyItemInBox();
+                    fishbowl.itemSize -= removeSize;
 
                     break;
                 }

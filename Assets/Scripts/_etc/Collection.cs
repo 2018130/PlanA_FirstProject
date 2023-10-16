@@ -35,25 +35,6 @@ public class Collection : MonoBehaviour
 
             gameObject.SetActive(false);
         }
-
-        //화면영역밖 터치시 
-#if UNITY_EDITOR
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (!EventSystem.current.IsPointerOverGameObject())
-                {
-                    gameObject.SetActive(false);
-                }
-            }
-#elif UNITY_ANDROID
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-            {
-                gameObject.SetActive(false);
-            }
-        }
-#endif
         
         //디버깅용 코드
         if (Input.GetKeyDown(KeyCode.Alpha0))

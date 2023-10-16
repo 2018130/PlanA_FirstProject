@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BaitWindow : MonoBehaviour
 {
-    public const int Bait_BOX_SIZE = 50;
-    public const int Bait_IMAGE_SIZE = 5;
+    public const int BAIT_BOX_SIZE = 50;
+    public const int BAIT_IMAGE_SIZE = 5;
     [SerializeField]
     GameObject boxPrefab;
 
@@ -14,43 +14,30 @@ public class BaitWindow : MonoBehaviour
     public PlayerController playerController;
 
     GameObject content;
-    public GameObject[] boxes = new GameObject[Bait_BOX_SIZE];
-    int ownBaitSize = 0;
+    public GameObject[] boxes = new GameObject[BAIT_BOX_SIZE];
+    public int ownBaitSize = 0;
 
     [SerializeField]
     public Sprite defaultBoxImage;
 
     [SerializeField]
-    Sprite[] baitImages = new Sprite[Bait_IMAGE_SIZE];
+    Sprite[] baitImages = new Sprite[BAIT_IMAGE_SIZE];
+
+    public Sprite selectedBaitImage;
+    Button baitUpBtn;
 
     private void Start()
     {
         content = transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
         InitBoxes();
+        baitUpBtn = transform.Find("BaitUpBtn").GetComponent<Button>();
+        baitUpBtn.onClick.AddListener(ChangeBaitImage);
         gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        bool[] inputs = new bool[5];
-        inputs[0] = Input.GetKeyDown(KeyCode.Alpha1);
-        inputs[1] = Input.GetKeyDown(KeyCode.Alpha2);
-        inputs[2] = Input.GetKeyDown(KeyCode.Alpha3);
-        inputs[3] = Input.GetKeyDown(KeyCode.Alpha4);
-        inputs[4] = Input.GetKeyDown(KeyCode.Alpha5);
-
-        for(int i = 0; i < 5; i++)
-        {
-            if (inputs[i])
-            {
-                AddBaitImageInBox(i);
-            }
-        }
     }
 
     void InitBoxes()
     {
-        for (int i = 0; i < Bait_BOX_SIZE; i++)
+        for (int i = 0; i < BAIT_BOX_SIZE; i++)
         {
             GameObject newBox = Instantiate(boxPrefab, content.transform);
             boxes[i] = newBox;
@@ -73,5 +60,23 @@ public class BaitWindow : MonoBehaviour
         ownBaitSize++;
     }
 
+    public void AddRandomBait()
+    {
+        if (ownBaitSize == BAIT_IMAGE_SIZE) return;
 
+        int preBaitSize = ownBaitSize;
+        while (preBaitSize == ownBaitSize)
+        {
+            int idx = Random.Range(0, BAIT_IMAGE_SIZE);
+
+            AddBaitImageInBox(idx);
+        }
+    }
+
+    void ChangeBaitImage()
+    {
+        if (selectedBaitImage == defaultBoxImage) return;
+
+        playerController.SetBaitImage(selectedBaitImage);
+    }
 }
