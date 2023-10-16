@@ -16,7 +16,7 @@ public class Fishbowl : MonoBehaviour
     GameObject sellWindow;
     public GameObject[] boxes = new GameObject[FISHBOWL_BOX_SIZE];
     public int itemSize = 0;
-
+    
     public HashSet<Item> clickedItem = new HashSet<Item>();
 
     [SerializeField]
