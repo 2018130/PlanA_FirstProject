@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Spine.Unity;
 using UnityEngine.EventSystems;
+using System.IO;
 using UnityEngine;
+
+public class CollectionSaveData
+{
+    public List<int> collectedFishIdx = new List<int>();
+}
 
 public class Collection : MonoBehaviour
 {
@@ -14,17 +20,24 @@ public class Collection : MonoBehaviour
     int curIndex = 0;
     int fishDataSize = 0;
 
+    string path;
+
     // Start is called before the first frame update
     void Start()
     {
-        InitializeCollectionInfoFromPlayerPrefs();
+#if UNITY_EDITOR
+        path = Path.Combine(Application.dataPath, "collectionData.json");
+#elif UNITY_ANDROID
+        path = Application.persistentDataPath + "/collectionData.json";
+#endif
+        InitializeCollectionInfoFromJson();
     }
 
     // Update is called once per frame
     void Update()
     {
         //fishDatas초기화 코드
-        if(FishDataBundle.fishDatas.Count != fishDataSize)
+        if (FishDataBundle.fishDatas.Count != fishDataSize)
         {
             foreach (KeyValuePair<int, FishData> data in FishDataBundle.fishDatas)
             {
@@ -35,7 +48,7 @@ public class Collection : MonoBehaviour
 
             gameObject.SetActive(false);
         }
-        
+
         //디버깅용 코드
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
@@ -68,7 +81,7 @@ public class Collection : MonoBehaviour
     {
         if (index < 0 || index >= fishDataSize) return;
 
-        if(!gameObject.activeSelf)
+        if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
         }
@@ -94,48 +107,49 @@ public class Collection : MonoBehaviour
 
     public void ExitCollection()
     {
+        SaveCollectionInfoToJson();
         gameObject.SetActive(false);
     }
 
     private void OnApplicationQuit()
     {
-        SaveCollectionInfoToPlayerPrefs();
+        SaveCollectionInfoToJson();
     }
 
-    void SaveCollectionInfoToPlayerPrefs()
+    void SaveCollectionInfoToJson()
     {
-        string str = "";
+        CollectionSaveData collectionDatabase = new CollectionSaveData();
 
-        for(int i = 0; i < fishDatas.Length; i++)
+        for (int i = 0; i < fishDatas.Length; i++)
         {
             if (isCollected[i])
             {
-                str += i.ToString() + " ";
+                collectionDatabase.collectedFishIdx.Add(i);
             }
         }
+        string json = JsonUtility.ToJson(collectionDatabase, true);
+        File.WriteAllText(path, json);
 
-        PlayerPrefs.SetString("CollectedFishIndex", str);
     }
 
-    void InitializeCollectionInfoFromPlayerPrefs()
+    void InitializeCollectionInfoFromJson()
     {
-        if (PlayerPrefs.GetString("CollectedFishIndex").Length == 0) return;
+        if (!File.Exists(path)) return;
 
+        string jsonLoad = File.ReadAllText(path);
+        CollectionSaveData collectionDatabase = new CollectionSaveData();
+        collectionDatabase = JsonUtility.FromJson<CollectionSaveData>(jsonLoad);
 
-        char[] separator = { ' ' };
-        string[] indexs = PlayerPrefs.GetString("CollectedFishIndex").Split(separator);
-
-        for(int i = 0; i < indexs.Length; i++)
+        if (collectionDatabase != null)
         {
-            indexs[i] = indexs[i].Trim();
-        }
-        for (int i = 0; i < fishDataSize; i++)
-        {
-            isCollected[i] = false;
-        }
-        for(int i = 0; i < indexs.Length - 1; i++)
-        {
-            isCollected[int.Parse(indexs[i])] = true;
+            for (int i = 0; i < fishDataSize; i++)
+            {
+                isCollected[i] = false;
+            }
+            for (int i = 0; i < collectionDatabase.collectedFishIdx.Count; i++)
+            {
+                isCollected[collectionDatabase.collectedFishIdx[i]] = true;
+            }
         }
     }
 }

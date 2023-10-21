@@ -13321,6 +13321,7 @@ MonoBehaviour:
   upperBar: {fileID: 1190192331}
   speed: 5
   fishingFloats: {fileID: 34419447}
+  path: 
 --- !u!1 &1489751358
 GameObject:
   m_ObjectHideFlags: 0

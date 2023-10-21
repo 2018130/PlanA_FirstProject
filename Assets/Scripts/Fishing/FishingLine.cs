@@ -41,19 +41,19 @@ public class FishingLine : MonoBehaviour
             sign = 1;
         }
 
-        degree += sign * lineAcc * Time.deltaTime;
-
 #if UNITY_EDITOR
         if (Input.GetMouseButtonUp(0))
         {
             sign *= -1;
             lineAcc = 10;
+            return;
         }
 #elif UNITY_ANDROID        
         if(Input.touchCount != 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             sign *= -1;
             lineAcc = 10;
+            return;
         }
 #endif
         if(lineAcc < maxLineAcc)
@@ -61,5 +61,7 @@ public class FishingLine : MonoBehaviour
             float lineAccWeight = 5.0f;
             lineAcc += Time.deltaTime * lineAccWeight;
         }
+
+        degree += sign * lineAcc * Time.deltaTime;
     }
 }

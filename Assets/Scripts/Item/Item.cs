@@ -33,19 +33,6 @@ public class Item : MonoBehaviour
         baitWindow = fishbowl.transform.parent.Find("BaitWindow").GetComponent<BaitWindow>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Item item = new Item();
-            item.itemId = 1000;
-            item.itemPrice = 1000;
-            item.itemCount = 1;
-            item.itemName = "treasure";
-            item.itemType = EItemType.TREASURE;
-            fishbowl.AddItemInBox(item);
-        }
-    }
     /*
      * 아이템을 클릭하게 되면 해당 아이템의 id를 Fishbowl의 set에 전달
      */

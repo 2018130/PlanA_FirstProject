@@ -1,7 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine;
+
+[System.Serializable]
+public class FishbowlSaveData
+{
+    public List<int> ownItemId = new List<int>();
+    public List<int> ownItemCount = new List<int>();
+}
 
 public class Fishbowl : MonoBehaviour
 {
@@ -29,26 +37,39 @@ public class Fishbowl : MonoBehaviour
     public GameObject allSellBtn;
     public GameObject openTreasureBtn;
 
+    string path;
+
     private void Start()
     {
+#if UNITY_EDITOR
+        path = Path.Combine(Application.dataPath, "fishbowlData.json");
+#elif UNITY_ANDROID
+        path = Application.persistentDataPath + "/fishbowlData.json";
+#endif
         content = transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
         sellBtn = transform.Find("SellBtn").gameObject;
         allSellBtn = transform.Find("AllSellBtn").gameObject;
         openTreasureBtn = transform.Find("OpenTreasureBtn").gameObject;
         sellWindow = transform.Find("SellWindow").gameObject;
         InitBoxes();
-        InitItemInfoFromPlayerPrefs();
+        InitItemInfoFromJson();
+
         gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        
+        if(boxes[9].GetComponent<Item>().itemType != EItemType.TREASURE)
+        {
+            Item testBox = boxes[9].GetComponent<Item>();
+            testBox.itemId = 1000;
+            testBox.itemType = EItemType.TREASURE;
+        }
     }
 
     private void OnApplicationQuit()
     {
-        SaveItemInfoToPlayerPrefs();
+        SaveItemInfoToJson();
     }
 
     void InitBoxes()
@@ -115,7 +136,7 @@ public class Fishbowl : MonoBehaviour
         }
 
         playerController.Coin += totalPrice;
-        playerController.SavePlayerInfoToPlayerPrefs();
+        playerController.SavePlayerInfoToJson();
         int removeSize = RemoveEmptyItemInBox();
         CloseSellWindow();
         itemSize -= removeSize;
@@ -199,40 +220,51 @@ public class Fishbowl : MonoBehaviour
     /*
      * 아이템 정보를 id/개수로 저장
      */
-    public void SaveItemInfoToPlayerPrefs()
+    public void SaveItemInfoToJson()
     {
-        string str = "";
+        FishbowlSaveData fishbowlSaveData = new FishbowlSaveData();
 
         for (int i = 0; i < itemSize; i++)
         {
             Item item = boxes[i].GetComponent<Item>();
-            str += item.itemId + "/" + item.itemCount + " ";
+            fishbowlSaveData.ownItemCount.Add(item.itemCount);
+            fishbowlSaveData.ownItemId.Add(item.itemId);
         }
-        Debug.Log("-" + str + "-");
-        PlayerPrefs.SetString("OwnItemIDAndCount", str);
+
+        string json = JsonUtility.ToJson(fishbowlSaveData, true);
+
+        File.WriteAllText(path, json);
     }
 
-    void InitItemInfoFromPlayerPrefs()
+    void InitItemInfoFromJson()
     {
-        string[] datas = PlayerPrefs.GetString("OwnItemIDAndCount").Split(' ');
+        FishbowlSaveData fishbowlSaveData = new FishbowlSaveData();
 
-        if (datas.Length == 1) return;
-
-        for (int i = 0; i < datas.Length; i++)
+        if (!File.Exists(path))
         {
-            string[] itemInfoAndCount = datas[i].Split('/');
-            if (itemInfoAndCount.Length == 1) return;
+            Debug.Log("파일경로가 존재하지 않습니다");
+        }
+        else
+        {
+            string loadJson = File.ReadAllText(path);
+            fishbowlSaveData = JsonUtility.FromJson<FishbowlSaveData>(loadJson);
 
-            if (FishDataBundle.fishDatas.ContainsKey(int.Parse(itemInfoAndCount[0])))
+            if (fishbowlSaveData != null)
             {
-
-                FishData fishData = FishDataBundle.fishDatas[int.Parse(itemInfoAndCount[0])];
-
-                if (fishData != null)
+                for (int i = 0; i < fishbowlSaveData.ownItemId.Count; i++)
                 {
-                    Item item = fishing.ChangeFishDataToItem(fishData);
-                    item.itemCount = int.Parse(itemInfoAndCount[1]);
-                    AddItemInBox(item);
+                    if (FishDataBundle.fishDatas.ContainsKey(fishbowlSaveData.ownItemId[i]))
+                    {
+
+                        FishData fishData = FishDataBundle.fishDatas[fishbowlSaveData.ownItemId[i]];
+
+                        if (fishData != null)
+                        {
+                            Item item = fishing.ChangeFishDataToItem(fishData);
+                            item.itemCount = fishbowlSaveData.ownItemCount[i];
+                            AddItemInBox(item);
+                        }
+                    }
                 }
             }
         }

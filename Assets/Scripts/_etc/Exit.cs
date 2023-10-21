@@ -9,7 +9,7 @@ public class Exit : MonoBehaviour
 
     public void ExitGame()
     {
-        playerController.SavePlayerInfoToPlayerPrefs();
+        playerController.SavePlayerInfoToJson();
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

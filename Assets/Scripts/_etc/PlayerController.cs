@@ -5,12 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public enum EScreenState
 {
     main,
     sharehouse,
+}
+
+[System.Serializable]
+public class PlayerControllerSaveData
+{
+    public int Health;
+    public int Coin;
+    public int FishingLineLenth;
 }
 
 public class PlayerController : MonoBehaviour
@@ -83,9 +92,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public string path;
+
     private void Start()
     {
-        InitializePlayerInfoFromPlayerPrefs();
+#if UNITY_EDITOR
+        path = Path.Combine(Application.dataPath, "playerData.json");
+#elif UNITY_ANDROID
+        path = Application.persistentDataPath + "/playerData.json";
+#endif
+        InitializePlayerInfoFromJson();
         SetBaitImage(selectedBaitImage);
     }
 
@@ -99,31 +115,38 @@ public class PlayerController : MonoBehaviour
         return ray.GetPoint(distance);
     }
 
-    private void InitializePlayerInfoFromPlayerPrefs()
+    private void InitializePlayerInfoFromJson()
     {
-        if (!PlayerPrefs.HasKey("Health"))
+        if (!File.Exists(path))
         {
             Health = 300;
-            Coin = 919;
-            PlayerPrefs.SetInt("Health", Health);
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("FishingLineLenth", FishingLineLenth);
+            Coin = 0;
+            fishingLineLenth = 1500;
         }
         else
         {
-            Health = PlayerPrefs.GetInt("Health");
-            Coin = PlayerPrefs.GetInt("Coin");
-            FishingLineLenth = PlayerPrefs.GetInt("FishingLineLenth");
-            Debug.Log("get coin : " + PlayerPrefs.GetInt("Coin"));
+            PlayerControllerSaveData playerControllerSaveData = new PlayerControllerSaveData();
+            string loadJson = File.ReadAllText(path);
+            playerControllerSaveData = JsonUtility.FromJson<PlayerControllerSaveData>(loadJson);
+
+            if(playerControllerSaveData != null)
+            {
+                Health = playerControllerSaveData.Health;
+                Coin = playerControllerSaveData.Coin;
+                FishingLineLenth = playerControllerSaveData.FishingLineLenth;
+            }
         }
     }
 
-    public void SavePlayerInfoToPlayerPrefs()
+    public void SavePlayerInfoToJson()
     {
-        PlayerPrefs.SetInt("Health", Health);
-        PlayerPrefs.SetInt("Coin", Coin);
-        PlayerPrefs.SetInt("FishingLineLenth", FishingLineLenth);
-        Debug.Log("save coin : " + PlayerPrefs.GetInt("Coin"));
+        PlayerControllerSaveData playercontrollerSaveData = new PlayerControllerSaveData();
+        playercontrollerSaveData.Health = Health;
+        playercontrollerSaveData.Coin = Coin;
+        playercontrollerSaveData.FishingLineLenth = FishingLineLenth;
+
+        string json = JsonUtility.ToJson(playercontrollerSaveData);
+        File.WriteAllText(path, json);
     }
 
     public void IncreaseHBC()
@@ -135,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SavePlayerInfoToPlayerPrefs();
+        SavePlayerInfoToJson();
     }
 
     //yyyy-MM-dd HH:mm:ss
@@ -162,7 +185,7 @@ public class PlayerController : MonoBehaviour
         const int addedLenth = 100;
         FishingLineLenth += addedLenth;
 
-        SavePlayerInfoToPlayerPrefs();
+        SavePlayerInfoToJson();
     }
 
     public void AddHealth()
@@ -170,6 +193,6 @@ public class PlayerController : MonoBehaviour
         const int addedHealth = 300;
         Health += addedHealth;
 
-        SavePlayerInfoToPlayerPrefs();
+        SavePlayerInfoToJson();
     }
 }
