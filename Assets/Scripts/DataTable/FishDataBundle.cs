@@ -8,6 +8,14 @@ public enum Habitat
     FreshWater
 }
 
+public enum FishSize
+{
+    Small,
+    Normal,
+    Middle,
+    Large,
+    UltraLarge,
+}
 public class FishData
 {
     private int id = 0;
@@ -19,8 +27,8 @@ public class FishData
     private string lv = "";
     private float speed = 0;
     private int productCount = 0;
+    private FishSize size = FishSize.Normal;
     private string information = "";
-    private string spinePath = "";
     private string spritePath;
     private Sprite sprite;
     private List<Habitat> habitats = new List<Habitat>();
@@ -32,8 +40,40 @@ public class FishData
         lv = dictionaryFishData["Lv"].ToString();
         speed = float.Parse(dictionaryFishData["Speed"].ToString());
         productCount = int.Parse(dictionaryFishData["ProductCount"].ToString());
+        switch (dictionaryFishData["Size"].ToString())
+        {
+            case "small":
+                {
+                    size = FishSize.Small;
+                    break;
+                }
+            case "normal":
+                {
+                    size = FishSize.Normal;
+                    break;
+                }
+            case "middle":
+                {
+                    size = FishSize.Middle;
+                    break;
+                }
+            case "large":
+                {
+                    size = FishSize.Large;
+                    break;
+                }
+            case "ultraLarge":
+                {
+                    size = FishSize.UltraLarge;
+                    break;
+                }
+            default:
+                {
+                    size = FishSize.Normal;
+                    break;
+                }
+        }
         information = dictionaryFishData["Information"].ToString();
-        spinePath = dictionaryFishData["SpinePath"].ToString();
         spritePath = dictionaryFishData["SpritePath"].ToString();
         sprite = Resources.Load<Sprite>(spritePath);
 
@@ -59,8 +99,8 @@ public class FishData
         lv = baseFishData.lv;
         speed = baseFishData.speed;
         productCount = baseFishData.productCount;
+        size = baseFishData.size;
         information = baseFishData.information;
-        spinePath = baseFishData.spinePath;
         spritePath = baseFishData.spritePath;
 
         for (int i = 0; i < baseFishData.habitats.Count; i++)
@@ -72,7 +112,7 @@ public class FishData
     //µð¹ö±ë¿ë
     public void PrintFishDataVar()
     {
-        Debug.Log(id + " " + fishName + " " + lv + " " + speed + " " + productCount + " " + information + " " + spinePath + " " + spritePath);
+        Debug.Log(id + " " + fishName + " " + lv + " " + speed + " " + productCount + " " + information + " " + " " + spritePath);
         for(int i = 0; i < habitats.Count; i++)
         {
             Debug.Log(habitats[i]);
@@ -87,10 +127,7 @@ public class FishData
     {
         return information;
     }
-    public string GetSpinePath()
-    {
-        return spinePath;
-    }
+
     public Sprite GetSprite()
     {
         return sprite;
@@ -109,6 +146,11 @@ public class FishData
     public int GetId()
     {
         return id;
+    }
+
+    public FishSize GetFishSize()
+    {
+        return size;
     }
 }
 

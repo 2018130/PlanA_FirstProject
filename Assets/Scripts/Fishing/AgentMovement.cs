@@ -151,7 +151,6 @@ public class AgentMovement : MonoBehaviour
 
     void InitFishData()
     {
-        skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetSpinePath());
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         skeletonAnimation.loop = true;
         Spine.Animation[] animations = skeletonAnimation.skeletonDataAsset.GetSkeletonData(false).Animations.Items;

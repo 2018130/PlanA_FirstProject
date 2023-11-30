@@ -1,27 +1,37 @@
-Id,Name,Lv,Speed,ProductCount,Information,Habitat,SpinePath,SpritePath
-1,가시고기,C,1,2,"큰가시고기하목 큰가시고기과에 속하는 민물고기 등에 뾰족한 가시가 있으니 찔리지 않도록 주의하자!",민물,FishSpine/eel/skeleton_SkeletonData,FishSpine/eel/skeleton
-2,연골어강1,S,2,1,연골어강에 속하는 물고기로 딱딱한 뼈 대신에 질긴 피부와 가벼운 물렁뼈를 가지고 있다.,바다,FishSpine/gupi/skeleton_SkeletonData,FishSpine/gupi/skeleton
-3,연골어강2,S,3,1,(프로토 타입이므로 비워둡니다. 연골어강1과 내용 동일),바다,FishSpine/Hairtail/skeleton_SkeletonData,FishSpine/Hairtail/skeleton
-4,연골어강3,S,4,1,〃,바다,FishSpine/Heckel/skeleton_SkeletonData,FishSpine/Heckel/skeleton
-5,심해어1,A,0.5,1,수심 200m보다 깊은 해역에 사는 생물이다. 독특한 생김새를 한 친구가 많다.,바다,FishSpine/JellyFish/skeleton_SkeletonData,FishSpine/JellyFish/skeleton
-6,심해어2,A,2,1,〃,바다,FishSpine/krill/skeleton_SkeletonData,FishSpine/krill/skeleton
-7,심해어3,A,2,1,〃,바다,FishSpine/MolaMola/skeleton_SkeletonData,FishSpine/MolaMola/skeleton1
-8,관상어1,B,2,1,아름다운 모습을 한 친구가 많다. 뷰티풀!,바다,FishSpine/PlasticBag/skeleton_SkeletonData,FishSpine/PlasticBag/skeleton
-9,관상어2,B,1,1,〃,바다,FishSpine/Pollock/skeleton_SkeletonData,FishSpine/Pollock/skeleton
-10,관상어3,B,1,1,〃,바다,FishSpine/Stingray/skeleton_SkeletonData,FishSpine/Stingray/skeleton
-11,해수어1,C,3,2,바다에 사는 친구들! 이곳까지 어떻게 흘러들어온 걸까?,바다,FishSpine/ThornFish/물고기 에니메이션_SkeletonData,FishSpine/ThornFish/물고기 에니메이션
-12,해수어2,C,3,2,〃,바다,FishSpine/YellowTang/skeleton2_SkeletonData,FishSpine/YellowTang/skeleton
-13,해수어3,C,3,2,〃,바다,-,-
-14,담수어1,C,4,1,강이나 호수에서 주로 보이는 친구들이다.,민물,-,-
-15,담수어2,C,4,1,〃,민물,-,-
-16,담수어3,C,4,1,〃,민물,-,-
-17,어패류1,D,-1,1,조개라고 불리는 것들. 단단한 껍질이 매력적이야.,바다,-,-
-18,어패류2,D,-1,1,〃,민물,-,-
-19,어패류3,D,-1,1,〃,민물,-,-
-20,해면1,E,1,1,생긴 것만큼 내부도 간단하게 구성된 친구들. 독특하다.,바다,-,-
-21,해면2,E,1,1,〃,바다,-,-
-22,해초1,E,1,3,흐늘흐늘 흔들리는 게 아름다운 곡선을 만들어내고 있어!,바다,-,-
-23,해초2,E,1,3,〃,바다,-,-
-24,쓰레기1,F,2,1,으악! 누가 이런 걸 버린 거야!,"바다,민물",-,-
-25,쓰레기2,F,3,1,〃,"바다,민물",-,-
-26,쓰레기3,F,3,2,〃,"바다,민물",-,-
+Id,Name,Lv,Speed,ProductCount,Size,Information,Habitat,SpritePath
+1,멸치,C,1,2,small,"큰가시고기하목 큰가시고기과에 속하는 민물고기 등에 뾰족한 가시가 있으니 찔리지 않도록 주의하자!",민물,Fish/Anchovy
+2,물치다래,S,2,1,normal,연골어강에 속하는 물고기로 딱딱한 뼈 대신에 질긴 피부와 가벼운 물렁뼈를 가지고 있다.,바다,Fish/AuxisThazard
+3,돌묵상어,S,3,1,large,(프로토 타입이므로 비워둡니다. 연골어강1과 내용 동일),바다,Fish/BaskingShark
+4,파랑비늘돔,S,4,1,normal,〃,바다,Fish/BlueParrotfish
+5,흰긴수염고래,A,0.5,1,ultraLarge,수심 200m보다 깊은 해역에 사는 생물이다. 독특한 생김새를 한 친구가 많다.,바다,Fish/BlueWhale
+6,향고래,A,2,1,ultraLarge,〃,바다,Fish/Cachalot
+7,물메기,A,2,1,normal,〃,바다,Fish/Catfish
+8,민어,B,2,1,normal,아름다운 모습을 한 친구가 많다. 뷰티풀!,바다,Fish/Croaker
+9,돌고래,B,1,1,middle,〃,바다,Fish/Dolphin
+10,쥐치,B,1,1,normal,〃,바다,Fish/Filefish
+11,가자미,C,3,2,normal,바다에 사는 친구들! 이곳까지 어떻게 흘러들어온 걸까?,바다,Fish/Flounder
+12,갈돔,C,3,2,normal,〃,바다,Fish/Galfish
+13,문절망둑,C,3,2,normal,〃,바다,Fish/Goby
+14,백상아리,C,4,1,large,강이나 호수에서 주로 보이는 친구들이다.,민물,Fish/GreatWhiteShark
+15,귀상어,C,4,1,large,〃,민물,Fish/Hammerhead
+16,참조기,C,4,1,normal,〃,민물,Fish/LarimichthysPolyactis
+17,준치,D,-1,1,normal,조개라고 불리는 것들. 단단한 껍질이 매력적이야.,바다,Fish/LlishaElongata
+18,고등어,D,-1,1,normal,〃,민물,Fish/Mackerel
+19,청새치,D,-1,1,middle,〃,민물,Fish/Marlin
+20,문어,E,1,1,normal,생긴 것만큼 내부도 간단하게 구성된 친구들. 독특하다.,바다,Fish/Octopus
+21,병어,E,1,1,normal,〃,바다,Fish/PampusArgenteus
+22,돌돔,E,1,3,normal,흐늘흐늘 흔들리는 게 아름다운 곡선을 만들어내고 있어!,바다,Fish/Parrotfish
+23,분홍돌고래,E,1,3,middle,〃,바다,Fish/PinkDolphin
+24,참돔,F,2,1,normal,으악! 누가 이런 걸 버린 거야!,"바다,민물",Fish/redSeaBream
+25,우럭,F,3,1,normal,〃,"바다,민물",Fish/Rockfish
+26,정어리,F,3,2,normal,〃,"바다,민물",Fish/Sardine
+27,밴뎅이,F,3,2,normal,〃,"바다,민물",Fish/SardinellaZunasi
+28,삼치,F,3,2,normal,〃,"바다,민물",Fish/ScomberomorusNiphonius
+29,볼락,F,3,2,normal,〃,"바다,민물",Fish/SebastesInermis
+30,쏨뱅이,F,3,2,normal,〃,"바다,민물",Fish/SebastiscusMarmoratus
+31,오징어,F,3,2,normal,〃,"바다,민물",Fish/Squid
+32,가오리,F,3,2,middle,〃,"바다,민물",Fish/Stinggray
+33,개복치,F,3,2,normal,〃,"바다,민물",Fish/Sunfish
+34,황새치,F,3,2,middle,〃,"바다,민물",Fish/Swordfish
+35,복어,F,3,2,normal,〃,"바다,민물",Fish/Tetraodon
+36,다랑어,F,3,2,normal,〃,"바다,민물",Fish/Tunny

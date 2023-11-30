@@ -10,7 +10,7 @@ public class NewFishMove : MonoBehaviour
 
     Rigidbody2D rightBody2D;
 
-    SkeletonAnimation skeletonAnimation;
+    SpriteRenderer spriteRenderer;
 
     float fishSpeed = 1f;
     const float maxFishAngle = 0f;
@@ -23,11 +23,7 @@ public class NewFishMove : MonoBehaviour
     bool isCorutineRunning = false;
     bool isDetectedObject = false;
 
-    private void Awake()
-    {
-        skeletonAnimation = GetComponent<SkeletonAnimation>();
-    }
-
+    
     private void Start()
     {
         rightBody2D = GetComponent<Rigidbody2D>();
@@ -117,25 +113,44 @@ public class NewFishMove : MonoBehaviour
         fishSpeed = 1f;
     }
 
-    void InitFishData()
-    {
-        if (skeletonAnimation != null)
-        {
-            skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(fishData.GetSpinePath());
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            skeletonAnimation.loop = true;
-            Spine.Animation[] animations = skeletonAnimation.skeletonDataAsset.GetSkeletonData(false).Animations.Items;
-            int animationIndex = Random.Range(0, animations.Length);
-            skeletonAnimation.AnimationName = animations[animationIndex].ToString();
-        }
-    }
-
     public void SpawnFish(Vector2 spawnPos)
     {
         gameObject.SetActive(true);
         fishData = FishDataBundle.GetRandomFishData();
-        InitFishData();
+        if (!spriteRenderer)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+        spriteRenderer.sprite = fishData.GetSprite();
         transform.position = spawnPos;
+        switch(fishData.GetFishSize())
+        {
+            case FishSize.Small:
+                {
+                    transform.localScale = new Vector2(-0.1f, 0.1f);
+                    break;
+                }
+            case FishSize.Normal:
+                {
+                    transform.localScale = new Vector2(-0.25f, 0.25f);
+                    break;
+                }
+            case FishSize.Middle:
+                {
+                    transform.localScale = new Vector2(-0.5f, 0.5f);
+                    break;
+                }
+            case FishSize.Large:
+                {
+                    transform.localScale = new Vector2(-1f, 1f);
+                    break;
+                }
+            case FishSize.UltraLarge:
+                {
+                    transform.localScale = new Vector2(-1.5f, 1.5f);
+                    break;
+                }
+        }
     }
 
     public void RemoveFish()

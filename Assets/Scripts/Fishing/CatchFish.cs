@@ -30,7 +30,6 @@ public class CatchFish : MonoBehaviour
         if (fishImage != null) {
             SkeletonAnimation skeletonAnimation = fishImage.GetComponent<SkeletonAnimation>();
             fishImage.GetComponent<MeshRenderer>().sortingOrder = 5;
-            skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(catchedFish.GetFishData().GetSpinePath());
             skeletonAnimation.AnimationName = "";
             skeletonAnimation.Initialize(true);
         }
@@ -52,7 +51,6 @@ public class CatchFish : MonoBehaviour
         {
             SkeletonAnimation skeletonAnimation = fishImage.GetComponent<SkeletonAnimation>();
             fishImage.GetComponent<MeshRenderer>().sortingOrder = 5;
-            skeletonAnimation.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(catchedFish.GetFishData().GetSpinePath());
             skeletonAnimation.AnimationName = "";
             skeletonAnimation.Initialize(true);
         }
