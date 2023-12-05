@@ -23,7 +23,8 @@ public class NewFishMove : MonoBehaviour
     bool isCorutineRunning = false;
     bool isDetectedObject = false;
 
-    
+    bool makeBig = false;
+
     private void Start()
     {
         rightBody2D = GetComponent<Rigidbody2D>();
@@ -45,7 +46,7 @@ public class NewFishMove : MonoBehaviour
         //물고기 공통 속도 * 개체별 속도
         newPosX += Mathf.Cos(fishAngle * Mathf.PI / 180) * fishSpeed * Time.deltaTime * fishData.GetSpeed() * fishDirectionSign;
         newPosY += Mathf.Sin(fishAngle * Mathf.PI / 180) * fishSpeed * Time.deltaTime * fishData.GetSpeed();
-        
+            
         transform.position = new Vector3(newPosX, newPosY, 0);
 
         //방향 전환
@@ -68,6 +69,11 @@ public class NewFishMove : MonoBehaviour
         if (upperRemovePosY < transform.position.y)
         {
             RemoveFish();
+        }
+        
+        if(makeBig)
+        {
+            MakeBig();
         }
     }
 
@@ -191,5 +197,82 @@ public class NewFishMove : MonoBehaviour
     public FishData GetFishData()
     {
         return fishData;
+    }
+
+    public void MoveTo(Vector3 targetPosition)
+    {
+        float moveSpeed = 1f;
+
+        Vector3 dir = (targetPosition - transform.position).normalized;
+
+        transform.position += dir * moveSpeed * Time.deltaTime;
+    }
+
+    public void MakeSmall()
+    {
+        float speed = 1f;
+        float minScale = 0.25f;
+
+        if (Mathf.Abs(transform.localScale.x) >= minScale)
+        {
+            int sign = (int)(transform.localScale.x / Mathf.Abs(transform.localScale.x));
+            float nextScaleX = transform.localScale.x - sign * speed * Time.deltaTime;
+            float nextScaleY = transform.localScale.y - speed * Time.deltaTime;
+
+            transform.localScale = new Vector3(nextScaleX, nextScaleY);
+        }
+    }
+
+    public void MakeBig()
+    {
+        makeBig = true;
+        float speed = 1f;
+        float maxScale = 0f;
+        switch (fishData.GetFishSize())
+        {
+            case FishSize.Small:
+                {
+                    maxScale = 0.1f;
+                    break;
+                }
+            case FishSize.Normal:
+                {
+                    maxScale = 0.25f;
+                    break;
+                }
+            case FishSize.Middle:
+                {
+                    maxScale = 0.5f;
+                    break;
+                }
+            case FishSize.Large:
+                {
+                    maxScale = 1f;
+                    break;
+                }
+            case FishSize.UltraLarge:
+                {
+                    maxScale = 1.5f;
+                    break;
+                }
+        }
+
+        if (Mathf.Abs(transform.localScale.x) <= maxScale)
+        {
+            int sign = (int)(transform.localScale.x / Mathf.Abs(transform.localScale.x));
+            float nextScaleX = transform.localScale.x + sign * speed * Time.deltaTime;
+            float nextScaleY = transform.localScale.y + speed * Time.deltaTime;
+
+            transform.localScale = new Vector3(nextScaleX, nextScaleY);
+        }
+        else
+        {
+            makeBig = false;
+        }
+    }
+
+    public void SetFishSpeed(float value)
+    {
+        fishSpeed = value;
     }
 }
