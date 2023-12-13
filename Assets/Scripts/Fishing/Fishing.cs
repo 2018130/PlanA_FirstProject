@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Spine.Unity;
 
 public class Fishing : MonoBehaviour
@@ -15,15 +16,7 @@ public class Fishing : MonoBehaviour
     [SerializeField]
     PlayerController playerController;
     [SerializeField]
-    GameObject fishingStartTextPanel;
-    [SerializeField]
     Progress progressPanel;
-    [SerializeField]
-    GameObject moveToMainMenuBtn;
-    [SerializeField]
-    FishingBtn moveToGameSceneBtn;
-    [SerializeField]
-    GameObject catchFishPanel;
     [SerializeField]
     Text smallFishCountText;
     [SerializeField]
@@ -38,15 +31,8 @@ public class Fishing : MonoBehaviour
     GameObject caeraPanel;
     [SerializeField]
     GameObject currentHealthUI;
-    GameObject fishingBackground;
-    [SerializeField]
-    GameObject mainBackground;
     [SerializeField]
     GameObject fishbowl;
-    HookCaptureController hookCaptureController;
-
-    [SerializeField]
-    GameObject rod;
 
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
@@ -129,32 +115,24 @@ public class Fishing : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        fishingBackground = transform.GetChild(2).gameObject;
-        hookCaptureController = transform.Find("FishingController").Find("FishingHook").gameObject.GetComponent<HookCaptureController>();
-    }
-
     private void Start()
     {
         if(SFishing == null)
         {
             SFishing = this;
         }
+        else
+        {
+            Destroy(this);
+        }
 
-        gameObject.SetActive(false);
-    }
+        SpriteRenderer fishingFloatsBaitImg = transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>();
+        if(fishingFloatsBaitImg)
+        {
+            fishingFloatsBaitImg.sprite = PlayerController.SPlayerController.selectedBaitImage;
+        }
 
-    private void OnEnable()
-    {
-        CurrentHealth = playerController.Health;
-        CatchedSmallFishCount = 0;
-        CatchedMediumFishCount = 0;
-        CatchedLargeFishCount = 0;
-        fishingLineLenth = 0;
-
-        const float backgroundPosY = -87f;
-        fishingBackground.transform.position = new Vector3(fishingBackground.transform.position.x, backgroundPosY, 0);
+        InitFishing();
     }
 
     private void Update()
@@ -171,42 +149,52 @@ public class Fishing : MonoBehaviour
         }
     }
 
-    public void MoveToMainMenuScreen()
+    void InitFishing()
     {
-        if (caeraPanel.activeSelf)
+        playerController = PlayerController.SPlayerController;
+        if(playerController)
         {
+            Transform gameUI = playerController.transform.GetChild(1);
+            progressPanel = gameUI.GetChild(0).GetComponent<Progress>();
+            smallFishCountText = gameUI.GetChild(4).GetChild(1).GetComponent<Text>();
+            mediumFishCountText = gameUI.GetChild(5).GetChild(1).GetComponent<Text>();
+            largeFishCountText = gameUI.GetChild(6).GetChild(1).GetComponent<Text>();
+            fishingLineText = gameUI.GetChild(1).GetComponent<Text>();
+            failPanel = gameUI.GetChild(7).gameObject;
+            caeraPanel = gameUI.GetChild(8).gameObject;
+            currentHealthUI = gameUI.GetChild(3).gameObject;
+            fishbowl = playerController.transform.GetChild(0).GetChild(5).GetChild(4).gameObject;
+            //pause Btn
+            gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
+            //FailPanel Confirm Btn
+            gameUI.GetChild(7).GetChild(6).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
+            //CaeraPanel Confirm Btn
+            gameUI.GetChild(8).GetChild(5).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
+
+            CurrentHealth = playerController.Health;
+            CatchedSmallFishCount = 0;
+            CatchedMediumFishCount = 0;
+            CatchedLargeFishCount = 0;
+            fishingLineLenth = 0;
+
+            failPanel.SetActive(false);
             caeraPanel.SetActive(false);
         }
+    }
 
-        if (failPanel.activeSelf)
-        {
-            failPanel.SetActive(false);
-        }
-
-        const float mainBackgroundPosY = 67.87f;
-        //mainBackground.transform.position = new Vector3(mainBackground.transform.position.x, mainBackgroundPosY, 0);
-
+    public void MoveToMainMenuScreen()
+    {
         onFishingEnd.Invoke();
-        Camera.main.GetComponent<MainCamera>().MoveToMainScreen();
         Time.timeScale = 1;
-        gameObject.SetActive(false);
+
+        playerController.SetMainSceneUI();
+        fishbowl.GetComponent<Fishbowl>().SaveItemInfoToJson();
+        SceneManager.LoadSceneAsync("MainScene");
     }
 
     public void DeactiveGameObject()
     {
         gameObject.SetActive(false);
-    }
-
-    public void CatchFish(AgentMovement catchedFish)
-    {
-        fishingSuccessCount++;
-
-        CatchFish catchFish = catchFishPanel.GetComponent<CatchFish>();
-        if(catchedFish != null)
-        {
-            hookCaptureController.SetTriggerBlocked(true);
-            catchFish.ActiveToViewport(catchedFish);
-        }
     }
 
     public void CatchFish(NewFishMove catchedFish)
@@ -230,7 +218,7 @@ public class Fishing : MonoBehaviour
                 }
         }
 
-        fishbowl.GetComponent<Fishbowl>().AddItemInBox(ChangeFishDataToItem(catchedFish.GetFishData()));
+        fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFish.GetFishData()));
     }
 
     void OpenCaeraPanel()
@@ -240,7 +228,7 @@ public class Fishing : MonoBehaviour
         texts[0].text = "x" + catchedSmallFishCount.ToString();
         texts[1].text = "x" + catchedMediumFishCount.ToString();
         texts[2].text = "x" + catchedLargeFishCount.ToString();
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
 
         caeraPanel.SetActive(true);
     }
@@ -251,24 +239,9 @@ public class Fishing : MonoBehaviour
 
         texts[0].text = "x" + catchedSmallFishCount.ToString();
         texts[1].text = "x" + catchedMediumFishCount.ToString();
-        texts[2].text = "x" + catchedLargeFishCount.ToString();
-        Time.timeScale = 0;
+        texts[2].text = "x" + catchedMediumFishCount.ToString();
+        Time.timeScale = 0f;
 
         failPanel.SetActive(true);
-    }
-
-    public Item ChangeFishDataToItem(FishData fishData)
-    {
-        Item newItem = new Item();
-        newItem.itemCount = fishData.GetCount();
-        newItem.itemId = fishData.GetId();
-        newItem.itemImage = fishData.GetSprite();
-        newItem.itemName = fishData.GetName();
-        //나중에 수정해야함
-        newItem.itemPrice = fishData.GetId();
-
-        newItem.itemType = EItemType.FISH;
-
-        return newItem;
     }
 }

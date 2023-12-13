@@ -17,7 +17,7 @@ public class HookCaptureController : MonoBehaviour
             AgentMovement agentMovement = _collision.gameObject.GetComponent<AgentMovement>();
             if(agentMovement != null)
             {
-                fishing.CatchFish(agentMovement);
+                
             }
         }
     }

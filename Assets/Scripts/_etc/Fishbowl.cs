@@ -47,10 +47,10 @@ public class Fishbowl : MonoBehaviour
         path = Application.persistentDataPath + "/fishbowlData.json";
 #endif
         content = transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-        sellBtn = transform.Find("SellBtn").gameObject;
-        allSellBtn = transform.Find("AllSellBtn").gameObject;
-        openTreasureBtn = transform.Find("OpenTreasureBtn").gameObject;
-        sellWindow = transform.Find("SellWindow").gameObject;
+        sellBtn = transform.GetChild(3).gameObject;
+        allSellBtn = transform.GetChild(4).gameObject;
+        openTreasureBtn = transform.GetChild(5).gameObject;
+        sellWindow = transform.GetChild(6).gameObject;
         InitBoxes();
         InitItemInfoFromJson();
 
@@ -83,7 +83,8 @@ public class Fishbowl : MonoBehaviour
 
     public void VisualizeBoxesWithItemInfo()
     {
-        for(int i = 0; i < itemSize; i++)
+        Debug.Log(itemSize);
+        for (int i = 0; i < itemSize; i++)
         {
             GameObject box = boxes[i];
             Image boxImg = box.transform.GetChild(0).GetComponent<Image>();
@@ -260,7 +261,7 @@ public class Fishbowl : MonoBehaviour
 
                         if (fishData != null)
                         {
-                            Item item = fishing.ChangeFishDataToItem(fishData);
+                            Item item = PlayerController.SPlayerController.ChangeFishDataToItem(fishData);
                             item.itemCount = fishbowlSaveData.ownItemCount[i];
                             AddItemInBox(item);
                         }

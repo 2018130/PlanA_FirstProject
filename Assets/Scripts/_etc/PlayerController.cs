@@ -24,6 +24,8 @@ public class PlayerControllerSaveData
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController SPlayerController;
+    
     [SerializeField]
     public Sprite selectedBaitImage;
 
@@ -103,6 +105,15 @@ public class PlayerController : MonoBehaviour
 #endif
         InitializePlayerInfoFromJson();
         SetBaitImage(selectedBaitImage);
+
+        if(SPlayerController)
+        {
+            Destroy(this);
+        }else
+        {
+            SPlayerController = this;
+            DontDestroyOnLoad(this);
+        }
     }
 
     public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
@@ -177,7 +188,6 @@ public class PlayerController : MonoBehaviour
     {
         selectedBaitImage = newBait;
         upperBar.transform.GetChild(4).GetChild(0).GetComponent<Image>().sprite = selectedBaitImage;
-        fishingFloats.sprite = newBait;
     }
 
     public void AddFishingLineLenth()
@@ -194,5 +204,32 @@ public class PlayerController : MonoBehaviour
         Health += addedHealth;
 
         SavePlayerInfoToJson();
+    }
+
+    public void SetMainSceneUI()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(false);
+    }
+
+    public void SetGameSceneUI()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(true);
+    }
+
+    public Item ChangeFishDataToItem(FishData fishData)
+    {
+        Item newItem = new Item();
+        newItem.itemCount = fishData.GetCount();
+        newItem.itemId = fishData.GetId();
+        newItem.itemImage = fishData.GetSprite();
+        newItem.itemName = fishData.GetName();
+        //나중에 수정해야함
+        newItem.itemPrice = fishData.GetId();
+
+        newItem.itemType = EItemType.FISH;
+
+        return newItem;
     }
 }

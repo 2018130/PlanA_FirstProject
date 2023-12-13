@@ -31,7 +31,7 @@ public class NewFishSpawner : MonoBehaviour
     IEnumerator CSpawnFishPerFewSec()
     {
         isCorutineRun = true;
-        float spawnWaitTime = 0.5f;
+        float spawnWaitTime = 0.2f;
         yield return new WaitForSeconds(spawnWaitTime);
 
         SpawnFish();

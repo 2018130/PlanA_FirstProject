@@ -172,8 +172,8 @@ public class NewFishMove : MonoBehaviour
 
     void Turn()
     {
-        float rightTurnPointX = 115f;
-        float leftTurnPointX = 84f;
+        float rightTurnPointX = 17f;
+        float leftTurnPointX = -17f;
         bool isTurn = false;
 
         if (transform.position.x > rightTurnPointX)

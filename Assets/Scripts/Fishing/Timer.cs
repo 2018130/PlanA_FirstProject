@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     [SerializeField]
-    Fishing fishing;
-    [SerializeField]
     Progress progress;
 
     bool isEndOfTimer = true;

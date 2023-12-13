@@ -37,10 +37,7 @@ public class FishingBtn : MonoBehaviour
     {
         yield return new WaitForSeconds(animationPlayTime);
 
-        MainCamera mainCamera = Camera.main.GetComponent<MainCamera>();
-        if (mainCamera)
-        {
-            mainCamera.MoveToGameScreen();
-        }
+        PlayerController.SPlayerController.SetGameSceneUI();
+        SceneManager.LoadSceneAsync("GameScene");
     }
 }

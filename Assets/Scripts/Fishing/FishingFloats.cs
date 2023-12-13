@@ -22,7 +22,6 @@ public class FishingFloats : MonoBehaviour
             fishing.CatchFish(newFishMove);
             newFishMove.RemoveFish();
 
-            fishing.CurrentHealth -= 100;
             if (fishing.CurrentHealth <= 0)
             {
                 fishing.OpenFailPanel();
