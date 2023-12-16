@@ -696,7 +696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.552}
   m_SizeDelta: {x: 2000, y: 4000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28817322
@@ -6136,6 +6136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644143502}
   - component: {fileID: 644143503}
+  - component: {fileID: 644143504}
   m_Layer: 0
   m_Name: Boat&Cat
   m_TagString: Untagged
@@ -6178,6 +6179,22 @@ MonoBehaviour:
   endPosition: {x: 0, y: 0}
   direction: {x: 0, y: -1}
   eEndState: 5
+--- !u!114 &644143504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644143501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250824b856b2ffc4e8103e9c351a595e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  minDegree: -10
+  maxDegree: 10
+  endState: 2
 --- !u!1 &645164816
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,6 +9709,7 @@ GameObject:
   - component: {fileID: 1100150624}
   - component: {fileID: 1100150625}
   - component: {fileID: 1100150626}
+  - component: {fileID: 1100150627}
   m_Layer: 0
   m_Name: fishing line
   m_TagString: Untagged
@@ -9707,8 +9725,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100150623}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.37, y: -2.2400002, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.3873, y: 0.7, z: 0}
+  m_LocalScale: {x: 1.2038, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 150441338}
@@ -9786,6 +9804,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1100150627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100150623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250824b856b2ffc4e8103e9c351a595e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: -2
+  minDegree: -10
+  maxDegree: 10
+  endState: 2
 --- !u!1 &1109082074
 GameObject:
   m_ObjectHideFlags: 0
@@ -12813,6 +12847,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1475810691}
+  - component: {fileID: 1475810692}
   m_Layer: 0
   m_Name: Sea
   m_TagString: Untagged
@@ -12843,6 +12878,22 @@ Transform:
   m_Father: {fileID: 585237943}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1475810692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475810690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250824b856b2ffc4e8103e9c351a595e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  minDegree: 0
+  maxDegree: 0
+  endState: 0
 --- !u!1 &1488284650
 GameObject:
   m_ObjectHideFlags: 0

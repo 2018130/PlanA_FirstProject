@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public string path;
+    public string path = "";
 
     private void Start()
     {
@@ -106,7 +106,14 @@ public class PlayerController : MonoBehaviour
         InitializePlayerInfoFromJson();
         SetBaitImage(selectedBaitImage);
 
-        if(SPlayerController)
+        //
+        Text[] textList = FindObjectsOfType<Text>();
+        for (int i = 0; i < textList.Length; i++)
+        {
+            textList[i].font = Resources.Load<Font>("Fonts/DaPretty");
+        }//
+
+        if (SPlayerController)
         {
             Destroy(this);
         }else
@@ -169,7 +176,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (path.Length == 0) return;
+        
         SavePlayerInfoToJson();
+        
     }
 
     //yyyy-MM-dd HH:mm:ss

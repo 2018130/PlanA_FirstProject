@@ -37,7 +37,7 @@ public class Fishbowl : MonoBehaviour
     public GameObject allSellBtn;
     public GameObject openTreasureBtn;
 
-    string path;
+    string path = "";
 
     private void Start()
     {
@@ -223,6 +223,8 @@ public class Fishbowl : MonoBehaviour
      */
     public void SaveItemInfoToJson()
     {
+        if (path.Length == 0) return;
+
         FishbowlSaveData fishbowlSaveData = new FishbowlSaveData();
 
         for (int i = 0; i < itemSize; i++)

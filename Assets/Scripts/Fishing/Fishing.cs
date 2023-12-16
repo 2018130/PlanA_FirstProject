@@ -117,7 +117,15 @@ public class Fishing : MonoBehaviour
 
     private void Start()
     {
-        if(SFishing == null)
+
+        //
+        Text[] textList = FindObjectsOfType<Text>();
+        for (int i = 0; i < textList.Length; i++)
+        {
+            textList[i].font = Resources.Load<Font>("Fonts/DaPretty");
+        }//
+
+        if (SFishing == null)
         {
             SFishing = this;
         }

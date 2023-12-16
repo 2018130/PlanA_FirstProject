@@ -20,7 +20,7 @@ public class Collection : MonoBehaviour
     int curIndex = 0;
     int fishDataSize = 0;
 
-    string path;
+    string path = "";
 
     // Start is called before the first frame update
     void Start()
@@ -113,6 +113,8 @@ public class Collection : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (path.Length == 0) return;
+
         SaveCollectionInfoToJson();
     }
 

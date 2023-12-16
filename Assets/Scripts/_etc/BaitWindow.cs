@@ -34,7 +34,7 @@ public class BaitWindow : MonoBehaviour
     public Sprite selectedBaitImage;
     Button baitUpBtn;
 
-    string path;
+    string path = "";
 
     private void Start()
     {
@@ -53,6 +53,8 @@ public class BaitWindow : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (path.Length == 0) return;
+
         SaveOwnBaitInfoToJson();
     }
     void InitBoxes()

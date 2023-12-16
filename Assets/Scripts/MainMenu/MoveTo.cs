@@ -29,10 +29,15 @@ public class MoveTo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         if (bEndOfMove) return;
 
         Vector2 nextPos = new Vector2(transform.position.x, transform.position.y) +
-            Time.deltaTime * direction.normalized * moveSpeed;
+            Time.fixedDeltaTime * direction.normalized * moveSpeed;
         /*
         if (nextPos.x < startPosition.x || nextPos.x > endPosition.x)
         {
