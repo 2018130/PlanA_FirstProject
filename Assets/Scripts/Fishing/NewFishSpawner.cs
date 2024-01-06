@@ -31,7 +31,7 @@ public class NewFishSpawner : MonoBehaviour
         });
         fishSpawnIDByWaterDepth.Add(2, new List<int>() { 3, 9,13,14,15,19,23,28,31,32,34,36
         });
-        fishSpawnIDByWaterDepth.Add(3, new List<int>() { 5,6,20,33
+        fishSpawnIDByWaterDepth.Add(3, new List<int>() { 5,6,20,33,37,38,39,40,41,42,43,44,45
         });
     }
 

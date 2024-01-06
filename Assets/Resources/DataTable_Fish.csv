@@ -35,3 +35,12 @@ Id,Name,Lv,Speed,ProductCount,Size,Information,Habitat,SpritePath
 34,황새치,F,3,2,middle,〃,"바다,민물",Fish/Swordfish
 35,복어,F,3,2,normal,〃,"바다,민물",Fish/Tetraodon
 36,다랑어,F,3,2,normal,〃,"바다,민물",Fish/Tunny
+37,귀신고기,F,3,2,normal,〃,"바다,민물",Fish/FangtoothFish
+38,대왕가오리,F,3,2,large,〃,"바다,민물",Fish/GiantStingray
+39,대왕문어,F,3,2,large,〃,"바다,민물",Fish/GiantOctopus
+40,대왕오징어,F,3,2,large,〃,"바다,민물",Fish/GiantSquid
+41,실러캔스,F,3,2,normal,〃,"바다,민물",Fish/Coelacanth
+42,우파루파,F,3,2,normal,〃,"바다,민물",Fish/Axolotl
+43,초롱아귀,F,3,2,normal,〃,"바다,민물",Fish/FootballFish
+44,해파리1,F,3,2,normal,〃,"바다,민물",Fish/JellyFish1
+45,해파리2,F,3,2,normal,〃,"바다,민물",Fish/JellyFish2
