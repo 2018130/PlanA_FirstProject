@@ -33,6 +33,8 @@ public class Fishing : MonoBehaviour
     GameObject currentHealthUI;
     [SerializeField]
     GameObject fishbowl;
+    [SerializeField]
+    GameObject collection;
 
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
@@ -172,6 +174,7 @@ public class Fishing : MonoBehaviour
             caeraPanel = gameUI.GetChild(8).gameObject;
             currentHealthUI = gameUI.GetChild(3).gameObject;
             fishbowl = playerController.transform.GetChild(0).GetChild(5).GetChild(4).gameObject;
+            collection = playerController.transform.GetChild(0).GetChild(7).gameObject;
             //pause Btn
             gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
             //FailPanel Confirm Btn
@@ -197,6 +200,7 @@ public class Fishing : MonoBehaviour
 
         playerController.SetMainSceneUI();
         fishbowl.GetComponent<Fishbowl>().SaveItemInfoToJson();
+        collection.GetComponent<Collection>().SaveCollectionInfoToJson();
         SceneManager.LoadSceneAsync("MainScene");
     }
 
@@ -226,6 +230,7 @@ public class Fishing : MonoBehaviour
                 }
         }
 
+        collection.GetComponent<Collection>().AddCollectedFish(catchedFish.GetFishData());
         fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFish.GetFishData()));
     }
 

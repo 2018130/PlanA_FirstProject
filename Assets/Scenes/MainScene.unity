@@ -2505,7 +2505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339034573}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.7, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2577,8 +2577,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
-  startPosition: {x: 0, y: -5.66}
-  endPosition: {x: 0, y: -4.66}
+  startPosition: {x: 0, y: -6}
+  endPosition: {x: 0, y: -5}
   direction: {x: 0, y: -1}
   eEndState: 5
 --- !u!114 &339034577
@@ -6152,7 +6152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644143501}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: -1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6175,8 +6175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.2
-  startPosition: {x: 0, y: -1}
-  endPosition: {x: 0, y: 0}
+  startPosition: {x: 0, y: -1.1}
+  endPosition: {x: 0, y: -0.1}
   direction: {x: 0, y: -1}
   eEndState: 5
 --- !u!114 &644143504
@@ -10705,7 +10705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242890727}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.8, z: 0}
+  m_LocalPosition: {x: 0, y: -6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10777,8 +10777,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.2
-  startPosition: {x: 0, y: -6.72}
-  endPosition: {x: 0, y: -5.72}
+  startPosition: {x: 0, y: -6.5}
+  endPosition: {x: 0, y: -5.5}
   direction: {x: 0, y: -1}
   eEndState: 5
 --- !u!114 &1242890731

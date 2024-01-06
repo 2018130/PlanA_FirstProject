@@ -34,6 +34,7 @@ public class FishSpawner : MonoBehaviour
         boundaryX = (int)moveField.transform.localScale.x;
         boundaryY = (int)moveField.transform.localScale.y;
         fishStartPos = transform.position - new Vector3(-5f, 0f, 0f);
+
     }
 
 

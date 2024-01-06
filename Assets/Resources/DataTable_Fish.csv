@@ -15,9 +15,9 @@ Id,Name,Lv,Speed,ProductCount,Size,Information,Habitat,SpritePath
 14,백상아리,C,4,1,large,강이나 호수에서 주로 보이는 친구들이다.,민물,Fish/GreatWhiteShark
 15,귀상어,C,4,1,large,〃,민물,Fish/Hammerhead
 16,참조기,C,4,1,normal,〃,민물,Fish/LarimichthysPolyactis
-17,준치,D,-1,1,normal,조개라고 불리는 것들. 단단한 껍질이 매력적이야.,바다,Fish/LlishaElongata
-18,고등어,D,-1,1,normal,〃,민물,Fish/Mackerel
-19,청새치,D,-1,1,middle,〃,민물,Fish/Marlin
+17,준치,D,1,1,normal,조개라고 불리는 것들. 단단한 껍질이 매력적이야.,바다,Fish/LlishaElongata
+18,고등어,D,1,1,normal,〃,민물,Fish/Mackerel
+19,청새치,D,1,1,middle,〃,민물,Fish/Marlin
 20,문어,E,1,1,normal,생긴 것만큼 내부도 간단하게 구성된 친구들. 독특하다.,바다,Fish/Octopus
 21,병어,E,1,1,normal,〃,바다,Fish/PampusArgenteus
 22,돌돔,E,1,3,normal,흐늘흐늘 흔들리는 게 아름다운 곡선을 만들어내고 있어!,바다,Fish/Parrotfish

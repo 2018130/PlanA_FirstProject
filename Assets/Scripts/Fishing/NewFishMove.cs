@@ -17,6 +17,7 @@ public class NewFishMove : MonoBehaviour
     float fishAngle = 0f;
     float fishAngleWeight = 15.0f;
     int fishAngleSign = 1;
+    [SerializeField]
     int fishDirectionSign = 1;
     public int fishSize = 1;
 
@@ -33,9 +34,7 @@ public class NewFishMove : MonoBehaviour
 
         StartCoroutine("C_DetectObjectTimer");
     }
-
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         float newPosX = transform.position.x;
         float newPosY = transform.position.y;
@@ -45,14 +44,15 @@ public class NewFishMove : MonoBehaviour
         //앞으로 나아감
         //물고기 공통 속도 * 개체별 속도
         newPosX += Mathf.Cos(fishAngle * Mathf.PI / 180) * fishSpeed * Time.deltaTime * fishData.GetSpeed() * fishDirectionSign;
+        Debug.Log(gameObject.name + " " +Mathf.Cos(fishAngle * Mathf.PI / 180));
         newPosY += Mathf.Sin(fishAngle * Mathf.PI / 180) * fishSpeed * Time.deltaTime * fishData.GetSpeed();
-            
+
         transform.position = new Vector3(newPosX, newPosY, 0);
 
         //방향 전환
-        transform.rotation = Quaternion.Euler(new Vector3(0,0, fishAngle));
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, fishAngle));
 
-        if(Mathf.Abs(fishAngle) > maxFishAngle)
+        if (Mathf.Abs(fishAngle) > maxFishAngle)
         {
             fishAngleSign *= -1;
         }
@@ -64,7 +64,10 @@ public class NewFishMove : MonoBehaviour
         }
 
         Turn();
-
+    }
+    // Update is called once per frame
+    void Update()
+    {
         float upperRemovePosY = 13f;
         if (upperRemovePosY < transform.position.y)
         {
@@ -77,6 +80,7 @@ public class NewFishMove : MonoBehaviour
         }
     }
 
+    
     IEnumerator C_DetectObjectTimer()
     {
         isCorutineRunning = true;
@@ -119,10 +123,10 @@ public class NewFishMove : MonoBehaviour
         fishSpeed = 1f;
     }
 
-    public void SpawnFish(Vector2 spawnPos)
+    public void SpawnFish(Vector2 spawnPos, FishData newFishData)
     {
         gameObject.SetActive(true);
-        fishData = FishDataBundle.GetRandomFishData();
+        fishData = newFishData;
         if (!spriteRenderer)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -134,26 +138,31 @@ public class NewFishMove : MonoBehaviour
             case FishSize.Small:
                 {
                     transform.localScale = new Vector2(-0.1f, 0.1f);
+                    fishSize = 1;
                     break;
                 }
             case FishSize.Normal:
                 {
                     transform.localScale = new Vector2(-0.25f, 0.25f);
+                    fishSize = 1;
                     break;
                 }
             case FishSize.Middle:
                 {
                     transform.localScale = new Vector2(-0.5f, 0.5f);
+                    fishSize = 2;
                     break;
                 }
             case FishSize.Large:
                 {
                     transform.localScale = new Vector2(-1f, 1f);
+                    fishSize = 3;
                     break;
                 }
             case FishSize.UltraLarge:
                 {
                     transform.localScale = new Vector2(-1.5f, 1.5f);
+                    fishSize = 3;
                     break;
                 }
         }
@@ -199,6 +208,9 @@ public class NewFishMove : MonoBehaviour
         return fishData;
     }
 
+    /**
+     * 낚시찌의 자성구현시 사용
+     */
     public void MoveTo(Vector3 targetPosition)
     {
         float moveSpeed = 1f;

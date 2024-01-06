@@ -48,21 +48,6 @@ public class Collection : MonoBehaviour
 
             gameObject.SetActive(false);
         }
-
-        //디버깅용 코드
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            if (!isCollected[0])
-            {
-                isCollected[0] = true;
-                SetCollection(0);
-            }
-            else
-            {
-                isCollected[0] = false;
-                SetCollection(0);
-            }
-        }
     }
 
     public void PreCollectionFishInfo()
@@ -94,6 +79,7 @@ public class Collection : MonoBehaviour
         page.text = (curIndex + 1).ToString() + "/" + fishDataSize.ToString();
         name.text = fishDatas[curIndex].GetName();
         description.text = fishDatas[curIndex].GetInformation();
+        fishImg.sprite = fishDatas[index].GetSprite();
 
         if (!isCollected[index])
         {
@@ -102,6 +88,20 @@ public class Collection : MonoBehaviour
         else
         {
             fishImg.color = new Color(1, 1, 1);
+        }
+    }
+
+    public void AddCollectedFish(FishData fishData)
+    {
+        for(int i = 0; i < fishDataSize; i++)
+        {
+            if(fishDatas[i].GetId() == fishData.GetId())
+            {
+                isCollected[i] = true;
+                Debug.Log(fishData.GetName() + " was collected");
+
+                break;
+            }
         }
     }
 
@@ -118,7 +118,7 @@ public class Collection : MonoBehaviour
         SaveCollectionInfoToJson();
     }
 
-    void SaveCollectionInfoToJson()
+    public void SaveCollectionInfoToJson()
     {
         CollectionSaveData collectionDatabase = new CollectionSaveData();
 

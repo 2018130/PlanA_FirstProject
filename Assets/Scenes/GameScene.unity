@@ -392,6 +392,7 @@ MonoBehaviour:
   caeraPanel: {fileID: 0}
   currentHealthUI: {fileID: 0}
   fishbowl: {fileID: 0}
+  collection: {fileID: 0}
 --- !u!4 &6832347534448327921
 Transform:
   m_ObjectHideFlags: 0

@@ -18,9 +18,13 @@ public class FishingBtn : MonoBehaviour
     [SerializeField]
     Fishing fishing;
 
+    bool isAnimPlayed = false;
     public void ClickToFisingBtn()
     {
+        if (isAnimPlayed) return;
+
         mainCat.GetComponent<Animator>().SetTrigger("StartFishing");
+        isAnimPlayed = true;
         mainCat.transform.GetChild(0).GetComponent<Animator>().SetTrigger("StartFishing");
         float animationPlayTime = mainCat.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length;
 
@@ -38,6 +42,7 @@ public class FishingBtn : MonoBehaviour
         yield return new WaitForSeconds(animationPlayTime);
 
         PlayerController.SPlayerController.SetGameSceneUI();
+        isAnimPlayed = false;
         SceneManager.LoadSceneAsync("GameScene");
     }
 }

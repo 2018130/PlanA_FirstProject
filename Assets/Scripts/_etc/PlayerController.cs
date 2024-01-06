@@ -39,7 +39,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     SpriteRenderer fishingFloats;
 
-    const int maxFishingLineLenth = 3000;
+    const int maxFishingLineLenth = 6000;
+    public int MaxFishingLineLenth
+    {
+        get => maxFishingLineLenth;
+    }
+
     int fishingLineLenth;
     public int FishingLineLenth
     {
@@ -123,6 +128,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Coin += 1000;
+        }
+    }
     public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPos);

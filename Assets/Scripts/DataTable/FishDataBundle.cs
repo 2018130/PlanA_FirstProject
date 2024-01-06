@@ -102,6 +102,7 @@ public class FishData
         size = baseFishData.size;
         information = baseFishData.information;
         spritePath = baseFishData.spritePath;
+        sprite = Resources.Load<Sprite>(spritePath);
 
         for (int i = 0; i < baseFishData.habitats.Count; i++)
         {
@@ -205,7 +206,7 @@ public class FishDataBundle : MonoBehaviour
         return false;
     }
 
-    public FishData CopyFishData(int id)
+    public static FishData CopyFishData(int id)
     {
         FishData fishData = new FishData();
         if (fishDatas.ContainsKey(id))

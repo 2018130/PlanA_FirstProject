@@ -41,7 +41,6 @@ public class Rotate : MonoBehaviour
             if (endState == EEndRotState.RETURNING)
             {
                 sign *= -1;
-                Debug.Log(minDegree + " " + maxDegree + " " + transform.localEulerAngles.z);
             }
         }
 
