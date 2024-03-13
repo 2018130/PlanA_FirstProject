@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Setting : MonoBehaviour
@@ -11,12 +12,15 @@ public class Setting : MonoBehaviour
     Scrollbar backgroundSoundScrollbar;
     Scrollbar effectSoundScrollbar;
 
+    Button exitBtn;
+
     float backgroundSound = 0f;
     float effectSound = 0f;
     private void Awake()
     {
         backgroundSoundScrollbar = transform.GetChild(2).GetChild(0).GetComponent<Scrollbar>();
         effectSoundScrollbar = transform.GetChild(3).GetChild(0).GetComponent<Scrollbar>();
+        exitBtn = transform.GetChild(5).GetComponent<Button>();
 
         backgroundSoundScrollbar.onValueChanged.AddListener(OnBackgroundValueChanged);
         effectSoundScrollbar.onValueChanged.AddListener(OnEffectValueChanged);
@@ -24,6 +28,9 @@ public class Setting : MonoBehaviour
 
     private void Start()
     {
+        sound = Camera.main.GetComponent<Sound>();
+        exitBtn.onClick.AddListener(PlayerController.SPlayerController.OpenConfirmPanel);
+
         OnBackgroundValueChanged(0.5f);
         OnEffectValueChanged(0.5f);
     }
@@ -35,7 +42,7 @@ public class Setting : MonoBehaviour
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                gameObject.SetActive(false);
+                CloseSettingWindow();
             }
         }
 #elif UNITY_ANDROID
@@ -43,10 +50,24 @@ public class Setting : MonoBehaviour
         {
             if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                gameObject.SetActive(false);
+                CloseSettingWindow();
             }
         }
 #endif
+    }
+
+    public void OpenSettingWindow()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void CloseSettingWindow()
+    {
+        gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "GameScene")
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     void OnBackgroundValueChanged(float value)

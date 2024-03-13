@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AdmobAdManager : MonoBehaviour
 {
+    Fishing fishing;
     private RewardedAd rewardedAd;
 
     string adUnitId;
@@ -24,6 +25,8 @@ public class AdmobAdManager : MonoBehaviour
 #endif
 
         LoadRewardedAd();
+
+        fishing = GameObject.Find("Fishing").GetComponent<Fishing>();
     }
 
     public void LoadRewardedAd() //±§∞Ì ∑ŒµÂ «œ±‚
@@ -70,7 +73,8 @@ public class AdmobAdManager : MonoBehaviour
             {
                 //∫∏ªÛ »πµÊ«œ±‚
                 Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
-                Time.timeScale = 0;
+
+                fishing.GetADReward();
             });
         }
         else

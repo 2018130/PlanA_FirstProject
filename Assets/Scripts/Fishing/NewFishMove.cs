@@ -19,6 +19,8 @@ public class NewFishMove : MonoBehaviour
     int fishAngleSign = 1;
     [SerializeField]
     int fishDirectionSign = 1;
+
+    //max 3
     public int fishSize = 1;
 
     bool isCorutineRunning = false;
@@ -44,7 +46,6 @@ public class NewFishMove : MonoBehaviour
         //앞으로 나아감
         //물고기 공통 속도 * 개체별 속도
         newPosX += Mathf.Cos(fishAngle * Mathf.PI / 180) * fishSpeed * Time.deltaTime * fishData.GetSpeed() * fishDirectionSign;
-        Debug.Log(gameObject.name + " " +Mathf.Cos(fishAngle * Mathf.PI / 180));
         newPosY += Mathf.Sin(fishAngle * Mathf.PI / 180) * fishSpeed * Time.deltaTime * fishData.GetSpeed();
 
         transform.position = new Vector3(newPosX, newPosY, 0);

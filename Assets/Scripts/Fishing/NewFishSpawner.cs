@@ -27,11 +27,11 @@ public class NewFishSpawner : MonoBehaviour
 
         S_NewFishSpawner = this;
 
-        fishSpawnIDByWaterDepth.Add(1, new List<int>() { 1, 2, 4,7,8,10,11,12,16,17,18,21,22,24,25,26,27,29,30,35
+        fishSpawnIDByWaterDepth.Add(1, new List<int>() { 1, 2, 4,7,8,10,11,12,16,17,18,21,22,24,25,26,27,29,30,35,46
         });
-        fishSpawnIDByWaterDepth.Add(2, new List<int>() { 3, 9,13,14,15,19,23,28,31,32,34,36
+        fishSpawnIDByWaterDepth.Add(2, new List<int>() { 3, 9,13,14,15,19,23,28,31,32,34,36,46,47
         });
-        fishSpawnIDByWaterDepth.Add(3, new List<int>() { 5,6,20,33,37,38,39,40,41,42,43,44,45
+        fishSpawnIDByWaterDepth.Add(3, new List<int>() { 5,6,20,33,37,38,39,40,41,42,43,44,45,47
         });
     }
 
@@ -56,7 +56,6 @@ public class NewFishSpawner : MonoBehaviour
                 fishingLineLenthToChangeWaterDepth[i + 1] > Fishing.SFishing.FishingLineLenth)
             {
                 waterDepthLv = i + 1;
-                Debug.Log("waterDepLv: " + waterDepthLv);
             }
         }
         SpawnFish(waterDepthLv);

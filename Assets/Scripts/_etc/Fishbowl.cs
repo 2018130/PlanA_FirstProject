@@ -83,20 +83,22 @@ public class Fishbowl : MonoBehaviour
 
     public void VisualizeBoxesWithItemInfo()
     {
-        Debug.Log(itemSize);
         for (int i = 0; i < itemSize; i++)
         {
             GameObject box = boxes[i];
             Image boxImg = box.transform.GetChild(0).GetComponent<Image>();
             Item item = box.GetComponentInChildren<Item>();
+            Text itemCountText = box.GetComponentInChildren<Text>();
 
-            if(item.itemId != -1)
+            if (item.itemId != -1)
             {
                 boxImg.sprite = item.itemImage;
+                itemCountText.text = "x" + item.itemCount;
             }
             else
             {
                 boxImg.sprite = defaultBoxImage;
+                itemCountText.text = "";
             }
 
             boxes[i].GetComponent<Image>().color = new Color(1f, 1f, 1f);
@@ -108,7 +110,7 @@ public class Fishbowl : MonoBehaviour
         int totalPrice = 0;
         foreach(Item selectedItem in clickedItem)
         {
-            totalPrice += selectedItem.itemPrice;
+            totalPrice += selectedItem.itemPrice * selectedItem.itemCount;
         }
 
         sellWindow.transform.GetChild(3).GetComponent<Text>().text = totalPrice.ToString() + "G";
@@ -136,7 +138,7 @@ public class Fishbowl : MonoBehaviour
             selectedItem.itemId = -1;
         }
 
-        playerController.Coin += totalPrice;
+        playerController.Coin = playerController.Coin + totalPrice;
         playerController.SavePlayerInfoToJson();
         int removeSize = RemoveEmptyItemInBox();
         CloseSellWindow();

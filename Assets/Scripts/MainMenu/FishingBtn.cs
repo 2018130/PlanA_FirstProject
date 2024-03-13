@@ -19,6 +19,14 @@ public class FishingBtn : MonoBehaviour
     Fishing fishing;
 
     bool isAnimPlayed = false;
+
+    private void Update()
+    {
+        if(mainCat == null)
+        {
+            mainCat = GameObject.Find("Main").transform.GetChild(1).GetChild(1).gameObject;
+        }
+    }
     public void ClickToFisingBtn()
     {
         if (isAnimPlayed) return;

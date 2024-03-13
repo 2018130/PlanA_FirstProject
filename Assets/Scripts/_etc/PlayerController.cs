@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     SpriteRenderer fishingFloats;
 
-    const int maxFishingLineLenth = 6000;
+    GameObject confirmWindow;
+
+    const int maxFishingLineLenth = 10000;
     public int MaxFishingLineLenth
     {
         get => maxFishingLineLenth;
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour
         get { return fishingLineLenth; }
         set
         {
-            fishingLineLenth = Mathf.Clamp(value, 1500, maxFishingLineLenth);
+            fishingLineLenth = Mathf.Clamp(value, 4000, maxFishingLineLenth);
             if (upperBar != null)
             {
                 upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = fishingLineLenth.ToString() + "m";
@@ -80,6 +82,7 @@ public class PlayerController : MonoBehaviour
         set
         {
             coin = value;
+            Debug.Log(coin + "  " + Coin);
             if (upperBar != null)
             {
                 if (coin > maxCoin)
@@ -115,25 +118,35 @@ public class PlayerController : MonoBehaviour
         Text[] textList = FindObjectsOfType<Text>();
         for (int i = 0; i < textList.Length; i++)
         {
-            textList[i].font = Resources.Load<Font>("Fonts/DaPretty");
+            textList[i].font = Resources.Load<Font>("Fonts/jejuDolDam");
         }//
 
-        if (SPlayerController)
+        
+
+        if (SPlayerController != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }else
         {
             SPlayerController = this;
             DontDestroyOnLoad(this);
         }
+        confirmWindow = transform.GetChild(3).gameObject;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+#if UNITY_EDITOR
+        if(Input.GetKey(KeyCode.Q))
         {
-            Coin += 1000;
+            OpenConfirmPanel();
         }
+#elif UNITY_ANDROID
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            OpenConfirmPanel();
+        }
+#endif
     }
     public Vector3 ExchangeScreenPosToWorldPos(Vector3 screenPos)
     {
@@ -150,8 +163,8 @@ public class PlayerController : MonoBehaviour
         if (!File.Exists(path))
         {
             Health = 300;
-            Coin = 0;
-            fishingLineLenth = 1500;
+            Coin = 1;
+            fishingLineLenth = 4000;
         }
         else
         {
@@ -164,6 +177,7 @@ public class PlayerController : MonoBehaviour
                 Health = playerControllerSaveData.Health;
                 Coin = playerControllerSaveData.Coin;
                 FishingLineLenth = playerControllerSaveData.FishingLineLenth;
+                Debug.Log("from json coin : " + Coin);
             }
         }
     }
@@ -173,6 +187,7 @@ public class PlayerController : MonoBehaviour
         PlayerControllerSaveData playercontrollerSaveData = new PlayerControllerSaveData();
         playercontrollerSaveData.Health = Health;
         playercontrollerSaveData.Coin = Coin;
+        Debug.Log("save to json coin : " + playercontrollerSaveData.Coin);
         playercontrollerSaveData.FishingLineLenth = FishingLineLenth;
 
         string json = JsonUtility.ToJson(playercontrollerSaveData);
@@ -189,9 +204,6 @@ public class PlayerController : MonoBehaviour
     private void OnApplicationQuit()
     {
         if (path.Length == 0) return;
-        
-        SavePlayerInfoToJson();
-        
     }
 
     //yyyy-MM-dd HH:mm:ss
@@ -222,7 +234,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddHealth()
     {
-        const int addedHealth = 300;
+        const int addedHealth = 100;
         Health += addedHealth;
 
         SavePlayerInfoToJson();
@@ -232,6 +244,11 @@ public class PlayerController : MonoBehaviour
     {
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(false);
+
+        if(confirmWindow.activeSelf)
+        {
+            confirmWindow.SetActive(false);
+        }
     }
 
     public void SetGameSceneUI()
@@ -253,5 +270,30 @@ public class PlayerController : MonoBehaviour
         newItem.itemType = EItemType.FISH;
 
         return newItem;
+    }
+    
+    public void OpenConfirmPanel()
+    {
+        Time.timeScale = 0;
+        Text exitWindowText = confirmWindow.transform.GetChild(2).GetComponent<Text>();
+
+        if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+            exitWindowText.text = "정말 종료하시겠습니까?";
+            //yes btn
+            confirmWindow.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(confirmWindow.GetComponent<ConfirmWindow>().ExitGame);
+            //no btn
+            confirmWindow.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmWindow.GetComponent<ConfirmWindow>().CloseExitPanel);
+        }
+        else if(SceneManager.GetActiveScene().name == "GameScene")
+        {
+            exitWindowText.text = "메인화면으로 가기";
+            //yes btn
+            confirmWindow.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(Fishing.SFishing.MoveToMainMenuScreen);
+            //no btn
+            confirmWindow.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmWindow.GetComponent<ConfirmWindow>().CloseExitPanel);
+        }
+
+        confirmWindow.SetActive(true);
     }
 }

@@ -117,14 +117,20 @@ public class Fishing : MonoBehaviour
         }
     }
 
+    int warningTwinkle = 2, warningTwinkleCount = 0;
+    bool startTwinkle = false;
+    bool isTwinkleCoroutineActived = false;
+
+    bool isInvincible = false;
+
+    List<FishData> catchedFishs = new List<FishData>();
+
     private void Start()
     {
-
-        //
         Text[] textList = FindObjectsOfType<Text>();
         for (int i = 0; i < textList.Length; i++)
         {
-            textList[i].font = Resources.Load<Font>("Fonts/DaPretty");
+            textList[i].font = Resources.Load<Font>("Fonts/jejuDolDam");
         }//
 
         if (SFishing == null)
@@ -137,7 +143,7 @@ public class Fishing : MonoBehaviour
         }
 
         SpriteRenderer fishingFloatsBaitImg = transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>();
-        if(fishingFloatsBaitImg)
+        if (fishingFloatsBaitImg)
         {
             fishingFloatsBaitImg.sprite = PlayerController.SPlayerController.selectedBaitImage;
         }
@@ -150,19 +156,37 @@ public class Fishing : MonoBehaviour
         FishingLineLenth += Time.deltaTime * fishingLineSpeed;
         progressPanel.SetPercent(FishingLineLenth / playerController.FishingLineLenth);
 
-        if(FishingLineLenth == playerController.FishingLineLenth)
+        if (FishingLineLenth == playerController.FishingLineLenth)
         {
-            if(!caeraPanel.activeSelf)
+            if (!caeraPanel.activeSelf)
             {
                 OpenCaeraPanel();
             }
+        }
+
+        if(startTwinkle && !isTwinkleCoroutineActived && warningTwinkleCount < warningTwinkle)
+        {
+            isInvincible = true;
+            StartCoroutine(SetBackgroundColorToRed());
+
+            //마지막 루프일 때
+            if(warningTwinkle == warningTwinkleCount + 1)
+            {
+                startTwinkle = false;
+                warningTwinkleCount = 0;
+                isTwinkleCoroutineActived = false;
+                isInvincible = false;
+                return;
+            }
+
+            warningTwinkleCount++;
         }
     }
 
     void InitFishing()
     {
         playerController = PlayerController.SPlayerController;
-        if(playerController)
+        if (playerController)
         {
             Transform gameUI = playerController.transform.GetChild(1);
             progressPanel = gameUI.GetChild(0).GetComponent<Progress>();
@@ -176,11 +200,13 @@ public class Fishing : MonoBehaviour
             fishbowl = playerController.transform.GetChild(0).GetChild(5).GetChild(4).gameObject;
             collection = playerController.transform.GetChild(0).GetChild(7).gameObject;
             //pause Btn
-            gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
+            gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(playerController.OpenConfirmPanel);
             //FailPanel Confirm Btn
             gameUI.GetChild(7).GetChild(6).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
+            gameUI.GetChild(7).GetChild(7).GetComponent<Button>().onClick.AddListener(GetADReward);
             //CaeraPanel Confirm Btn
             gameUI.GetChild(8).GetChild(5).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
+            gameUI.GetChild(8).GetChild(6).GetComponent<Button>().onClick.AddListener(GetADReward);
 
             CurrentHealth = playerController.Health;
             CatchedSmallFishCount = 0;
@@ -190,6 +216,8 @@ public class Fishing : MonoBehaviour
 
             failPanel.SetActive(false);
             caeraPanel.SetActive(false);
+
+            catchedFishs.Clear();
         }
     }
 
@@ -230,6 +258,14 @@ public class Fishing : MonoBehaviour
                 }
         }
 
+        if (catchedFish.GetFishData().GetDamage() != 0 && !isInvincible)
+        {
+            CurrentHealth -= catchedFish.GetFishData().GetDamage();
+            startTwinkle = true;
+        }
+
+        catchedFishs.Add(catchedFish.GetFishData());
+
         collection.GetComponent<Collection>().AddCollectedFish(catchedFish.GetFishData());
         fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFish.GetFishData()));
     }
@@ -256,5 +292,38 @@ public class Fishing : MonoBehaviour
         Time.timeScale = 0f;
 
         failPanel.SetActive(true);
+    }
+    public IEnumerator SetBackgroundColorToWhite()
+    {
+        float whiteBrightTime = 0.2f;
+
+        yield return new WaitForSeconds(whiteBrightTime);
+
+        SpriteRenderer fishingBackground = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        fishingBackground.color = new Color(1, 1, 1);
+
+        isTwinkleCoroutineActived = false;
+    }
+
+    public IEnumerator SetBackgroundColorToRed()
+    {
+        isTwinkleCoroutineActived = true;
+        float redBrightTime = 0.2f;
+
+        yield return new WaitForSeconds(redBrightTime);
+
+        SpriteRenderer fishingBackground = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        fishingBackground.color = new Color(1, 0.5f, 0.5f);
+
+        StartCoroutine(SetBackgroundColorToWhite());
+    }
+
+    public void GetADReward()
+    {
+        for(int i = 0; i < catchedFishs.Count; i++)
+        {
+            fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFishs[i]));
+        }
+        Debug.Log("보상 획득 완료");
     }
 }

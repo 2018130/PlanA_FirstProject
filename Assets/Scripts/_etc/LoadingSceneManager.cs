@@ -25,9 +25,9 @@ public class LoadingSceneManager : MonoBehaviour
         Text[] textList = FindObjectsOfType<Text>();
         for(int i = 0; i < textList.Length; i++)
         {
-            textList[i].font = Resources.Load<Font>("Fonts/DaPretty");
-            
-            for(int j = 0; j < deactiveGameObjList.Length; j++)
+            textList[i].font = Resources.Load<Font>("Fonts/jejuDolDam");
+
+            for (int j = 0; j < deactiveGameObjList.Length; j++)
             {
                 if (textList[i].name == deactiveGameObjList[j]) textList[i].gameObject.SetActive(false);
             }

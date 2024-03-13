@@ -27,6 +27,7 @@ public class FishData
     private string lv = "";
     private float speed = 0;
     private int productCount = 0;
+    private int damage = 0;
     private FishSize size = FishSize.Normal;
     private string information = "";
     private string spritePath;
@@ -40,6 +41,7 @@ public class FishData
         lv = dictionaryFishData["Lv"].ToString();
         speed = float.Parse(dictionaryFishData["Speed"].ToString());
         productCount = int.Parse(dictionaryFishData["ProductCount"].ToString());
+        damage = int.Parse(dictionaryFishData["Damage"].ToString());
         switch (dictionaryFishData["Size"].ToString())
         {
             case "small":
@@ -99,6 +101,7 @@ public class FishData
         lv = baseFishData.lv;
         speed = baseFishData.speed;
         productCount = baseFishData.productCount;
+        damage = baseFishData.damage;
         size = baseFishData.size;
         information = baseFishData.information;
         spritePath = baseFishData.spritePath;
@@ -152,6 +155,11 @@ public class FishData
     public FishSize GetFishSize()
     {
         return size;
+    }
+
+    public int GetDamage()
+    {
+        return damage;
     }
 }
 

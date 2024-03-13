@@ -1,46 +1,48 @@
-Id,Name,Lv,Speed,ProductCount,Size,Information,Habitat,SpritePath
-1,멸치,C,1,2,small,"큰가시고기하목 큰가시고기과에 속하는 민물고기 등에 뾰족한 가시가 있으니 찔리지 않도록 주의하자!",민물,Fish/Anchovy
-2,물치다래,S,2,1,normal,연골어강에 속하는 물고기로 딱딱한 뼈 대신에 질긴 피부와 가벼운 물렁뼈를 가지고 있다.,바다,Fish/AuxisThazard
-3,돌묵상어,S,3,1,large,(프로토 타입이므로 비워둡니다. 연골어강1과 내용 동일),바다,Fish/BaskingShark
-4,파랑비늘돔,S,4,1,normal,〃,바다,Fish/BlueParrotfish
-5,흰긴수염고래,A,0.5,1,ultraLarge,수심 200m보다 깊은 해역에 사는 생물이다. 독특한 생김새를 한 친구가 많다.,바다,Fish/BlueWhale
-6,향고래,A,2,1,ultraLarge,〃,바다,Fish/Cachalot
-7,물메기,A,2,1,normal,〃,바다,Fish/Catfish
-8,민어,B,2,1,normal,아름다운 모습을 한 친구가 많다. 뷰티풀!,바다,Fish/Croaker
-9,돌고래,B,1,1,middle,〃,바다,Fish/Dolphin
-10,쥐치,B,1,1,normal,〃,바다,Fish/Filefish
-11,가자미,C,3,2,normal,바다에 사는 친구들! 이곳까지 어떻게 흘러들어온 걸까?,바다,Fish/Flounder
-12,갈돔,C,3,2,normal,〃,바다,Fish/Galfish
-13,문절망둑,C,3,2,normal,〃,바다,Fish/Goby
-14,백상아리,C,4,1,large,강이나 호수에서 주로 보이는 친구들이다.,민물,Fish/GreatWhiteShark
-15,귀상어,C,4,1,large,〃,민물,Fish/Hammerhead
-16,참조기,C,4,1,normal,〃,민물,Fish/LarimichthysPolyactis
-17,준치,D,1,1,normal,조개라고 불리는 것들. 단단한 껍질이 매력적이야.,바다,Fish/LlishaElongata
-18,고등어,D,1,1,normal,〃,민물,Fish/Mackerel
-19,청새치,D,1,1,middle,〃,민물,Fish/Marlin
-20,문어,E,1,1,normal,생긴 것만큼 내부도 간단하게 구성된 친구들. 독특하다.,바다,Fish/Octopus
-21,병어,E,1,1,normal,〃,바다,Fish/PampusArgenteus
-22,돌돔,E,1,3,normal,흐늘흐늘 흔들리는 게 아름다운 곡선을 만들어내고 있어!,바다,Fish/Parrotfish
-23,분홍돌고래,E,1,3,middle,〃,바다,Fish/PinkDolphin
-24,참돔,F,2,1,normal,으악! 누가 이런 걸 버린 거야!,"바다,민물",Fish/redSeaBream
-25,우럭,F,3,1,normal,〃,"바다,민물",Fish/Rockfish
-26,정어리,F,3,2,normal,〃,"바다,민물",Fish/Sardine
-27,밴뎅이,F,3,2,normal,〃,"바다,민물",Fish/SardinellaZunasi
-28,삼치,F,3,2,normal,〃,"바다,민물",Fish/ScomberomorusNiphonius
-29,볼락,F,3,2,normal,〃,"바다,민물",Fish/SebastesInermis
-30,쏨뱅이,F,3,2,normal,〃,"바다,민물",Fish/SebastiscusMarmoratus
-31,오징어,F,3,2,normal,〃,"바다,민물",Fish/Squid
-32,가오리,F,3,2,middle,〃,"바다,민물",Fish/Stinggray
-33,개복치,F,3,2,normal,〃,"바다,민물",Fish/Sunfish
-34,황새치,F,3,2,middle,〃,"바다,민물",Fish/Swordfish
-35,복어,F,3,2,normal,〃,"바다,민물",Fish/Tetraodon
-36,다랑어,F,3,2,normal,〃,"바다,민물",Fish/Tunny
-37,귀신고기,F,3,2,normal,〃,"바다,민물",Fish/FangtoothFish
-38,대왕가오리,F,3,2,large,〃,"바다,민물",Fish/GiantStingray
-39,대왕문어,F,3,2,large,〃,"바다,민물",Fish/GiantOctopus
-40,대왕오징어,F,3,2,large,〃,"바다,민물",Fish/GiantSquid
-41,실러캔스,F,3,2,normal,〃,"바다,민물",Fish/Coelacanth
-42,우파루파,F,3,2,normal,〃,"바다,민물",Fish/Axolotl
-43,초롱아귀,F,3,2,normal,〃,"바다,민물",Fish/FootballFish
-44,해파리1,F,3,2,normal,〃,"바다,민물",Fish/JellyFish1
-45,해파리2,F,3,2,normal,〃,"바다,민물",Fish/JellyFish2
+Id,Name,Lv,Speed,ProductCount,Damage,Size,Information,Habitat,SpritePath
+1,멸치,C,1,2,0,small,나 멸치 아니라 실압근이다!,민물,Fish/Anchovy
+2,물치다래,S,2,1,0,normal,고등어 : 내 친구야 인사해,바다,Fish/AuxisThazard
+3,돌묵상어,S,3,1,0,large, 고래상어에 이어 두번째로 큰 상어다. 1등만 기억하는 더러운 세상,바다,Fish/BaskingShark
+4,파랑비늘돔,S,4,1,0,normal, 돔이다. 회쳐 먹으면 맜있을지도??,바다,Fish/BlueParrotfish
+5,흰긴수염고래,A,0.5,1,0,ultraLarge, 우*우 변호사가 좋아하는 고래를 잡았다!!,바다,Fish/BlueWhale
+6,향고래,A,2,1,0,ultraLarge,내 똥이 그렇게 비싸다던데...,바다,Fish/Cachalot
+7,물메기,A,2,1,0,normal,소주가 생각난다. 츄베릅,바다,Fish/Catfish
+8,민어,B,2,1,0,normal,차례상에 많이 올리는 대표 생선이다.,바다,Fish/Croaker
+9,돌고래,B,1,1,0,middle,따따따따 따따다따따다~~ 또 물보라를 일으켜,바다,Fish/Dolphin
+10,쥐치,B,1,1,0,normal,수심 100m의 암초지대에 무리지어 서식중이다.,바다,Fish/Filefish
+11,가자미,C,3,2,0,normal,나 넙치 아니다.,바다,Fish/Flounder
+12,갈돔,C,3,2,0,normal,아무거나 잘먹는다. 난가??,바다,Fish/Galfish
+13,문절망둑,C,3,2,0,normal,쉽게 잡히고 흔하다... 또 너냐?,바다,Fish/Goby
+14,백상아리,C,4,1,0,large,백상아리다 돔황챠~~~,민물,Fish/GreatWhiteShark
+15,귀상어,C,4,1,0,large,신기하다 얼굴이 망치처럼 생겼다.,민물,Fish/Hammerhead
+16,참조기,C,4,1,0,normal,물고기 중 으뜸가는 물고기라고 한다.,민물,Fish/LarimichthysPolyactis
+17,준치,D,1,1,0,normal,가시가 많다고 한다. 할머니 한테 살발라 달라고 해야겠다.,바다,Fish/LlishaElongata
+18,고등어,D,1,1,0,normal,대표적인 등푸른 생선중 하나이다. 내가 제일 좋아하는 물고기다:D,민물,Fish/Mackerel
+19,청새치,D,1,1,0,middle,노인과 바다에 나온 그친구 맞다.,민물,Fish/Marlin
+20,문어,E,1,1,0,normal,대머리 놀릴때 내이름 쓰는데 내 입장도 들어줘...,바다,Fish/Octopus
+21,병어,E,1,1,0,normal,맛이 담백 고소하면서 감칠맛이 있어 맛있다고 한다. 한번 먹어볼까?,바다,Fish/PampusArgenteus
+22,돌돔,E,1,3,0,normal,암초가 많은 연안에서 여름철 낚시로 주로 잡힌다.,바다,Fish/Parrotfish
+23,분홍돌고래,E,1,3,0,middle,난 강에 살고 있는 돌고래이다. 지금 싱겁다...,바다,Fish/PinkDolphin
+24,참돔,F,2,1,0,normal,참돔을 낚았다!! 행운과 복을 불러온다는데 로또 하나 사볼까??,"바다,민물",Fish/redSeaBream
+25,우럭,F,3,1,0,normal,우럭이다!! 너 우럭?(ㅈㅅ;;),"바다,민물",Fish/Rockfish
+26,정어리,F,3,2,0,normal,무리지어 다니는걸 보면 황홀하다,"바다,민물",Fish/Sardine
+27,밴댕이,F,3,2,0,normal,밴댕이 이름이 너무 귀엽다!!,"바다,민물",Fish/SardinellaZunasi
+28,삼치,F,3,2,0,normal,삼치다!! 사치는 더 크려나?,"바다,민물",Fish/ScomberomorusNiphonius
+29,볼락,F,3,2,0,normal,바위만 있다면 어디든 잡을 수 있다.,"바다,민물",Fish/SebastesInermis
+30,쏨뱅이,F,3,2,0,normal,나 독있다. 조심히 만져!!,"바다,민물",Fish/SebastiscusMarmoratus
+31,오징어,F,3,2,0,normal,〃,"바다,민물",Fish/Squid
+32,가오리,F,3,2,0,middle,〃,"바다,민물",Fish/Stinggray
+33,개복치,F,3,2,0,normal,〃,"바다,민물",Fish/Sunfish
+34,황새치,F,3,2,0,middle,〃,"바다,민물",Fish/Swordfish
+35,복어,F,3,2,0,normal,〃,"바다,민물",Fish/Tetraodon
+36,다랑어,F,3,2,0,normal,〃,"바다,민물",Fish/Tunny
+37,귀신고기,F,3,2,0,normal,〃,"바다,민물",Fish/FangtoothFish
+38,대왕가오리,F,3,2,0,large,〃,"바다,민물",Fish/GiantStingray
+39,대왕문어,F,3,2,0,large,〃,"바다,민물",Fish/GiantOctopus
+40,대왕오징어,F,3,2,0,large,〃,"바다,민물",Fish/GiantSquid
+41,실러캔스,F,3,2,0,normal,〃,"바다,민물",Fish/Coelacanth
+42,우파루파,F,3,2,0,normal,〃,"바다,민물",Fish/Axolotl
+43,초롱아귀,F,3,2,0,normal,〃,"바다,민물",Fish/FootballFish
+44,해파리1,F,3,2,0,normal,〃,"바다,민물",Fish/JellyFish1
+45,해파리2,F,3,2,0,normal,〃,"바다,민물",Fish/JellyFish2
+46,페트병,F,1,2,100,normal,〃,"바다,민물",Fish/PlasticBottle
+47,비닐봉지,F,1,2,150,normal,〃,"바다,민물",Fish/PlasticBag

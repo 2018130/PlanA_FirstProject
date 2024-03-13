@@ -48,6 +48,24 @@ public class Collection : MonoBehaviour
 
             gameObject.SetActive(false);
         }
+
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                gameObject.SetActive(false);
+            }
+        }
+#elif UNITY_ANDROID
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                gameObject.SetActive(false);
+            }
+        }
+#endif
     }
 
     public void PreCollectionFishInfo()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class FishingLine : MonoBehaviour
@@ -27,7 +28,7 @@ public class FishingLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 endPoint = lineLenth * new Vector3(Mathf.Cos((degree + 270 - maxDegree / 2)* Mathf.PI / 180),
+        Vector3 endPoint = lineLenth * new Vector3(Mathf.Cos((degree + 270 - maxDegree / 2) * Mathf.PI / 180),
             Mathf.Sin((degree + 270 - maxDegree / 2) * Mathf.PI / 180), 0) + lineRenderer.GetPosition(0);
 
         lineRenderer.SetPosition(1, endPoint);
@@ -36,7 +37,8 @@ public class FishingLine : MonoBehaviour
         if (Mathf.Abs(degree) > maxDegree)
         {
             sign = -1;
-        }else if(degree < 0)
+        }
+        else if (degree < 0)
         {
             sign = 1;
         }
@@ -49,14 +51,15 @@ public class FishingLine : MonoBehaviour
             return;
         }
 #elif UNITY_ANDROID        
-        if(Input.touchCount != 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount != 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             sign *= -1;
             lineAcc = 10;
             return;
+
         }
 #endif
-        if(lineAcc < maxLineAcc)
+        if (lineAcc < maxLineAcc)
         {
             float lineAccWeight = 5.0f;
             lineAcc += Time.deltaTime * lineAccWeight;
