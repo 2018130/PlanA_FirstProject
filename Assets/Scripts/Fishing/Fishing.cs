@@ -35,6 +35,7 @@ public class Fishing : MonoBehaviour
     GameObject fishbowl;
     [SerializeField]
     GameObject collection;
+    AdsManager adsManager;
 
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
@@ -199,14 +200,15 @@ public class Fishing : MonoBehaviour
             currentHealthUI = gameUI.GetChild(3).gameObject;
             fishbowl = playerController.transform.GetChild(0).GetChild(5).GetChild(4).gameObject;
             collection = playerController.transform.GetChild(0).GetChild(7).gameObject;
+            adsManager = GameObject.Find("AdsManager").GetComponent<AdsManager>();
             //pause Btn
             gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(playerController.OpenConfirmPanel);
             //FailPanel Confirm Btn
             gameUI.GetChild(7).GetChild(6).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
-            gameUI.GetChild(7).GetChild(7).GetComponent<Button>().onClick.AddListener(GetADReward);
+            gameUI.GetChild(7).GetChild(7).GetComponent<Button>().onClick.AddListener(adsManager.ShowRewardedAd);
             //CaeraPanel Confirm Btn
             gameUI.GetChild(8).GetChild(5).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
-            gameUI.GetChild(8).GetChild(6).GetComponent<Button>().onClick.AddListener(GetADReward);
+            gameUI.GetChild(8).GetChild(6).GetComponent<Button>().onClick.AddListener(adsManager.ShowRewardedAd);
 
             CurrentHealth = playerController.Health;
             CatchedSmallFishCount = 0;
