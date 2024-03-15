@@ -79,6 +79,7 @@ public class AdsManager : MonoBehaviour
                 Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
 
                 fishing.GetADReward();
+                Time.timeScale = 0;
 
                 _rewardedAd.Destroy();
             });

@@ -275,7 +275,7 @@ public class Fishing : MonoBehaviour
     void OpenCaeraPanel()
     {
         Text[] texts = caeraPanel.GetComponentsInChildren<Text>();
-
+        Debug.Log("OpenCaeraPanel");
         texts[0].text = "x" + catchedSmallFishCount.ToString();
         texts[1].text = "x" + catchedMediumFishCount.ToString();
         texts[2].text = "x" + catchedLargeFishCount.ToString();
@@ -287,6 +287,7 @@ public class Fishing : MonoBehaviour
     public void OpenFailPanel()
     {
         Text[] texts = failPanel.GetComponentsInChildren<Text>();
+        Debug.Log("OpenFailPanel");
 
         texts[0].text = "x" + catchedSmallFishCount.ToString();
         texts[1].text = "x" + catchedMediumFishCount.ToString();

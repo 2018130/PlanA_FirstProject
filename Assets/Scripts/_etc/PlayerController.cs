@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     GameObject confirmWindow;
 
-    const int maxFishingLineLenth = 10000;
+    const int maxFishingLineLenth = 1000;
     public int MaxFishingLineLenth
     {
         get => maxFishingLineLenth;
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    const int maxHealth = 1000;
+    const int maxHealth = 100;
     int health;
     public int Health
     {
