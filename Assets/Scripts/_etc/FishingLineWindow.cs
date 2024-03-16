@@ -26,11 +26,11 @@ public class FishingLineWindow : MonoBehaviour
     }
     public void BuyFisingLine()
     {
-        Debug.Log("Call buy fisingline coin : " + playerController.Coin);
-        if (playerController.Coin < Cost) return;
+        const int addedLenth = 100;
+        if (playerController.Coin < Cost || playerController.FishingLineLenth + addedLenth > playerController.MaxFishingLineLenth) return;
 
-        Debug.Log("enough coin");
         playerController.Coin = playerController.Coin - Cost;
-        playerController.AddFishingLineLenth();
+        playerController.FishingLineLenth += addedLenth;
+        playerController.SavePlayerInfoToJson();
     }
 }

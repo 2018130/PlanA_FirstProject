@@ -26,9 +26,15 @@ public class HealthWindow : MonoBehaviour
     }
     public void BuyHealth()
     {
-        if (playerController.Coin < Cost) return;
+        const int addedHealth = 100;
+        if (playerController.Coin < Cost || playerController.MaxHealth < addedHealth + playerController.Health)
+        {
+            return;
+        }
 
+        playerController.Health += addedHealth;
         playerController.Coin = playerController.Coin - Cost;
-        playerController.AddHealth();
+
+        playerController.SavePlayerInfoToJson();
     }
 }

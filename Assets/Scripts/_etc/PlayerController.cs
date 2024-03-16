@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     GameObject confirmWindow;
 
-    const int maxFishingLineLenth = 1000;
+    const int maxFishingLineLenth = 10000;
     public int MaxFishingLineLenth
     {
         get => maxFishingLineLenth;
@@ -53,14 +53,18 @@ public class PlayerController : MonoBehaviour
         get { return fishingLineLenth; }
         set
         {
-            fishingLineLenth = Mathf.Clamp(value, 4000, maxFishingLineLenth);
+            fishingLineLenth = Mathf.Clamp(value, 1000, maxFishingLineLenth);
             if (upperBar != null)
             {
                 upperBar.transform.GetChild(3).GetChild(1).GetComponent<Text>().text = fishingLineLenth.ToString() + "m";
             }
         }
     }
-    const int maxHealth = 100;
+    const int maxHealth = 500;
+    public int MaxHealth
+    {
+        get => maxHealth;
+    }
     int health;
     public int Health
     {
@@ -222,22 +226,6 @@ public class PlayerController : MonoBehaviour
     {
         selectedBaitImage = newBait;
         upperBar.transform.GetChild(4).GetChild(0).GetComponent<Image>().sprite = selectedBaitImage;
-    }
-
-    public void AddFishingLineLenth()
-    {
-        const int addedLenth = 100;
-        FishingLineLenth += addedLenth;
-
-        SavePlayerInfoToJson();
-    }
-
-    public void AddHealth()
-    {
-        const int addedHealth = 100;
-        Health += addedHealth;
-
-        SavePlayerInfoToJson();
     }
 
     public void SetMainSceneUI()

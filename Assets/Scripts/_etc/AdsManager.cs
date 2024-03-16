@@ -35,12 +35,12 @@ public class AdsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void LoadRewardedAd()
     {
-        if(_rewardedAd != null)
+        if (_rewardedAd != null)
         {
             _rewardedAd.Destroy();
             _rewardedAd = null;
@@ -52,7 +52,7 @@ public class AdsManager : MonoBehaviour
 
         RewardedAd.Load(_adUnitId, adRequest, (RewardedAd ad, LoadAdError error) =>
         {
-            if(ad == null || error != null)
+            if (ad == null || error != null)
             {
                 Debug.Log("Rewareded ad fail to load an ad with error : " + error);
                 return;
@@ -72,7 +72,7 @@ public class AdsManager : MonoBehaviour
     {
         const string rewardMsg = "Rewarded ad rewarded the user. Type : {0}, amount : {1}.";
 
-        if(_rewardedAd != null && _rewardedAd.CanShowAd())
+        if (_rewardedAd != null && _rewardedAd.CanShowAd())
         {
             _rewardedAd.Show((Reward reward) =>
             {
