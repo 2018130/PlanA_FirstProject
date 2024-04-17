@@ -91,7 +91,7 @@ public class Tile : MonoBehaviour
         if (shareHouseCat != null)
         {
             if (Mathf.Approximately(collision.transform.position.x, transform.position.x) &&
-                Mathf.Approximately(collision.transform.position.x, transform.position.x))
+                Mathf.Approximately(collision.transform.position.y, transform.position.y))
             {
                 if (tilePosX > postTile.tilePosX)
                 {

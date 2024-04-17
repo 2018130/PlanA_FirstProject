@@ -26,7 +26,8 @@ public class NewFishSpawner : MonoBehaviour
         fishingLineLenthToChangeWaterDepth = new List<int>() { 0, 1500, 3000, PlayerController.SPlayerController.MaxFishingLineLenth };
 
         S_NewFishSpawner = this;
-
+        //fishSpawnIDByWaterDepth.Add(1, new List<int>() { 46
+        //});
         fishSpawnIDByWaterDepth.Add(1, new List<int>() { 1, 2, 4,7,8,10,11,12,16,17,18,21,22,24,25,26,27,29,30,35,46
         });
         fishSpawnIDByWaterDepth.Add(2, new List<int>() { 3, 9,13,14,15,19,23,28,31,32,34,36,46,47

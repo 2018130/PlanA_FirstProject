@@ -8,18 +8,30 @@ public class MainCamera : MonoBehaviour
 
     private void Start()
     {
-        if(!fishingFloats)
-        {
-            Fishing fishing = FindObjectOfType<Fishing>();
-            if(fishing)
-            {
-                fishingFloats = fishing.transform.GetChild(1).GetChild(0).gameObject;
-            }
-        }
+        
     }
 
     private void Update()
     {
+        if (!fishingFloats)
+        {
+            Fishing fishing = FindObjectOfType<Fishing>();
+            if (fishing)
+            {
+                fishingFloats = fishing.transform.GetChild(1).GetChild(0).gameObject;
+            }
+            else
+            {
+                if(transform.position.x != 0 || 
+                    transform.position.y != 0)
+                {
+                    transform.position = new Vector3(0, 0, -10);
+                }
+            }
+        }
+
+        if (fishingFloats == null) return;
+
         float topCamPosY = -100f, bottomCamPosY = 100f;
         float leftCamPosX = -200f, rightCamPosX = 200f;
         if (fishingFloats.gameObject.transform.position.y > bottomCamPosY &&

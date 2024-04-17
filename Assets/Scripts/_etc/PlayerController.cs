@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
     GameObject upperBar;
 
     Vector3 destinationPos = Vector3.zero;
-    [SerializeField]
-    float speed = 5.0f;
 
     [SerializeField]
     SpriteRenderer fishingFloats;
@@ -124,7 +122,6 @@ public class PlayerController : MonoBehaviour
         {
             textList[i].font = Resources.Load<Font>("Fonts/jejuDolDam");
         }//
-
         
 
         if (SPlayerController != null)
@@ -141,14 +138,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR
-        if(Input.GetKey(KeyCode.Q))
+        if(Input.anyKeyDown)
         {
-            OpenConfirmPanel();
+            Camera.main.GetComponent<Sound>().PlayUserTouchClip();
         }
 #elif UNITY_ANDROID
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.touchCount >= 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            OpenConfirmPanel();
+            Camera.main.GetComponent<Sound>().PlayUserTouchClip();
         }
 #endif
     }
@@ -260,28 +257,28 @@ public class PlayerController : MonoBehaviour
         return newItem;
     }
     
-    public void OpenConfirmPanel()
+    public static void OpenConfirmPanel()
     {
         Time.timeScale = 0;
-        Text exitWindowText = confirmWindow.transform.GetChild(2).GetComponent<Text>();
+        Text exitWindowText = SPlayerController.confirmWindow.transform.GetChild(2).GetComponent<Text>();
 
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
             exitWindowText.text = "정말 종료하시겠습니까?";
             //yes btn
-            confirmWindow.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(confirmWindow.GetComponent<ConfirmWindow>().ExitGame);
+            SPlayerController.confirmWindow.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(SPlayerController.confirmWindow.GetComponent<ConfirmWindow>().ExitGame);
             //no btn
-            confirmWindow.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmWindow.GetComponent<ConfirmWindow>().CloseExitPanel);
+            SPlayerController.confirmWindow.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(SPlayerController.confirmWindow.GetComponent<ConfirmWindow>().CloseExitPanel);
         }
         else if(SceneManager.GetActiveScene().name == "GameScene")
         {
             exitWindowText.text = "메인화면으로 가기";
             //yes btn
-            confirmWindow.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(Fishing.SFishing.MoveToMainMenuScreen);
+            SPlayerController.confirmWindow.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(Fishing.SFishing.MoveToMainMenuScreen);
             //no btn
-            confirmWindow.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(confirmWindow.GetComponent<ConfirmWindow>().CloseExitPanel);
+            SPlayerController.confirmWindow.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(SPlayerController.confirmWindow.GetComponent<ConfirmWindow>().CloseExitPanel);
         }
 
-        confirmWindow.SetActive(true);
+        SPlayerController.confirmWindow.SetActive(true);
     }
 }

@@ -24,7 +24,8 @@ public class FishingBtn : MonoBehaviour
     {
         if(mainCat == null)
         {
-            mainCat = GameObject.Find("Main").transform.GetChild(1).GetChild(1).gameObject;
+
+            mainCat = GameObject.Find("Main")?.transform.GetChild(1).GetChild(1).gameObject;
         }
     }
     public void ClickToFisingBtn()
@@ -35,7 +36,7 @@ public class FishingBtn : MonoBehaviour
         isAnimPlayed = true;
         mainCat.transform.GetChild(0).GetComponent<Animator>().SetTrigger("StartFishing");
         float animationPlayTime = mainCat.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length;
-
+        
         StartCoroutine("C_MoveToGameScreen", animationPlayTime);
     }
 
@@ -49,6 +50,7 @@ public class FishingBtn : MonoBehaviour
     {
         yield return new WaitForSeconds(animationPlayTime);
 
+        Camera.main.GetComponent<Sound>().ChangeSceneToFishing();
         PlayerController.SPlayerController.SetGameSceneUI();
         isAnimPlayed = false;
         SceneManager.LoadSceneAsync("GameScene");

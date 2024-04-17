@@ -24,7 +24,7 @@ public class FishingFloats : MonoBehaviour
 
             if (fishing.CurrentHealth <= 0)
             {
-                fishing.OpenFailPanel();
+                fishing.OpenFailPanel(false);
             }
         }
     }

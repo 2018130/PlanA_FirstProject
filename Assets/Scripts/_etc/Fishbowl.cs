@@ -59,12 +59,13 @@ public class Fishbowl : MonoBehaviour
 
     private void Update()
     {
+        /*
         if(boxes[9].GetComponent<Item>().itemType != EItemType.TREASURE)
         {
             Item testBox = boxes[9].GetComponent<Item>();
             testBox.itemId = 1000;
             testBox.itemType = EItemType.TREASURE;
-        }
+        }*/
     }
 
     private void OnApplicationQuit()

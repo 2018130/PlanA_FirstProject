@@ -161,7 +161,7 @@ public class Fishing : MonoBehaviour
         {
             if (!caeraPanel.activeSelf)
             {
-                OpenCaeraPanel();
+                OpenCaeraPanel(false);
             }
         }
 
@@ -170,7 +170,7 @@ public class Fishing : MonoBehaviour
             isInvincible = true;
             StartCoroutine(SetBackgroundColorToRed());
 
-            //¸¶Áö¸· ·çÇÁÀÏ ¶§
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             if(warningTwinkle == warningTwinkleCount + 1)
             {
                 startTwinkle = false;
@@ -198,11 +198,11 @@ public class Fishing : MonoBehaviour
             failPanel = gameUI.GetChild(7).gameObject;
             caeraPanel = gameUI.GetChild(8).gameObject;
             currentHealthUI = gameUI.GetChild(3).gameObject;
-            fishbowl = playerController.transform.GetChild(0).GetChild(5).GetChild(4).gameObject;
+            fishbowl = playerController.transform.GetChild(0).GetChild(6).GetChild(4).gameObject;
             collection = playerController.transform.GetChild(0).GetChild(7).gameObject;
             adsManager = GameObject.Find("AdsManager").GetComponent<AdsManager>();
             //pause Btn
-            gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(playerController.OpenConfirmPanel);
+            gameUI.GetChild(2).GetComponent<Button>().onClick.AddListener(PlayerController.OpenConfirmPanel);
             //FailPanel Confirm Btn
             gameUI.GetChild(7).GetChild(6).GetComponent<Button>().onClick.AddListener(MoveToMainMenuScreen);
             gameUI.GetChild(7).GetChild(7).GetComponent<Button>().onClick.AddListener(adsManager.ShowRewardedAd);
@@ -221,6 +221,10 @@ public class Fishing : MonoBehaviour
 
             catchedFishs.Clear();
         }
+
+        AudioClip clip = Camera.main.GetComponent<Sound>().FishingClips[Random.Range(0, Camera.main.GetComponent<Sound>().FishingClips.Count)];
+        Camera.main.GetComponent<Sound>().backgroundAudioSource.clip = clip;
+        Camera.main.GetComponent<Sound>().backgroundAudioSource.Play();
     }
 
     public void MoveToMainMenuScreen()
@@ -228,6 +232,7 @@ public class Fishing : MonoBehaviour
         onFishingEnd.Invoke();
         Time.timeScale = 1;
 
+        StartCoroutine(Camera.main.GetComponent<Sound>().PlayAudioClipForDuration(Camera.main.GetComponent<Sound>().afternoonTime, Camera.main.GetComponent<Sound>().afternoonClip));
         playerController.SetMainSceneUI();
         fishbowl.GetComponent<Fishbowl>().SaveItemInfoToJson();
         collection.GetComponent<Collection>().SaveCollectionInfoToJson();
@@ -272,26 +277,43 @@ public class Fishing : MonoBehaviour
         fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFish.GetFishData()));
     }
 
-    void OpenCaeraPanel()
+    void OpenCaeraPanel(bool isADRewarded)
     {
         Text[] texts = caeraPanel.GetComponentsInChildren<Text>();
         Debug.Log("OpenCaeraPanel");
         texts[0].text = "x" + catchedSmallFishCount.ToString();
         texts[1].text = "x" + catchedMediumFishCount.ToString();
         texts[2].text = "x" + catchedLargeFishCount.ToString();
+
+        if(isADRewarded)
+        {
+            texts[0].text += "(+" + catchedSmallFishCount.ToString() + ")";
+            texts[1].text += "(+" + catchedMediumFishCount.ToString() + ")";
+            texts[2].text += "(+" + catchedLargeFishCount.ToString() + ")";
+
+            caeraPanel.transform.GetChild(6).gameObject.SetActive(false);
+        }
+
         Time.timeScale = 0f;
 
         caeraPanel.SetActive(true);
     }
 
-    public void OpenFailPanel()
+    public void OpenFailPanel(bool isADRewarded)
     {
         Text[] texts = failPanel.GetComponentsInChildren<Text>();
-        Debug.Log("OpenFailPanel");
 
         texts[0].text = "x" + catchedSmallFishCount.ToString();
         texts[1].text = "x" + catchedMediumFishCount.ToString();
         texts[2].text = "x" + catchedMediumFishCount.ToString();
+        if (isADRewarded)
+        {
+            texts[0].text += "(+" + catchedSmallFishCount.ToString() + ")";
+            texts[1].text += "(+" + catchedMediumFishCount.ToString() + ")";
+            texts[2].text += "(+" + catchedLargeFishCount.ToString() + ")";
+            failPanel.transform.GetChild(7).gameObject.SetActive(false);
+        }
+
         Time.timeScale = 0f;
 
         failPanel.SetActive(true);
@@ -327,6 +349,14 @@ public class Fishing : MonoBehaviour
         {
             fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFishs[i]));
         }
-        Debug.Log("º¸»ó È¹µæ ¿Ï·á");
+
+        if(caeraPanel.activeSelf)
+        {
+            OpenCaeraPanel(true);
+        }
+        else if(failPanel.activeSelf)
+        {
+            OpenFailPanel(true);
+        }
     }
 }

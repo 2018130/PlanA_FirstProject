@@ -80,7 +80,7 @@ public class TileBundle : MonoBehaviour
         }
 
         //플레이어 다음 타일로 가야하는 경우
-        if (isEndOfTileSync && playerPos != haveToWalkTile)
+        if ( playerPos != haveToWalkTile)
         {
             shareHouseCat.transform.position = Vector3.MoveTowards(shareHouseCat.transform.position,
                 tiles[haveToWalkTile.y][haveToWalkTile.x].transform.position, Time.deltaTime * speed);
@@ -105,12 +105,12 @@ public class TileBundle : MonoBehaviour
 
     IEnumerator C_AStar(Vector2Int curIdx, Vector2Int targetIdx)
     {
-        isEndOfTileSync = false;
+        //isEndOfTileSync = false;
         AStar(curIdx, targetIdx);
 
         yield return new WaitForSeconds(0.3f);
 
-        isEndOfTileSync = true;
+        //isEndOfTileSync = true;
     }
 
     public void AStar(Vector2Int curIdx, Vector2Int targetIdx)

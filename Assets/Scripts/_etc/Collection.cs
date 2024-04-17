@@ -89,6 +89,8 @@ public class Collection : MonoBehaviour
             gameObject.SetActive(true);
         }
 
+        Camera.main.GetComponent<Sound>().PlayTurnTheCollectionClip();
+
         Text page = transform.GetChild(1).GetComponent<Text>();
         Text name = transform.GetChild(2).GetComponent<Text>();
         Text description = transform.GetChild(4).GetComponent<Text>();

@@ -31,8 +31,7 @@ public class NewFishMove : MonoBehaviour
     private void Start()
     {
         rightBody2D = GetComponent<Rigidbody2D>();
-        UnityAction unityAction = new UnityAction(RemoveFish);
-        Fishing.SFishing.onFishingEnd.AddListener(unityAction);
+        Fishing.SFishing.onFishingEnd.AddListener(new UnityAction(RemoveFish));
 
         StartCoroutine("C_DetectObjectTimer");
     }

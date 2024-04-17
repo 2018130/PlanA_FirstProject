@@ -24,10 +24,7 @@ public class AdsManager : MonoBehaviour
     {
         fishing = GameObject.Find("Fishing").GetComponent<Fishing>();
 
-        MobileAds.Initialize((InitializationStatus initStatus) =>
-        {
-
-        });
+        MobileAds.Initialize((InitializationStatus initStatus) =>{ });
 
         LoadRewardedAd();
     }

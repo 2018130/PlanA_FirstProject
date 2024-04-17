@@ -9,13 +9,15 @@ public class Setting : MonoBehaviour
 {
     [SerializeField]
     Sound sound;
+
     Scrollbar backgroundSoundScrollbar;
     Scrollbar effectSoundScrollbar;
 
     Button exitBtn;
 
-    float backgroundSound = 0f;
-    float effectSound = 0f;
+    public static float BackgroundSound = 0f;
+    public static float EffectSound = 0f;
+
     private void Awake()
     {
         backgroundSoundScrollbar = transform.GetChild(2).GetChild(0).GetComponent<Scrollbar>();
@@ -23,16 +25,18 @@ public class Setting : MonoBehaviour
         exitBtn = transform.GetChild(5).GetComponent<Button>();
 
         backgroundSoundScrollbar.onValueChanged.AddListener(OnBackgroundValueChanged);
-        effectSoundScrollbar.onValueChanged.AddListener(OnEffectValueChanged);
+        effectSoundScrollbar.onValueChanged.AddListener(OnEffectValueChanged); 
     }
 
     private void Start()
     {
         sound = Camera.main.GetComponent<Sound>();
-        exitBtn.onClick.AddListener(PlayerController.SPlayerController.OpenConfirmPanel);
+        exitBtn.onClick.AddListener(PlayerController.OpenConfirmPanel);
 
         OnBackgroundValueChanged(0.5f);
         OnEffectValueChanged(0.5f);
+
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -75,7 +79,7 @@ public class Setting : MonoBehaviour
         float maxAreaSize = 500f;
         RectTransform fillingArea = backgroundSoundScrollbar.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
         fillingArea.sizeDelta = new Vector2(value * maxAreaSize, fillingArea.sizeDelta.y);
-        backgroundSound = value;
+        BackgroundSound = value;
         sound.backgroundAudioSource.volume = value;
     }
 
@@ -84,6 +88,6 @@ public class Setting : MonoBehaviour
         float maxAreaSize = 500f;
         RectTransform fillingArea = effectSoundScrollbar.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
         fillingArea.sizeDelta = new Vector2(value * maxAreaSize, fillingArea.sizeDelta.y);
-        effectSound = value;
+        EffectSound = value;
     }
 }
