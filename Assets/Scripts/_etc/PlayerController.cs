@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public enum EScreenState
 {
@@ -25,7 +26,10 @@ public class PlayerControllerSaveData
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController SPlayerController;
-    
+
+    [SerializeField]
+    public ParticleSystem TouchParticle;
+
     [SerializeField]
     public Sprite selectedBaitImage;
 
@@ -141,11 +145,15 @@ public class PlayerController : MonoBehaviour
         if(Input.anyKeyDown)
         {
             Camera.main.GetComponent<Sound>().PlayUserTouchClip();
+            ParticleSystem tp = Instantiate(TouchParticle, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+            StartCoroutine(DespawnTouchParticle(tp));
         }
 #elif UNITY_ANDROID
-        if (Input.touchCount >= 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             Camera.main.GetComponent<Sound>().PlayUserTouchClip();
+            ParticleSystem tp = Instantiate(TouchParticle, Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Quaternion.identity);
+            StartCoroutine(DespawnTouchParticle(tp));
         }
 #endif
     }
@@ -280,5 +288,12 @@ public class PlayerController : MonoBehaviour
         }
 
         SPlayerController.confirmWindow.SetActive(true);
+    }
+
+    IEnumerator DespawnTouchParticle(ParticleSystem ps)
+    {
+        yield return new WaitForSeconds(1);
+
+        Destroy(ps.gameObject);
     }
 }
