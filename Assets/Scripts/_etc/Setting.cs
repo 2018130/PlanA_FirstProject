@@ -62,6 +62,7 @@ public class Setting : MonoBehaviour
 
     public void OpenSettingWindow()
     {
+        PlayerController.SPlayerController.SavePlayerInfoToJson();
         gameObject.SetActive(true);
     }
 

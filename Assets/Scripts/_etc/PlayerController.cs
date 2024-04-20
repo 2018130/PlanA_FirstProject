@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         get => maxFishingLineLenth;
     }
 
-    int fishingLineLenth;
+    int fishingLineLenth = 0;
     public int FishingLineLenth
     {
         get { return fishingLineLenth; }
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         get => maxHealth;
     }
-    int health;
+    int health = 0;
     public int Health
     {
         get { return health; }
@@ -81,14 +81,13 @@ public class PlayerController : MonoBehaviour
     }
 
     const int maxCoin = 9999999;
-    int coin;
+    int coin = 0;
     public int Coin
     {
         get { return coin; }
         set
         {
             coin = value;
-            Debug.Log(coin + "  " + Coin);
             if (upperBar != null)
             {
                 if (coin > maxCoin)
@@ -113,9 +112,10 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
 #if UNITY_EDITOR
-        path = Path.Combine(Application.dataPath, "playerData.json");
+        path = Path.Combine(Application.dataPath, "playerData01.json");
 #elif UNITY_ANDROID
-        path = Application.persistentDataPath + "/playerData.json";
+        path = Application.persistentDataPath + "/playerData01.json";
+        Debug.Log(path);
 #endif
         InitializePlayerInfoFromJson();
         SetBaitImage(selectedBaitImage);
@@ -167,21 +167,23 @@ public class PlayerController : MonoBehaviour
         return ray.GetPoint(distance);
     }
 
-    private void InitializePlayerInfoFromJson()
+    public void InitializePlayerInfoFromJson()
     {
         if (!File.Exists(path))
         {
             Health = 300;
             Coin = 1;
             fishingLineLenth = 4000;
+            SavePlayerInfoToJson();
         }
         else
         {
             PlayerControllerSaveData playerControllerSaveData = new PlayerControllerSaveData();
             string loadJson = File.ReadAllText(path);
             playerControllerSaveData = JsonUtility.FromJson<PlayerControllerSaveData>(loadJson);
+            Debug.Log(loadJson);
 
-            if(playerControllerSaveData != null)
+            if (playerControllerSaveData != null)
             {
                 Health = playerControllerSaveData.Health;
                 Coin = playerControllerSaveData.Coin;
@@ -203,6 +205,29 @@ public class PlayerController : MonoBehaviour
         File.WriteAllText(path, json);
     }
 
+    public void LoadCloudDataIntoGameData(string strData)
+    {
+        PlayerControllerSaveData playerControllerSaveData = JsonUtility.FromJson<PlayerControllerSaveData>(strData);
+
+        if (playerControllerSaveData != null)
+        {
+            Health = playerControllerSaveData.Health;
+            Coin = playerControllerSaveData.Coin;
+            FishingLineLenth = playerControllerSaveData.FishingLineLenth;
+            Debug.Log("from json coin : " + Coin);
+        }
+    }
+
+    public void SaveToCloudFromJson()
+    {
+        GPGSBinder.SaveToCloud();
+    }
+
+    public void LoadCloudToGameData()
+    {
+        GPGSBinder.LoadFromCloud();
+    }
+
     public void IncreaseHBC()
     {
         Health++;
@@ -212,7 +237,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (path.Length == 0) return;
+        SavePlayerInfoToJson();
     }
 
     //yyyy-MM-dd HH:mm:ss

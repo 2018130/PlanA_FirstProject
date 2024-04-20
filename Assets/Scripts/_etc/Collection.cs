@@ -13,10 +13,17 @@ public class CollectionSaveData
 
 public class Collection : MonoBehaviour
 {
+    public static Collection Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     const int MAX_FISH_SIZE = 100;
 
-    FishData[] fishDatas = new FishData[MAX_FISH_SIZE];
-    bool[] isCollected = new bool[MAX_FISH_SIZE];
+    public FishData[] fishDatas = new FishData[MAX_FISH_SIZE];
+    public bool[] isCollected = new bool[MAX_FISH_SIZE];
     int curIndex = 0;
     int fishDataSize = 0;
 
@@ -26,9 +33,9 @@ public class Collection : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        path = Path.Combine(Application.dataPath, "collectionData.json");
+        path = Path.Combine(Application.dataPath, "collectionData01.json");
 #elif UNITY_ANDROID
-        path = Application.persistentDataPath + "/collectionData.json";
+        path = Application.persistentDataPath + "/collectionData01.json";
 #endif
         InitializeCollectionInfoFromJson();
     }
@@ -151,7 +158,6 @@ public class Collection : MonoBehaviour
         }
         string json = JsonUtility.ToJson(collectionDatabase, true);
         File.WriteAllText(path, json);
-
     }
 
     void InitializeCollectionInfoFromJson()
@@ -161,6 +167,24 @@ public class Collection : MonoBehaviour
         string jsonLoad = File.ReadAllText(path);
         CollectionSaveData collectionDatabase = new CollectionSaveData();
         collectionDatabase = JsonUtility.FromJson<CollectionSaveData>(jsonLoad);
+
+        if (collectionDatabase != null)
+        {
+            for (int i = 0; i < fishDataSize; i++)
+            {
+                isCollected[i] = false;
+            }
+            for (int i = 0; i < collectionDatabase.collectedFishIdx.Count; i++)
+            {
+                isCollected[collectionDatabase.collectedFishIdx[i]] = true;
+            }
+        }
+    }
+
+    public void LoadCloudDataIntoGameData(string strData)
+    {
+        CollectionSaveData collectionDatabase = new CollectionSaveData();
+        collectionDatabase = JsonUtility.FromJson<CollectionSaveData>(strData);
 
         if (collectionDatabase != null)
         {

@@ -13,6 +13,12 @@ public class FishbowlSaveData
 
 public class Fishbowl : MonoBehaviour
 {
+    public static Fishbowl Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public const int FISHBOWL_BOX_SIZE = 50;
     [SerializeField]
     GameObject boxPrefab;
@@ -24,7 +30,7 @@ public class Fishbowl : MonoBehaviour
     GameObject sellWindow;
     public GameObject[] boxes = new GameObject[FISHBOWL_BOX_SIZE];
     public int itemSize = 0;
-    
+
     public HashSet<Item> clickedItem = new HashSet<Item>();
 
     [SerializeField]
@@ -42,9 +48,9 @@ public class Fishbowl : MonoBehaviour
     private void Start()
     {
 #if UNITY_EDITOR
-        path = Path.Combine(Application.dataPath, "fishbowlData.json");
+        path = Path.Combine(Application.dataPath, "fishbowlData01.json");
 #elif UNITY_ANDROID
-        path = Application.persistentDataPath + "/fishbowlData.json";
+        path = Application.persistentDataPath + "/fishbowlData01.json";
 #endif
         content = transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
         sellBtn = transform.GetChild(3).gameObject;
@@ -75,7 +81,7 @@ public class Fishbowl : MonoBehaviour
 
     void InitBoxes()
     {
-        for(int i = 0; i < FISHBOWL_BOX_SIZE; i++)
+        for (int i = 0; i < FISHBOWL_BOX_SIZE; i++)
         {
             GameObject newBox = Instantiate(boxPrefab, content.transform);
             boxes[i] = newBox;
@@ -109,7 +115,7 @@ public class Fishbowl : MonoBehaviour
     public void OpenSellWindow()
     {
         int totalPrice = 0;
-        foreach(Item selectedItem in clickedItem)
+        foreach (Item selectedItem in clickedItem)
         {
             totalPrice += selectedItem.itemPrice * selectedItem.itemCount;
         }
@@ -121,7 +127,7 @@ public class Fishbowl : MonoBehaviour
     public void CloseSellWindow()
     {
         clickedItem.Clear();
-        for(int i = 0; i < itemSize; i++)
+        for (int i = 0; i < itemSize; i++)
         {
             boxes[i].GetComponent<Image>().color = new Color(1f, 1f, 1f);
         }
@@ -148,7 +154,7 @@ public class Fishbowl : MonoBehaviour
 
     public void SellAllItems_Confirm()
     {
-        for(int i = 0; i < itemSize; i++)
+        for (int i = 0; i < itemSize; i++)
         {
             clickedItem.Add(boxes[i].GetComponent<Item>());
         }
@@ -158,12 +164,12 @@ public class Fishbowl : MonoBehaviour
 
     public void AddItemInBox(Item newItem)
     {
-        for(int i = 0; i < itemSize; i++)
+        for (int i = 0; i < itemSize; i++)
         {
             Item item = boxes[i].GetComponent<Item>();
-            
+
             //아이템이 이미 있는 경우
-            if(newItem.itemId == item.itemId)
+            if (newItem.itemId == item.itemId)
             {
                 item.itemCount += newItem.itemCount;
 
@@ -189,17 +195,17 @@ public class Fishbowl : MonoBehaviour
 
     public int RemoveEmptyItemInBox()
     {
-        for(int i = 0; i < itemSize; i++)
+        for (int i = 0; i < itemSize; i++)
         {
             Item item = boxes[i].GetComponent<Item>();
 
-            if(item.itemId == -1 || item.itemCount <= 0)
+            if (item.itemId == -1 || item.itemCount <= 0)
             {
                 for (int j = i + 1; j < itemSize; j++)
                 {
                     Item nextItem = boxes[j].GetComponent<Item>();
 
-                    if(nextItem.itemId != -1 && nextItem.itemCount > 0)
+                    if (nextItem.itemId != -1 && nextItem.itemCount > 0)
                     {
                         item.InitItem(nextItem);
                         nextItem.itemId = -1;
@@ -213,7 +219,7 @@ public class Fishbowl : MonoBehaviour
 
         int removeSize = 0;
 
-        for(int i = itemSize - 1; i >= 0; i--)
+        for (int i = itemSize - 1; i >= 0; i--)
         {
             if (boxes[i].GetComponent<Item>().itemId == -1) removeSize++;
         }
@@ -274,5 +280,32 @@ public class Fishbowl : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void LoadCloudDataIntoGameData(string strData)
+    {
+        FishbowlSaveData fishbowlSaveData = new FishbowlSaveData();
+
+        fishbowlSaveData = JsonUtility.FromJson<FishbowlSaveData>(strData);
+
+        if (fishbowlSaveData != null)
+        {
+            for (int i = 0; i < fishbowlSaveData.ownItemId.Count; i++)
+            {
+                if (FishDataBundle.fishDatas.ContainsKey(fishbowlSaveData.ownItemId[i]))
+                {
+
+                    FishData fishData = FishDataBundle.fishDatas[fishbowlSaveData.ownItemId[i]];
+
+                    if (fishData != null)
+                    {
+                        Item item = PlayerController.SPlayerController.ChangeFishDataToItem(fishData);
+                        item.itemCount = fishbowlSaveData.ownItemCount[i];
+                        AddItemInBox(item);
+                    }
+                }
+            }
+        }
+
     }
 }
