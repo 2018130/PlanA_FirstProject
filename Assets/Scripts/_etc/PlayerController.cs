@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject upperBar;
 
+    [SerializeField]
+    public GameObject allScreenPanel;
+    
     Vector3 destinationPos = Vector3.zero;
 
     [SerializeField]
@@ -118,7 +121,8 @@ public class PlayerController : MonoBehaviour
         Debug.Log(path);
 #endif
         InitializePlayerInfoFromJson();
-        SetBaitImage(selectedBaitImage);
+        if(selectedBaitImage)
+            SetBaitImage(selectedBaitImage);
 
         //
         Text[] textList = FindObjectsOfType<Text>();
@@ -144,9 +148,12 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
         if(Input.anyKeyDown)
         {
-            Camera.main.GetComponent<Sound>().PlayUserTouchClip();
-            ParticleSystem tp = Instantiate(TouchParticle, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-            StartCoroutine(DespawnTouchParticle(tp));
+            if (Camera.main.GetComponent<Sound>() != null)
+            {
+                Camera.main.GetComponent<Sound>().PlayUserTouchClip();
+                ParticleSystem tp = Instantiate(TouchParticle, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+                StartCoroutine(DespawnTouchParticle(tp));
+            }
         }
 #elif UNITY_ANDROID
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
@@ -220,11 +227,13 @@ public class PlayerController : MonoBehaviour
 
     public void SaveToCloudFromJson()
     {
+        allScreenPanel.SetActive(true);
         GPGSBinder.SaveToCloud();
     }
 
     public void LoadCloudToGameData()
     {
+        allScreenPanel.SetActive(true);
         GPGSBinder.LoadFromCloud();
     }
 
@@ -285,7 +294,14 @@ public class PlayerController : MonoBehaviour
         //나중에 수정해야함
         newItem.itemPrice = fishData.GetId();
 
-        newItem.itemType = EItemType.FISH;
+        if(newItem.itemId == 7777)
+        {
+            newItem.itemType = EItemType.TREASURE;
+        }
+        else
+        {
+            newItem.itemType= EItemType.FISH;
+        }
 
         return newItem;
     }
@@ -319,6 +335,9 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        Destroy(ps.gameObject);
+        if(ps != null)
+        {
+            Destroy(ps.gameObject);
+        }
     }
 }

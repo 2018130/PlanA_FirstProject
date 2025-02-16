@@ -7,7 +7,7 @@ public enum EItemType
 {
     NONE,
     FISH,
-    TREASURE
+    TREASURE,
 }
 public class Item : MonoBehaviour
 {

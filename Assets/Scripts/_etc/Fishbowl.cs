@@ -16,7 +16,10 @@ public class Fishbowl : MonoBehaviour
     public static Fishbowl Instance;
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     public const int FISHBOWL_BOX_SIZE = 50;
@@ -97,7 +100,7 @@ public class Fishbowl : MonoBehaviour
             Item item = box.GetComponentInChildren<Item>();
             Text itemCountText = box.GetComponentInChildren<Text>();
 
-            if (item.itemId != -1)
+            if (item.itemId != -1 && item.itemCount != 0)
             {
                 boxImg.sprite = item.itemImage;
                 itemCountText.text = "x" + item.itemCount;
@@ -199,7 +202,7 @@ public class Fishbowl : MonoBehaviour
         {
             Item item = boxes[i].GetComponent<Item>();
 
-            if (item.itemId == -1 || item.itemCount <= 0)
+            if (item.itemId == -1 || item.itemCount < 1)
             {
                 for (int j = i + 1; j < itemSize; j++)
                 {
@@ -221,7 +224,8 @@ public class Fishbowl : MonoBehaviour
 
         for (int i = itemSize - 1; i >= 0; i--)
         {
-            if (boxes[i].GetComponent<Item>().itemId == -1) removeSize++;
+            if (boxes[i].GetComponent<Item>().itemId == -1 ||
+                boxes[i].GetComponent<Item>().itemCount < 1) removeSize++;
         }
 
         return removeSize;
@@ -285,8 +289,16 @@ public class Fishbowl : MonoBehaviour
     public void LoadCloudDataIntoGameData(string strData)
     {
         FishbowlSaveData fishbowlSaveData = new FishbowlSaveData();
-
         fishbowlSaveData = JsonUtility.FromJson<FishbowlSaveData>(strData);
+
+        for(int i = 0; i < itemSize; i++)
+        {
+            boxes[i].GetComponent<Item>().itemCount = 0;
+        }
+
+        int removeSize = RemoveEmptyItemInBox();
+        itemSize -= removeSize;
+        Debug.Log(removeSize);
 
         if (fishbowlSaveData != null)
         {
@@ -294,7 +306,6 @@ public class Fishbowl : MonoBehaviour
             {
                 if (FishDataBundle.fishDatas.ContainsKey(fishbowlSaveData.ownItemId[i]))
                 {
-
                     FishData fishData = FishDataBundle.fishDatas[fishbowlSaveData.ownItemId[i]];
 
                     if (fishData != null)

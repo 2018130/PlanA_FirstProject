@@ -7,7 +7,7 @@ public class FishingFloats : MonoBehaviour
     [SerializeField]
     Fishing fishing;
 
-    CircleCollider2D collider2d;
+    private CircleCollider2D collider2d;
 
     private void Start()
     {

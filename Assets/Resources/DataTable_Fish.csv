@@ -44,5 +44,13 @@ Id,Name,Lv,Speed,ProductCount,Damage,Size,Information,Habitat,SpritePath
 43,초롱아귀,F,3,2,0,normal,〃,"바다,민물",Fish/FootballFish
 44,해파리1,F,3,2,0,normal,〃,"바다,민물",Fish/JellyFish1
 45,해파리2,F,3,2,0,normal,〃,"바다,민물",Fish/JellyFish2
-46,페트병,F,1,2,100,normal,〃,"바다,민물",Fish/PlasticBottle
-47,비닐봉지,F,1,2,150,normal,〃,"바다,민물",Fish/PlasticBag
+46,페트병1,F,1,2,100,normal,〃,"바다,민물",Trash/PlasticBottle
+47,비닐봉지,F,1,2,150,normal,〃,"바다,민물",Trash/PlasticBag
+48,장화,F,1,1,150,normal,〃,"바다,민물",Trash/Boots
+49,통조림,F,1,1,150,normal,〃,"바다,민물",Trash/Can
+50,생선뼈,F,1,1,150,normal,〃,"바다,민물",Trash/FishBone
+51,페트병2,F,1,1,150,normal,〃,"바다,민물",Trash/Pet
+7777,선물병,F,1,1,0,normal,〃,"바다,민물",Fish/GiftBottle
+8001,체력회복약,SPECIAL,1,1,0,normal,〃,"바다,민물",ETC/RecoverHP
+8002,낚시대연장,SPECIAL,1,1,0,normal,〃,"바다,민물",ETC/RecoverFishingline
+8003,자성,SPECIAL,1,1,0,normal,〃,"바다,민물",ETC/Magnetic

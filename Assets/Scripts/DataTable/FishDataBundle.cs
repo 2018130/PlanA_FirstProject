@@ -25,6 +25,7 @@ public class FishData
     }
     private string fishName = "";
     private string lv = "";
+    public string Lv => lv;
     private float speed = 0;
     private int productCount = 0;
     private int damage = 0;

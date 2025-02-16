@@ -10,7 +10,8 @@ public class ConfirmWindow: MonoBehaviour
 
     private void Start()
     {
-        playerController = PlayerController.SPlayerController.GetComponent<PlayerController>();
+        if(PlayerController.SPlayerController)
+            playerController = PlayerController.SPlayerController.GetComponent<PlayerController>();
     }
     public void ExitGame()
     {

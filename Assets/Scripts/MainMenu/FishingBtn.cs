@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class FishingBtn : MonoBehaviour
 {
+    [SerializeField]
+    public Loading loadingUI;
 
     [Space(10f)]
     [SerializeField]
@@ -53,6 +55,6 @@ public class FishingBtn : MonoBehaviour
         Camera.main.GetComponent<Sound>().ChangeSceneToFishing();
         PlayerController.SPlayerController.SetGameSceneUI();
         isAnimPlayed = false;
-        SceneManager.LoadSceneAsync("GameScene");
+        loadingUI.OpenScene("GameScene");
     }
 }

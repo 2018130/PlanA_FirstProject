@@ -14,10 +14,13 @@ using Unity.VisualScripting;
 
 public class GPGSBinder : MonoBehaviour
 {
-
+    
     private static string path = "playerData01.json";
     private static string collectionPath = "collectionData01.json";
     private static string fishbowlPath = "fishbowlData01.json";
+
+    private static int maxSaveCount = 3;
+    private static int saveCount = 0;
 
     public void Start()
     {
@@ -61,6 +64,8 @@ public class GPGSBinder : MonoBehaviour
     static void OpenSavedGame(bool bSave)
     {
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+
+        saveCount = 0;
 
         if (bSave)
         {
@@ -129,7 +134,6 @@ public class GPGSBinder : MonoBehaviour
 
         for (int i = 0; i < Fishbowl.Instance.itemSize; i++)
         {
-            Debug.Log(Fishbowl.Instance.boxes[i].name);
             Item item = Fishbowl.Instance.boxes[i].GetComponent<Item>();
             fishbowlSaveData.ownItemCount.Add(item.itemCount);
             fishbowlSaveData.ownItemId.Add(item.itemId);
@@ -137,8 +141,8 @@ public class GPGSBinder : MonoBehaviour
 
         string json = JsonUtility.ToJson(fishbowlSaveData, true);
         byte[] bytes = Encoding.UTF8.GetBytes(json);
+        Debug.Log(json);
         SaveGame(game, bytes);
-
     }
     static void SaveGame(ISavedGameMetadata game, byte[] savedData)
     {
@@ -158,6 +162,9 @@ public class GPGSBinder : MonoBehaviour
             {
                 Debug.Log("Success to save data");
             }
+            saveCount++;
+            if(saveCount == maxSaveCount)
+                PlayerController.SPlayerController.allScreenPanel.SetActive(false);
         });
     }
 
@@ -188,6 +195,9 @@ public class GPGSBinder : MonoBehaviour
             {
                 Debug.Log("Fail to LoadData");
             }
+            saveCount++;
+            if (saveCount == maxSaveCount)
+                PlayerController.SPlayerController.allScreenPanel.SetActive(false);
         });
     }
     static void OnSavedCollectionDataOpenForRead(SavedGameRequestStatus status, ISavedGameMetadata game)
@@ -216,6 +226,9 @@ public class GPGSBinder : MonoBehaviour
             {
                 Debug.Log("Fail to LoadData");
             }
+            saveCount++;
+            if (saveCount == maxSaveCount)
+                PlayerController.SPlayerController.allScreenPanel.SetActive(false);
         });
     }
 
@@ -239,12 +252,17 @@ public class GPGSBinder : MonoBehaviour
             {
                 Debug.Log("Succeed to read fishbowl data");
                 string LoadData = Encoding.UTF8.GetString(data);
+                Debug.Log(LoadData);
                 Fishbowl.Instance.LoadCloudDataIntoGameData(LoadData);
             }
             else
             {
                 Debug.Log("Fail to LoadData");
             }
+
+            saveCount++;
+            if (saveCount == maxSaveCount)
+                PlayerController.SPlayerController.allScreenPanel.SetActive(false);
         });
     }
 }

@@ -41,7 +41,7 @@ public class LoadingSceneManager : MonoBehaviour
     {
         AsyncOperation op = SceneManager.LoadSceneAsync("MainScene");
         op.allowSceneActivation = false;
-
+        
         while(!op.isDone)
         {
             yield return null;
@@ -58,7 +58,6 @@ public class LoadingSceneManager : MonoBehaviour
             }
             else
             {
-                
                 yield return new WaitForSeconds(pointTurnOnTerm);
 
                 SetLodingPoint(pointIdx);

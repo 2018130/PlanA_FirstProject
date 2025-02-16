@@ -35,7 +35,11 @@ public class Fishing : MonoBehaviour
     GameObject fishbowl;
     [SerializeField]
     GameObject collection;
+    [SerializeField]
+    MagneticCollider MagneticCollider;
+
     AdsManager adsManager;
+    
 
     float questProgressPercent = 0f;
     int maxFishingSucessCount = 3;
@@ -215,6 +219,7 @@ public class Fishing : MonoBehaviour
             CatchedMediumFishCount = 0;
             CatchedLargeFishCount = 0;
             fishingLineLenth = 0;
+            MagneticCollider.GetComponent<CircleCollider2D>().radius = 2;
 
             failPanel.SetActive(false);
             caeraPanel.SetActive(false);
@@ -246,35 +251,58 @@ public class Fishing : MonoBehaviour
 
     public void CatchFish(NewFishMove catchedFish)
     {
-        switch (catchedFish.fishSize)
+
+        if(catchedFish.GetFishData().Lv != "SPECIAL")
         {
-            case 1:
-                {
-                    CatchedSmallFishCount++;
-                    break;
-                }
-            case 2:
-                {
-                    CatchedMediumFishCount++;
-                    break;
-                }
-            case 3:
-                {
-                    CatchedLargeFishCount++;
-                    break;
-                }
-        }
+            switch (catchedFish.fishSize)
+            {
+                case 1:
+                    {
+                        CatchedSmallFishCount++;
+                        break;
+                    }
+                case 2:
+                    {
+                        CatchedMediumFishCount++;
+                        break;
+                    }
+                case 3:
+                    {
+                        CatchedLargeFishCount++;
+                        break;
+                    }
+            }
 
-        if (catchedFish.GetFishData().GetDamage() != 0 && !isInvincible)
+            if (catchedFish.GetFishData().GetDamage() != 0 && !isInvincible)
+            {
+                CurrentHealth -= catchedFish.GetFishData().GetDamage();
+                startTwinkle = true;
+            }
+
+            catchedFishs.Add(catchedFish.GetFishData());
+
+            collection.GetComponent<Collection>().AddCollectedFish(catchedFish.GetFishData());
+            fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFish.GetFishData()));
+        }
+        else
         {
-            CurrentHealth -= catchedFish.GetFishData().GetDamage();
-            startTwinkle = true;
+            if(catchedFish.GetFishData().GetName() == "체력회복약")
+            {
+                Debug.Log("Recover Hp");
+                CurrentHealth += 10;
+            }else if(catchedFish.GetFishData().GetName() == "낚시대연장")
+            {
+                Debug.Log("Recover FishingLineLenth");
+                FishingLineLenth += 500;
+            }else if(catchedFish.GetFishData().GetName() == "자성")
+            {
+                if(MagneticCollider.GetComponent<CircleCollider2D>().radius == 2)
+                {
+                    Debug.Log("Extend magnetic range");
+                    MagneticCollider.GetComponent<CircleCollider2D>().radius += 3;
+                }
+            }
         }
-
-        catchedFishs.Add(catchedFish.GetFishData());
-
-        collection.GetComponent<Collection>().AddCollectedFish(catchedFish.GetFishData());
-        fishbowl.GetComponent<Fishbowl>().AddItemInBox(playerController.ChangeFishDataToItem(catchedFish.GetFishData()));
     }
 
     void OpenCaeraPanel(bool isADRewarded)
